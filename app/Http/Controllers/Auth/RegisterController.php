@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
 use App\Models\AdminModel;
-use Illuminate\Support\Facdes\Validator;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 
 class RegisterController extends Controller
 {
@@ -58,7 +59,7 @@ class RegisterController extends Controller
             ]);
         } catch (\Exception $e) {
             // Log error jika terjadi kesalahan
-            \Log::error('Error creating admin: ' . $e->getMessage());
+            Log::error('Error creating admin: ' . $e->getMessage());
             return null;
         }
     }
