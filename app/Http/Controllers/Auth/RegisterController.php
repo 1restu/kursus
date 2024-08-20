@@ -1,16 +1,16 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
+
+use App\Http\Controllers\Controller;
 use App\Models\AdminModel;
-use Illuminate\Support\Facades\RegistersUsers;
 use Illuminate\Support\Facdes\Validator;
 use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
-    use RegistersUsers;
 
-    protected $redirectTo = '/admin/login'; 
+    protected $redirectTo = '/login'; 
 
     public function __construct()
     {

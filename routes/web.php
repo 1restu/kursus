@@ -1,14 +1,16 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facade\Facade;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\LoginController;
-use App\Http\Controlllers\RegisterController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controlllers\Auth\RegisterController;
 
-Route::get('/admin/login', [LoginController::class, 'showLoginForm'])->name('login.form');
-Route::post('/admin/login', [LoginController::class, 'login'])->name('login');
+Auth::routes();
 
 Route::middleware(['auth:admin'])->group(function () {
-    Route::get('/', function () {
+    Route::get('/', function
+     () {
         return view('home');
     })->name('home');
 });
