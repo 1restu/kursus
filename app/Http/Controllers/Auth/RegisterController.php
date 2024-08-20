@@ -1,72 +1,80 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-
-use App\Http\Controllers\Controller;
-use App\Models\User;
-use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
+use App\Models\AdminModel;
+use Illuminate\Support\Facades\RegistersUsers;
+use Illuminate\Support\Facdes\Validator;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Register Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users as well as their
-    | validation and creation. By default this controller uses a trait to
-    | provide this functionality without requiring any additional code.
-    |
-    */
-
     use RegistersUsers;
 
-    /**
-     * Where to redirect users after registration.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/admin/login'; 
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('guest:admin');
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
+    public function showRegistrationForm()
+    {
+        return view('auth.register');
+    }
+
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'name' => ['required', 'string', 'min:5', 'max:255', 'unique:admin', 'regex:/^[a-zA-Z\s]+$/'],
+            'username' => ['required', 'string', 'max:255', 'min:5', 'unique:admin', 'regex:/[a-zA-Z]/'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ], [
+            'name.required' => 'Nama wajib diisi.',
+            'name.unique' => 'nama telah digunakan oleh admin lain, silakan gunakan nama yang berbeda.',
+            'name.string' => 'Nama harus berupa string.',
+            'name.min' => 'Nama harus memiliki minimal setidaknya 5 karakter.',
+            'name.max' => 'Nama tidak boleh lebih dari 255 karakter.',
+            'name.regex' => 'Nama hanya boleh terdiri dari huruf.',
+            'username.required' => 'Username wajib diisi.',
+            'username.string' => 'Username harus berupa string.',
+            'username.max' => 'Username tidak boleh lebih dari 255 karakter.',
+            'username.min' => 'Username harus memiliki setidaknya 5 karakter',
+            'username.unique' => 'Username telah digunakan oleh admin lain, silakan gunakan username yang berbeda.',
+            'username.regex' => 'Username harus mengandung minimal satu huruf.',
+            'password.required' => 'Password wajib diisi.',
+            'password.string' => 'Password harus berupa string.',
+            'password.min' => 'Password harus memiliki minimal setidaknya 8 karakter.',
+            'password.confirmed' => 'Konfirmasi password tidak cocok.',
         ]);
     }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\Models\User
-     */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+        try {
+            return AdminModel::create([
+                'name' => $data['name'],
+                'username' => $data['username'],
+                'password' => $data['password'],
+            ]);
+        } catch (\Exception $e) {
+            // Log error jika terjadi kesalahan
+            \Log::error('Error creating admin: ' . $e->getMessage());
+            return null;
+        }
+    }
+
+    public function register(Request $request)
+    {
+        // Validasi input
+        $this->validator($request->all())->validate();
+
+        // Proses registrasi
+        $admin = $this->create($request->all());
+
+        if ($admin) {
+            return redirect($this->redirectTo)->with('success', 'Registrasi berhasil, silakan login.');
+        }
+
+        return back()->with('error', 'Registrasi gagal, silakan coba lagi.');
     }
 }
