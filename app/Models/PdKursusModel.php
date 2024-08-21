@@ -19,7 +19,7 @@ class PdKursusModel extends Model
         'tanggal_daftar',
         'status',
         'tanggal_mulai',
-        'tanggal_selesai',
+        'tanggal_selesai'
     ];
 
     protected $dates = [
