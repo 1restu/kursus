@@ -15,6 +15,7 @@ class KursusModel extends Model
 
     protected $fillable = [
         'nama_krs',
+        'gambar',
         'deskripsi',
         'id_ktg',
         'id_mtr',
