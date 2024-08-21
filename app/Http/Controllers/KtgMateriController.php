@@ -74,13 +74,13 @@ class KtgMateriController extends Controller
 
     public function ktghapus($id)
 {
-    $ktg = BukuModel::find($id);
+    $ktg = KtgMateriModel::find($id);
 
     if (!$ktg) {
         return redirect('/kategori')->with('error', 'Kategori tidak ditemukan.');
     }
 
-    $kategoruterkait = MateriModel::where('id_ktg', $id)->exists();
+    $kategoriterkait = MateriModel::where('id_ktg', $id)->exists();
 
     if ($kategoriterkait) {
         return redirect('/kategori')->with('error', 'Kategori tidak dapat dihapus karena masih terkait dengan materi.');
@@ -88,7 +88,7 @@ class KtgMateriController extends Controller
 
     try {
         $ktg->delete();
-        return redirect('/kategoru')->with('success', 'Kategori berhasil dihapus.');
+        return redirect('/kategori')->with('success', 'Kategori berhasil dihapus.');
     } catch (\Exception $e) {
         return redirect('/')->with('error', 'Buku gagal dihapus.');
     }
