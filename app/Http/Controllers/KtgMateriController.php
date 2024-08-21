@@ -11,18 +11,18 @@ class KtgMateriController extends Controller
 {
     public function ktgtampil()
     {
-        $dataktg = KtgMateriModel::latest('created_at');
+        $dataktg = KtgMateriModel::latest('created_at')->get();
         return view('halaman/kategori', ['kategori' => $dataktg]);
     }
 
     public function ktgtambah(Request $request)
     {
         $request->validate([
-            'nama_ktg' => 'required|unique|regex:/^[a-zA-z\s]=$/'
+            'nama_ktg' => 'required|unique:ktg_materi,nama_ktg|regex:/^[a-zA-Z\s]+$/'
         ], [
             'nama_ktg.required' => 'Nama kategori tidak boleh kosong.',
-            'nama_ktg.unique' => 'Kategori ini sudah ada, silahkan masukan nama kategori yang lain.',
-            'nama_ktg.regex' => 'Nama kategori hanya boleh terdiri dari angka'
+            'nama_ktg.unique' => 'Kategori ini sudah ada, silahkan masukkan nama kategori yang lain.',
+            'nama_ktg.regex' => 'Nama kategori hanya boleh terdiri dari huruf.'
         ]);
 
         try {
@@ -30,7 +30,7 @@ class KtgMateriController extends Controller
                 'nama_ktg' => $request->nama_ktg
             ]);
 
-            return redirect('/kategori')->with('succes', 'Kategori baru berhasil ditambahkan.');
+            return redirect('/kategori')->with('success', 'Kategori baru berhasil ditambahkan.');
         } catch(\Exception $e) {
             return redirect('/kategori')->with('error', 'Kategori baru gagal untuk ditambahkan');
         }
@@ -41,13 +41,13 @@ class KtgMateriController extends Controller
         $ktg = KtgMateriModel::where('id', $id)->first();
 
         if (!$ktg) {
-            return redirect('/kategori')->with('Error', 'Kategori materi tak ditemukan.');
+            return redirect('/kategori')->with('error', 'Kategori materi tak ditemukan.');
         }
 
-        $kategoriterkait = MateriModel::where('id_ktg', $id_ktg)->exists();
+        $kategoriterkait = MateriModel::where('id_ktg', $id)->exists();
 
         if ($kategoriterkait) {
-            return redirect('/kategori')->with('error', 'Kategori tak dapat di edit karna masih terkait dengan materi');
+            return redirect('/kategori')->with('error', 'Kategori tak dapat diedit karena masih terkait dengan materi.');
         }
 
         $request->validate([
@@ -56,41 +56,40 @@ class KtgMateriController extends Controller
                 Rule::unique('ktg_materi', 'nama_ktg')->ignore($ktg)
             ]
             ], [
-                'nama_ktg.required' => 'Nama kategori wajib di isi.',
+                'nama_ktg.required' => 'Nama kategori wajib diisi.',
                 'nama_ktg.unique' => 'Kategori ini sudah ada, silahkan ganti.'
             ]);
 
-        try{
+        try {
             $ktg->update([
-                'nama_ktg'->$request->nama_ktg
+                'nama_ktg' => $request->nama_ktg
             ]);
 
-            return redirect('/kategori')->with('succes', 'Kategori berhasil di edit');
+            return redirect('/kategori')->with('success', 'Kategori berhasil diedit.');
         } catch(\Exception $e) {
-            return redirect('/kategori')-with('error', 'Kategori gagal di edit');
+            return redirect('/kategori')->with('error', 'Kategori gagal diedit.');
         }
-         
     }
 
     public function ktghapus($id)
-{
-    $ktg = KtgMateriModel::find($id);
+    {
+        $ktg = KtgMateriModel::find($id);
 
-    if (!$ktg) {
-        return redirect('/kategori')->with('error', 'Kategori tidak ditemukan.');
+        if (!$ktg) {
+            return redirect('/kategori')->with('error', 'Kategori tidak ditemukan.');
+        }
+
+        $kategoriterkait = MateriModel::where('id_ktg', $id)->exists();
+
+        if ($kategoriterkait) {
+            return redirect('/kategori')->with('error', 'Kategori tidak dapat dihapus karena masih terkait dengan materi.');
+        }
+
+        try {
+            $ktg->delete();
+            return redirect('/kategori')->with('success', 'Kategori berhasil dihapus.');
+        } catch (\Exception $e) {
+            return redirect('/kategori')->with('error', 'Kategori gagal dihapus.');
+        }
     }
-
-    $kategoriterkait = MateriModel::where('id_ktg', $id)->exists();
-
-    if ($kategoriterkait) {
-        return redirect('/kategori')->with('error', 'Kategori tidak dapat dihapus karena masih terkait dengan materi.');
-    }
-
-    try {
-        $ktg->delete();
-        return redirect('/kategori')->with('success', 'Kategori berhasil dihapus.');
-    } catch (\Exception $e) {
-        return redirect('/')->with('error', 'Buku gagal dihapus.');
-    }
-}
 }
