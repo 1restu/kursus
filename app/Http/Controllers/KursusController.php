@@ -30,8 +30,11 @@ class KursusController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama_krs' => 'required|unique:materi,nama_krs|regex:/^[a-zA-Z\s]+$/',
-            'gambar' => ''
+            'nama_krs' => 'required|unique:kursus,nama_krs|regex:/^[a-zA-Z\s]+$/',
+            'gambar' => 'required|image|max:5280|mimes:jpeg,png,jpg',
+            'deskripsi' => 'required|unique:kursus,nama_krs|min:10',
+            'id_mtr' => 'required|exists',
+
         ]);
     }
 

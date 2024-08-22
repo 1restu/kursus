@@ -17,7 +17,6 @@ class KursusModel extends Model
         'nama_krs',
         'gambar',
         'deskripsi',
-        'id_ktg',
         'id_mtr',
         'biaya_krs',
         'durasi'
@@ -26,11 +25,6 @@ class KursusModel extends Model
     public function materi()
     {
         return $this->belongTo(MateriModel::class, 'id_mtr');
-    }
-
-    public function kategori()
-    {
-        return $this->belongTo(KtgMateriModel::class, 'id_ktg');
     }
 
     public function Pdkursus()
