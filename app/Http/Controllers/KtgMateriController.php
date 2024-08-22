@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use App\Models\KtgMateriModel;
 use App\Model\MateriModel;
 
@@ -14,7 +15,7 @@ class KtgMateriController extends Controller
     public function index()
     {
         $kategori = KtgMateriModel::latest('created_at')->get();
-        return view('', compact('kategori'));
+        return view('categories.index', compact('kategori'));
     }
 
     /**
@@ -33,6 +34,7 @@ class KtgMateriController extends Controller
         $request->validate([
             'nama_ktg' => 'required|unique:ktg_materi,nama_ktg|regex:/^[a-zA-Z\s]+$/'
         ], [
+
             'nama_ktg.required' => 'Nama kategori harus di isi.',
             'nama_ktg.unique' => 'Kategori ini sudah ada, silahka masukan nama kategori yang berbeda.',
             'nama_ktg.regex' => 'Nama kategori tidak boleh memiliki angka.'
@@ -43,9 +45,9 @@ class KtgMateriController extends Controller
                 'nama_ktg'->$request->nama_ktg
             ]);
 
-            return redirect('')->with('succes', 'Kategori baru berhasil ditambahkan.');
+            return redirect('/categories')->with('succes', 'Kategori baru berhasil ditambahkan.');
         } catch(\Exception $e) {
-            return redirect('')->with('error', 'Kategori baru gagal ditambahkan.');
+            return redirect('/categories')->with('error', 'Kategori baru gagal ditambahkan.');
         }
     }
 
@@ -73,7 +75,7 @@ class KtgMateriController extends Controller
         $ktg = KtgMateriModel::find($id);
 
         if(!$ktg) {
-            return redirect('')->with('error', 'Kategori tak ditemukan.');
+            return redirect('/categories')->with('error', 'Kategori tak ditemukan.');
         }
 
         $request->validate([
@@ -88,12 +90,12 @@ class KtgMateriController extends Controller
             KtgMateriModel::update([
                 'nama_ktg'=>$request->nama_ktg
             ]);
-            return redirect('')->with('succes', 'Kategori berhasil di edit.');
+            return redirect('/categories')->with('succes', 'Kategori berhasil di edit.');
         } catch(\illuminate\Database\QueryException\Exception $e) {
             if($e->getcode() == '23000') {
-                return redirect('')->with('error', 'Kategori gagal di edit karna masih terkait dengan materi.');
+                return redirect('/categories')->with('error', 'Kategori gagal di edit karna masih terkait dengan materi.');
             }
-            return redirect('')->with('error', 'Kategori gagal di edit.');
+            return redirect('/categories')->with('error', 'Kategori gagal di edit.');
         }
     }
 
@@ -105,17 +107,18 @@ class KtgMateriController extends Controller
     $ktg = KtgMateriModel::find($id);
 
     if (!$ktg) {
-        return redirect('/kategori')->with('error', 'Kategori tidak ditemukan.');
+        return redirect('/categories')->with('error', 'Kategori tidak ditemukan.');
     }
 
     try {
         $ktg->delete();
-        return redirect('/kategori')->with('success', 'Kategori berhasil dihapus.');
+        return redirect('/categories')->with('success', 'Kategori berhasil dihapus.');
     } catch (\Illuminate\Database\QueryException $e) {
         if($e->getCode() == '23000') {
-            return redirect('/kategori')->with('error', 'Kategori tidak dapat dihapus karena masih terkait dengan materi.');
+            return redirect('/categories')->with('error', 'Kategori tidak dapat dihapus karena masih terkait dengan materi.');
         }
-        return redirect('/kategori')->with('error', 'Terjadi kesalahan. Kategori gagal dihapus.');
+        return redirect('/categories')->with('error', 'Terjadi kesalahan. Kategori gagal dihapus.');
     }
 }
 }
+
