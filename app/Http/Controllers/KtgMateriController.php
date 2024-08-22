@@ -13,8 +13,8 @@ class KtgMateriController extends Controller
      */
     public function index()
     {
-        $dataktg = KtgMateriModel::latest('created_at')->get();
-        return view('', ['kategori' => $dataktg]);
+        $kategori = KtgMateriModel::latest('created_at')->get();
+        return view('', compact('kategori'));
     }
 
     /**
