@@ -148,6 +148,7 @@ class MateriController extends Controller
      */
     public function destroy($id)
 {
+    $materi = MateriModel::find($id);
     try {
         if ($materi->file_mtr && file_exists(public_path('asset/files/' . $materi->file_mtr))) {
             unlink(public_path('asset/files/' . $materi->file_mtr));
