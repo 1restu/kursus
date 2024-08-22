@@ -32,7 +32,8 @@ class MateriController extends Controller
         $request->validate([
             'nama_mtr' => 'required|unique:materi,nama_mtr|regex:/^[a-zA-Z\s]+$/',
             'deskripsi' => 'required|min:10',
-            'file_mtr' => 'required|file|max:5120|mimes:pdf,doc,docx,txt'
+            'file_mtr' => 'required|file|max:5120|mimes:pdf,doc,docx,txt',
+            'id_ktg' => 'required|exists'
         ], [
             'nama_mtr.required' => 'Nama materi wajib di isi.',
             'nama_mtr.unique' => 'Nama materi sudah ada, silahkan masukkan nama yang lain.',
@@ -41,7 +42,9 @@ class MateriController extends Controller
             'deskripsi.min' => 'Dekripsi minimal memiliki 10 kata.',
             'file_mtr.required' => 'File materi wajib diunggah.',
             'file_mtr.max' => 'Ukuran file tidak boleh lebih dari 5MB.',
-            'file_mtr.mimes' => 'Format file harus berupa PDF, DOC, DOCX, atau TXT.'
+            'file_mtr.mimes' => 'Format file harus berupa PDF, DOC, DOCX, atau TXT.',
+            'id_ktg.required' => 'Kategori tidak boleh kosong',
+            'id_ktg.exists' => 'Kategori tidak valid.'
         ]);
     
         if ($request->hasFile('file_mtr')) {
@@ -87,7 +90,8 @@ class MateriController extends Controller
             $request->validate([
                 'nama_mtr' => 'required|unique:materi,nama_mtr|regex:/^[a-zA-Z\s]+$/',
                 'deskripsi' => 'required|min:10',
-                'file_mtr' => 'required|file|max:5120|mimes:pdf,doc,docx,txt'
+                'file_mtr' => 'required|file|max:5120|mimes:pdf,doc,docx,txt',
+                'id_ktg' => 'required|exists'
             ], [
                 'nama_mtr.required' => 'Nama materi wajib di isi.',
                 'nama_mtr.unique' => 'Nama materi sudah ada, silahkan masukkan nama yang lain.',
@@ -96,7 +100,9 @@ class MateriController extends Controller
                 'deskripsi.min' => 'Dekripsi minimal memiliki 10 kata.',
                 'file_mtr.required' => 'File materi wajib diunggah.',
                 'file_mtr.max' => 'Ukuran file tidak boleh lebih dari 5MB.',
-                'file_mtr.mimes' => 'Format file harus berupa PDF, DOC, DOCX, atau TXT.'
+                'file_mtr.mimes' => 'Format file harus berupa PDF, DOC, DOCX, atau TXT.',
+                'id_ktg.required' => 'Kategori tidak boleh kosong',
+                'id_ktg.exists' => 'Kategori tidak valid.'
             ]);
         
             if ($request->hasFile('file_mtr')) {
