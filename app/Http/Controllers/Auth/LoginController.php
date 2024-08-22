@@ -60,6 +60,6 @@ class LoginController extends Controller
         $request->session()->flash('success', 'Anda telah berhasil logout.');
 
         // Redirect ke halaman login
-        return redirect('/admin/login');
+        return redirect('/login');
     }
 }

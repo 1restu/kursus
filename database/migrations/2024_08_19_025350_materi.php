@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nama_mtr')->unique();
             $table->text('deskripsi');
             $table->string('file_mtr');
-            $table->foreignId('id_ktg')->constrained('ktg_materi')->onDelete('restrict');
+            $table->foreignId('id_ktg')->constrained('ktg_materi')->onDelete('restrict')->onUpdate('restrict');
             $table->timestamps();
         });
     }

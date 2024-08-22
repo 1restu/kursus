@@ -20,8 +20,8 @@ class KtgMateriModel extends Model
         return $this->hasMany(MateriModel::class, 'id_ktg');
     }
 
-    // public function Kursus()
-    // {
-    //     return $this->hasMany(KursusModel::class, 'id_ktg');
-    // }
+    public function Kursus()
+    {
+        return $this->hasMany(KursusModel::class, 'id_ktg');
+    }
 };
