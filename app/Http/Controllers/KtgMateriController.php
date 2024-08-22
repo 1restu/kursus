@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\KtgMateriModel;
 use App\Model\MateriModel;
+use Illuminate\Database\QueryException;
 
 class KtgMateriController extends Controller
 {
@@ -42,10 +43,10 @@ class KtgMateriController extends Controller
 
         try{
             KtgMateriModel::create([
-                'nama_ktg'->$request->nama_ktg
+                'nama_ktg'=>$request->nama_ktg
             ]);
 
-            return redirect('/categories')->with('succes', 'Kategori baru berhasil ditambahkan.');
+            return redirect('/categories')->with('success', 'Kategori baru berhasil ditambahkan.');
         } catch(\Exception $e) {
             return redirect('/categories')->with('error', 'Kategori baru gagal ditambahkan.');
         }
@@ -87,11 +88,9 @@ class KtgMateriController extends Controller
         ]);
 
         try{
-            KtgMateriModel::update([
-                'nama_ktg'=>$request->nama_ktg
-            ]);
-            return redirect('/categories')->with('succes', 'Kategori berhasil di edit.');
-        } catch(\illuminate\Database\QueryException\Exception $e) {
+            $ktg->update($request->only('nama_ktg'));
+            return redirect('/categories')->with('success', 'Kategori berhasil di edit.');
+        } catch(QueryException $e) {
             if($e->getcode() == '23000') {
                 return redirect('/categories')->with('error', 'Kategori gagal di edit karna masih terkait dengan materi.');
             }
@@ -113,7 +112,7 @@ class KtgMateriController extends Controller
     try {
         $ktg->delete();
         return redirect('/categories')->with('success', 'Kategori berhasil dihapus.');
-    } catch (\Illuminate\Database\QueryException $e) {
+    } catch (QueryException $e) {
         if($e->getCode() == '23000') {
             return redirect('/categories')->with('error', 'Kategori tidak dapat dihapus karena masih terkait dengan materi.');
         }
