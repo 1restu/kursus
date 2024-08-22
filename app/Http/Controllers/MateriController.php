@@ -87,6 +87,7 @@ class MateriController extends Controller
          */
         public function update(Request $request, string $id)
         {
+            $materi = MateriModel::find($id);
             $request->validate([
                 'nama_mtr' => 'required|unique:materi,nama_mtr|regex:/^[a-zA-Z\s]+$/',
                 'deskripsi' => 'required|min:10',
@@ -120,7 +121,7 @@ class MateriController extends Controller
                 $file->move(public_path('asset/files'), $fileName);
         
                 try {
-                    MateriModel::update([
+                    $materi->MateriModel::update([
                         'nama_mtr' => $request->nama_mtr,
                         'deskripsi' => $request->deskripsi,
                         'file_mtr' => $fileName,
