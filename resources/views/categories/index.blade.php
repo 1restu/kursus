@@ -36,7 +36,7 @@
 </div>
 
 <!-- Modal Tambah Produk -->
-{{-- <div class="modal fade" id="tambahproduk" tabindex="-1" aria-labelledby="tambahprodukLabel" aria-hidden="true">
+<div class="modal fade" id="tambahproduk" tabindex="-1" aria-labelledby="tambahprodukLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -44,11 +44,11 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('#') }}" method="post">
+                <form action="{{ route('categories.create') }}" method="post">
                     @csrf
                     <div class="mb-3">
-                        <label for="name" class="form-label">Nama</label>
-                        <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}">
+                        <label for="nama_ktg" class="form-label">Nama</label>
+                        <input type="text" class="form-control" id="nama_ktg" name="nama_ktg" value="{{ old('nama_ktg') }}">
                     </div>
                     <div class="text-end">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
@@ -58,7 +58,7 @@
             </div>
         </div>
     </div>
-</div> --}}
+</div>
 
 <div class="table-responsive">
     <table class="table table-striped table-bordered">
@@ -73,12 +73,12 @@
             @foreach($kategori as $ktg)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
-                    <td>{{ $ktg->name }}</td>
+                    <td>{{ $ktg->nama_ktg }}</td>
                     <td class="text-center">
                         <button class="btn btn-warning btn-sm me-2" data-bs-toggle="modal" data-bs-target="#modalProductEdit{{ $ktg->id }}">Edit</button>
 
-                        <!-- Modal Edit Produk -->
-                        {{-- <div class="modal fade" id="modalProductEdit{{ $ktg->id }}" tabindex="-1" aria-labelledby="editproduct" aria-hidden="true">
+                        <!-- Modal Edit Kategori -->
+                        <div class="modal fade" id="modalProductEdit{{ $ktg->id }}" tabindex="-1" aria-labelledby="editproduct" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -86,12 +86,12 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="{{ route('#', $ktg->id) }}" method="post">
+                                        <form action="{{ route('categories.edit', $ktg->id) }}" method="post">
                                             @csrf
                                             @method('PUT')
                                             <div class="mb-3">
-                                                <label for="name" class="form-label">Nama</label>
-                                                <input type="text" class="form-control" id="name" name="name" value="{{ $ktg->name }}">
+                                                <label for="nama_ktg" class="form-label">Nama</label>
+                                                <input type="text" class="form-control" id="nama_ktg" name="nama_ktg" value="{{ $ktg->nama_ktg }}">
                                             </div>
                                             <div class="text-end">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
@@ -103,11 +103,11 @@
                             </div>
                         </div>
 
-                        <form action="{{ route('#', $ktg->id) }}" method="POST" class="d-inline delete-form">
+                        <form action="{{ route('categories.delete', $ktg->id) }}" method="POST" class="d-inline delete-form">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                        </form> --}}
+                        </form> 
                     </td>
                 </tr>
             @endforeach

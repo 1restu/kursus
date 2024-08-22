@@ -15,10 +15,10 @@ class KtgMateriModel extends Model
         'nama_ktg'
     ];
 
-    // public function Materi()
-    // {
-    //     return $this->hasMany(MateriModel::class, 'id_ktg');
-    // }
+    public function Materi()
+    {
+        return $this->hasMany(MateriModel::class, 'id_ktg');
+    }
 
     // public function Kursus()
     // {
