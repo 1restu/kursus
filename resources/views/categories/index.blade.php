@@ -44,7 +44,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('categories.create') }}" method="post">
+                <form action="{{ route('categories.store') }}" method="post">
                     @csrf
                     <div class="mb-3">
                         <label for="nama_ktg" class="form-label">Nama</label>
@@ -86,7 +86,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="{{ route('categories.edit', $ktg->id) }}" method="post">
+                                        <form action="{{ route('categories.update', $ktg->id) }}" method="post">
                                             @csrf
                                             @method('PUT')
                                             <div class="mb-3">
@@ -98,12 +98,13 @@
                                                 <button type="submit" class="btn btn-primary">Edit</button>
                                             </div>
                                         </form>
+                                        
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <form action="{{ route('categories.delete', $ktg->id) }}" method="POST" class="d-inline delete-form">
+                        <form action="{{ route('categories.destroy', $ktg->id) }}" method="POST" class="d-inline delete-form">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-sm">Delete</button>

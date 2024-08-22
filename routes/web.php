@@ -15,8 +15,5 @@ Route::middleware(['auth:admin'])->group(function () {
         return view('home');
     })->name('home');
 
-    Route::get('/categories', [KtgMateriController::class, 'ktgtampil']);
-    Route::post('/categories/create', [KtgMateriController::class, 'ktgtambah'])->name('categories.create');
-    Route::put('/categories/edit/{id}', [KtgMateriController::class, 'ktgedit'])->name('categories.edit');
-    Route::delete('/categories/delete/{id}', [KtgMateriController::class, 'ktghapus'])->name('categories.delete');
+    Route::resource('categories', KtgMateriController::class);
 });
