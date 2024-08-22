@@ -51,12 +51,12 @@ class MateriController extends Controller
             $file = $request->file('file_mtr');
             $fileName = time() . '_' . $file->getClientOriginalName();
     
-            $filePath = public_path('asset/files/' . $fileName);
+            $filePath = public_path('assets/files/' . $fileName);
             if (file_exists($filePath)) {
                 return redirect()->back()->with('error', 'File dengan nama yang sama sudah ada.');
             }
     
-            $file->move(public_path('asset/files'), $fileName);
+            $file->move(public_path('assets/files'), $fileName);
     
             try {
                 MateriModel::create([
@@ -110,15 +110,15 @@ class MateriController extends Controller
                 $file = $request->file('file_mtr');
                 $fileName = time() . '_' . $file->getClientOriginalName();
         
-                $filePath = public_path('asset/files/' . $fileName);
+                $filePath = public_path('assets/files/' . $fileName);
                 if (file_exists($filePath)) {
                     return redirect()->back()->with('error', 'File dengan nama yang sama sudah ada.');
                 }
-                if ($materi->file_mtr && file_exists(public_path('asset/files/' . $materi->file_mtr))) {
-                    unlink(public_path('asset/files/' . $materi->file_mtr));
+                if ($materi->file_mtr && file_exists(public_path('assets/files/' . $materi->file_mtr))) {
+                    unlink(public_path('assets/files/' . $materi->file_mtr));
                 }
         
-                $file->move(public_path('asset/files'), $fileName);
+                $file->move(public_path('assets/files'), $fileName);
         
                 try {
                     $materi->MateriModel::update([
@@ -150,8 +150,8 @@ class MateriController extends Controller
 {
     $materi = MateriModel::find($id);
     try {
-        if ($materi->file_mtr && file_exists(public_path('asset/files/' . $materi->file_mtr))) {
-            unlink(public_path('asset/files/' . $materi->file_mtr));
+        if ($materi->file_mtr && file_exists(public_path('assets/files/' . $materi->file_mtr))) {
+            unlink(public_path('assets/files/' . $materi->file_mtr));
         }
         $materi->delete();
 
