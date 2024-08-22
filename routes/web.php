@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facade\Facade;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\KtgMateriController;
 use App\Http\Controlllers\Auth\RegisterController;
 
 Auth::routes();
@@ -13,4 +14,7 @@ Route::middleware(['auth:admin'])->group(function () {
      () {
         return view('home');
     })->name('home');
+
+    Route::get('/categories', [KtgMateriController::class, 'ktgtampil']);
+    Route::get('/categories/ktgtambah', [KtgMateriController::class, 'ktg']);
 });
