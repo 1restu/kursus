@@ -16,7 +16,6 @@ class PdKursusModel extends Model
     protected $fillable = [
         'id_krs',
         'id_mrd',
-        'tanggal_daftar',
         'status',
         'tanggal_mulai',
         'tanggal_selesai'
