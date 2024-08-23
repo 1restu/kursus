@@ -28,20 +28,19 @@ class LoginController extends Controller
 
     // Cek apakah username ada
     $user = AdminModel::where('username', $credentials['username'])->first();
+    if(!$user) {
+        return redirect('/login')->with('error', 'Username tida dapat ditemukan');
+    }
 
     if ($user) {
-        // Jika username ada, cek apakah password cocok
         if (Auth::guard('admin')->attempt($credentials)) {
-            // Jika login berhasil
             $request->session()->put('admin_name', $user->name);
             $request->session()->flash('success', 'Login berhasil! Selamat datang, ' . $user->name . '.');
             return redirect("/");
         } else {
-            // Jika password salah
             return redirect()->back()->with('error', 'Password yang Anda masukkan salah.');
         }
     } else {
-        // Jika username tidak ditemukan
         return redirect()->back()->with('error', 'Username tidak ditemukan.');
     }
 }
