@@ -80,9 +80,6 @@ class MateriController extends Controller
          */
         public function edit(string $id)
         {
-            $materi=MateriModel::findOrFail($id);
-            $categories = KtgMateriModel::latest('created_at')->get();
-            return view('materies.edit', compact('materi', 'categories'));
         }
     
         /**
@@ -90,9 +87,7 @@ class MateriController extends Controller
          */
         public function update(Request $request, string $id)
             {
-                $materi = MateriModel::findOrFail($id); // Gunakan findOrFail untuk menghindari masalah jika ID tidak ditemukan
-
-        // Validasi
+                $materi = MateriModel::findOrFail($id);      
         $request->validate([
             'nama_mtr' => 'required|unique:materi,nama_mtr,' . $id . '|regex:/^[a-zA-Z\s]+$/',
             'deskripsi' => 'required|min:10',
@@ -165,6 +160,9 @@ class MateriController extends Controller
     public function destroy($id)
 {
     $materi = MateriModel::find($id);
+    if ($materi->Kursus()->exists()) {
+        return redirect()->route('materies.index')->with('error', 'Materi tidak dapat dihapus karena masih terkait dengan kursus.');
+    }
     try {
         if ($materi->file_mtr && file_exists(public_path('assets/files/' . $materi->file_mtr))) {
             unlink(public_path('assets/files/' . $materi->file_mtr));

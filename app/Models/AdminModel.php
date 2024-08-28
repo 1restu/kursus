@@ -22,7 +22,6 @@ class AdminModel extends Authenticatable
         'password', 'remember_token',
     ];
 
-    // Hash password saat menyimpan
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = Hash::make($value);
