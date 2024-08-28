@@ -80,6 +80,9 @@ class MateriController extends Controller
          */
         public function edit(string $id)
         {
+            $materi=MateriModel::findOrFail($id);
+            $categories = KtgMateriModel::latest('created_at')->get();
+            return view('materies.edit', compact('materi', 'categories'));
         }
     
         /**
@@ -87,7 +90,12 @@ class MateriController extends Controller
          */
         public function update(Request $request, string $id)
             {
-                $materi = MateriModel::findOrFail($id);      
+                $materi = MateriModel::findOrFail($id);
+                if ($materi->Kursus()->exists()) {
+                    return redirect()->back()->with('error', 'Materi tidak dapat diubah karena masih terkait dengan kursus.');
+                }
+
+        // Validasi
         $request->validate([
             'nama_mtr' => 'required|unique:materi,nama_mtr,' . $id . '|regex:/^[a-zA-Z\s]+$/',
             'deskripsi' => 'required|min:10',
