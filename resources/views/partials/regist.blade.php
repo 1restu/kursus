@@ -11,7 +11,7 @@
                                 <i class="material-icons">&#xE8B6;</i>
                                 <input type="text" class="form-control" placeholder="Search&hellip;">
                             </div>
-                            <a href="{{ route('pd_kursus.create') }}" class="btn btn-primary">Tambah Data Baru</a>
+                            <a href="{{ route('regists.create', ['id_krs' => $course_id])) }}" class="btn btn-primary">Tambah Data Baru</a>
                         </div>
                     </div>
                 </div>

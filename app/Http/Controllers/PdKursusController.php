@@ -14,7 +14,7 @@ class PdKursusController extends Controller
     public function index()
     {
         $pdkursus = PdKursusModel::latest('tanggal_daftar')->get();
-        return view('pd_kursus.index', compact('pdkursus'));
+        return view('partials.regist', compact('pdkursus'));
     }
 
     /**
@@ -22,6 +22,7 @@ class PdKursusController extends Controller
      */
     public function create()
     {
+        return view('registrations.create');
     }
 
     /**

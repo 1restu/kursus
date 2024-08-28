@@ -204,6 +204,6 @@ table.table td i {
             </div>
         </div>
     </div>
-    @include('partials.regist')
+    {{-- @include('partials.regist', ['course_id' => $course->id]) --}}
 </div>
 @endsection
