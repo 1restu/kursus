@@ -21,7 +21,7 @@ class MateriModel extends Model
 
     public function kategori()
     {
-        return $this->belongTo(KtgMateriModel::class, 'id_ktg');
+        return $this->belongsTo(KtgMateriModel::class, 'id_ktg');
     }
 
     public function Kursus()

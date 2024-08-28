@@ -13,9 +13,8 @@ class MateriController extends Controller
      */
     public function index()
     {
-        $materi=MateriModel::latest('created_at')->get();
-        $categories = KtgMateriModel::latest('created_at')->get();
-        return view('materies.index', compact('materi', 'categories'));
+        $materies = MateriModel::with('kategori')->latest('created_at')->get();
+        return view('materies.index', compact('materies'));
     }
 
     /**
@@ -156,7 +155,8 @@ class MateriController extends Controller
      */
     public function show(string $id)
     {
-    //
+        $materies = MateriModel::with('kategori')->findOrFail($id); // Ambil data materi dan relasinya
+        return view('materies.show', compact('materies')); 
     }
 
     /**
