@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\KtgMateriModel;
 use Illuminate\Http\Request;
 Use App\Models\KursusModel;
+use App\Models\MateriModel;
 
 class KursusController extends Controller
 {
@@ -12,8 +14,8 @@ class KursusController extends Controller
      */
     public function index()
     {
-        $kursus = KursusModel::latest('created_at');
-        return view('', compact('kursus'));
+        $courses = KursusModel::latest('created_at')->get();
+        return view('courses.index', compact('courses'));
     }
 
     /**
@@ -21,7 +23,9 @@ class KursusController extends Controller
      */
     public function create()
     {
-        //
+        $categories = KtgMateriModel::latest('created_at')->get();
+        $materies = MateriModel::latest('created_at')->get();
+        return view('courses.create', compact('categories', 'materies'));
     }
 
     /**
@@ -32,7 +36,7 @@ class KursusController extends Controller
         $request->validate([
             'nama_krs' => 'required|unique:kursus,nama_krs|regex:/^[a-zA-Z\s]+$/',
             'gambar' => 'required|image|max:5280|mimes:jpeg,png,jpg',
-            'deskripsi' => 'required|unique:kursus,nama_krs|min:10',
+            'deskripsi' => 'required|min:10',
             'id_mtr' => 'required|exists:materi,id',
             'biaya_krs' => 'required|numeric|min:0',
             'durasi' => 'required|integer|min:1'
@@ -71,9 +75,9 @@ class KursusController extends Controller
                     'durasi' => $request->durasi
                 ]);
 
-                return redirect('')->with('succes', 'Kursus baru berhasil ditambahkan');
+                return redirect('/courses')->with('succes', 'Kursus baru berhasil ditambahkan');
             } catch(\Exception $e) {
-                return redirect('')->with('error', 'Kursus baru gagal untuk ditambahkan.');
+                return redirect('/courses')->with('error', "$e");
             }
         }
     }
@@ -81,17 +85,21 @@ class KursusController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
-    }
+    public function show(string $id){
+    $course = KursusModel::with('materi')->findOrFail($id);
+    
+    // Mengirim data ke view
+    return view('courses.show', compact('course'));}
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
     {
-        //
+        $course = KursusModel::findOrFail($id);
+        $categories = KtgMateriModel::latest('created_at')->get();
+        $materies = MateriModel::latest('created_at')->get();
+        return view('courses.edit', compact('course','categories', 'materies'));
     }
 
     /**
@@ -137,7 +145,7 @@ class KursusController extends Controller
             $kursus->gambar = $filename;
 
             try {
-                KursusModel::update([
+                $kursus->update([
                     'nama_krs' => $request->nama_krs,
                     'gambar' => $kursus->gambar,
                     'deskripsi' => $request->deskripsi,
@@ -146,9 +154,9 @@ class KursusController extends Controller
                     'durasi' => $request->durasi
                 ]);
 
-                return redirect('')->with('succes', 'Kursus berhasil diedit');
+                return redirect('/courses')->with('succes', 'Kursus berhasil diedit');
             } catch(\Exception $e) {
-                return redirect('')->with('error', 'Kursus gagal diedit.');
+                return redirect('/courses')->with('error', 'Kursus gagal diedit.');
             }
         }
     }
@@ -166,13 +174,13 @@ class KursusController extends Controller
         }
         $kursus->delete();
 
-        return redirect()->route('kursus.index')->with('success', 'Kursus berhasil dihapus.');
+        return redirect()->route('coursees.index')->with('success', 'Kursus berhasil dihapus.');
     } catch (\Exception $e) {
         if ($e->getCode() == 23000) {
-            return redirect()->route('kursus.index')->with('error', 'Kursus tidak dapat dihapus karena masih terkait dengan pendaftaran kursus.');
+            return redirect()->route('courses.index')->with('error', 'Kursus tidak dapat dihapus karena masih terkait dengan pendaftaran kursus.');
         }
 
-        return redirect()->route('kursus.index')->with('error', 'Gagal menghapus kursus.');
+        return redirect()->route('courses.index')->with('error', 'Gagal menghapus kursus.');
     }
 }
 

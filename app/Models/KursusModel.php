@@ -24,10 +24,10 @@ class KursusModel extends Model
 
     public function materi()
     {
-        return $this->belongTo(MateriModel::class, 'id_mtr');
+        return $this->belongsTo(MateriModel::class, 'id_mtr');
     }
 
-    public function Pdkursus()
+    public function pdkursus()
     {
         return $this->hasMany(PdKursusModel::class, 'id_krs');
     }

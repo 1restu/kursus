@@ -2,7 +2,15 @@
 
 @section('content')
 
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+<!-- Font Awesome (versi yang sama) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+<!-- jQuery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<!-- Bootstrap 5 (yang sama) -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <style>
     body {
@@ -91,8 +99,32 @@
     .file_manager .file:hover .hover {
     display: block; /* Tampilkan elemen saat hover */
 }
-
 </style>
+
+@if (session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+@endif
+
+@if (session('error'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ session('error') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+@endif
+
+@if ($errors->any())
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+@endif
 
 <div id="main-content" class="file_manager">
     <div class="d-flex justify-content-end mb-3">
@@ -100,61 +132,143 @@
     </div>
     <div class="container">
         <div class="row clearfix">
-            @foreach ($materi as $matery)
+            @foreach ($materies as $matery)
                 @php
-                    // Ekstrak ekstensi dari nama file
                     $fileName = pathinfo($matery->file_mtr, PATHINFO_EXTENSION);
-                    // $fileSizeInMB = pathinfo($matery->file_mtr);
-                    
-                    $fileSize = filesize(public_path("assets/files/$matery->file_mtr"))/ 1048576;
+                    $fileSize = filesize(public_path("assets/files/$matery->file_mtr")) / 1048576;
                 @endphp
                 <div class="col-lg-3 col-md-4 col-sm-12">
                     <div class="card">
                         <div class="file">
-                            {{-- <a href="javascript:void(0);"> --}}
-                                <div class="hover">
-                                    <a href="{{ route('materies.show', $matery->id) }}" class="btn btn-icon btn-primary">
-                                        <i class="fa fa-eye"></i>
-                                    </a>
-                                    
-                                    <!-- Tombol Edit -->
-                                    <a href="{{ route('materies.edit', $matery->id) }}" class="btn btn-icon btn-warning">
-                                        <i class="fa fa-pencil"></i>
-                                    </a>
-                                    
-                                    <!-- Tombol Delete -->
-                                    <form action="{{ route('materies.destroy', $matery->id) }}" method="POST" style="display:inline;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-icon btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus materi ini?');">
-                                            <i class="fa fa-trash"></i>
-                                        </button>
-                                    </form>
-                                </div>
-                                <div class="icon">
-                                    <div class="icon">
-                                        @if (in_array($fileName, ['pdf']))
-                                            <i class="fa fa-file-pdf-o text-danger"></i>
-                                        @elseif (in_array($fileName, ['doc', 'docx']))
-                                            <i class="fa fa-file-word-o text-primary"></i>
-                                        @elseif (in_array($fileName, ['txt']))
-                                            <i class="fa fa-file-text text-warning"></i>
-                                        @else
-                                            <i class="fa fa-file text-muted"></i>
-                                        @endif
+                            <div class="hover">
+                                <!-- Tombol untuk memicu modal -->
+
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#detailModal{{ $matery->id }}">
+                                    <i class="fa fa-eye"></i>
+                                </button>
+                                <!-- Sertakan file modal -->
+                                @include('partials.modal', ['matery' => $matery])
+            
+                                {{-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#detailModal{{ $matery->id }}">
+                                    <i class="fa fa-eye"></i>
+                                </button> --}}
+                                
+                                <!-- Modal -->
+                                {{-- <div class="modal fade" id="detailModal{{ $matery->id }}" tabindex="-1" aria-labelledby="detailModalLabel{{ $matery->id }}" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="detailModalLabel{{ $matery->id }}">Detail Materi</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form>
+                                                    @csrf
+                                                    <div class="mb-3">
+                                                        <label for="modalNama" class="form-label">Nama</label>
+                                                        <input type="text" id="modalNama" class="form-control" readonly value="{{ $matery->nama_mtr }}">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="deskripsi" class="form-label">Deskripsi</label>
+                                                        <textarea class="form-control" id="deskripsi" name="dekripsi" rows="4" readonly>{{ $matery->deskripsi }}</textarea>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="kategori" class="form-label">Kategori</label>
+                                                        <input type="text" id="kategori" class="form-control" readonly value="{{ $matery->kategori->nama_ktg }}">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="modalFile" class="form-label">File</label>
+                                                        <input type="text" id="modalFile" class="form-control" readonly value="{{ $matery->file_mtr }}">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <a id="modalDownload" class="btn btn-primary" href="/assets/files/{{ $matery->file_mtr }}" target="_blank">Download File</a>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                </div> --}}
+
+                                {{-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#simpleModal">
+                                    Open Simple Modal
+                                </button>
+
+                                <div class="modal fade" id="simpleModal" tabindex="-1" aria-labelledby="simpleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="simpleModalLabel">Simple Modal</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                This is a simple modal.
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-primary">Save changes</button>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="file-name">
-                                    <p class="m-b-5 text-muted">{{ $matery->nama_mtr }}</p>
-                                    <small>Size: {{ number_format($fileSize, 2) }} MB <span class="date text-muted">{{ $matery->created_at->format('M d, Y') }}</span></small>
-                                </div>
-                            {{-- </a> --}}
+                                </div> --}}
+
+                                <!-- Tombol Edit -->
+                                <a href="{{ route('materies.edit', $matery->id) }}" class="btn btn-icon btn-warning">
+                                    <i class="fa fa-pencil"></i>
+                                </a>
+                                <!-- Tombol Delete -->
+                                <form action="{{ route('materies.destroy', $matery->id) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-icon btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus materi ini?');">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                            <div class="icon">
+                                @if (in_array($fileName, ['pdf']))
+                                    <i class="fa fa-file-pdf-o text-danger"></i>
+                                @elseif (in_array($fileName, ['doc', 'docx']))
+                                    <i class="fa fa-file-word-o text-primary"></i>
+                                @elseif (in_array($fileName, ['txt']))
+                                    <i class="fa fa-file-text text-warning"></i>
+                                @else
+                                    <i class="fa fa-file text-muted"></i>
+                                @endif
+                            </div>
+                            <div class="file-name">
+                                <p class="m-b-5 text-muted">{{ $matery->nama_mtr }}</p>
+                                <small>Size: {{ number_format($fileSize, 2) }} MB <span class="date text-muted">{{ $matery->created_at->format('M d, Y') }}</span></small>
+                            </div>
                         </div>
                     </div>
-                </div> 
+                </div>
             @endforeach
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        setTimeout(function() {
+            let alertElement = document.querySelector('.alert');
+            if (alertElement) {
+                alertElement.classList.remove('show');
+                alertElement.classList.add('fade');
+                setTimeout(() => alertElement.remove(), 600);
+            }
+        }, 5000); 
+    });
+
+    document.querySelectorAll('.delete-form').forEach(form => {
+        form.addEventListener('submit', function(event) {
+            if (!confirm('Apakah Anda yakin ingin menghapus data ini?')) {
+                event.preventDefault();
+            }
+        });
+    });
+</script>
 
 @endsection
