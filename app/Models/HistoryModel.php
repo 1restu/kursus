@@ -16,6 +16,6 @@ class History extends Model
         'id_mrd',
         'tanggal_mulai',
         'tanggal_selesai',
-        'hasil',
+        'status',
     ];
 }

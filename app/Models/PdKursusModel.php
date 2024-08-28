@@ -16,6 +16,7 @@ class PdKursusModel extends Model
     protected $fillable = [
         'id_krs',
         'id_mrd',
+        'biaya',
         'status',
         'tanggal_mulai',
         'tanggal_selesai'
@@ -27,11 +28,16 @@ class PdKursusModel extends Model
 
     public function Kursus()
     {
-        return $this->belongTo(KursusModel::class, 'id_krs');
+        return $this->belongsTo(KursusModel::class, 'id_krs');
     }
 
     public function Murid()
     {
-        return $this->belongTo(MuridModel::class, 'id_mrd');
+        return $this->belongsTo(MuridModel::class, 'id_mrd');
+    }
+
+    public function Biaya()
+    {
+        return $this->belongsTo(KursusModel::class);
     }
 }

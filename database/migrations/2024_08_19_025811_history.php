@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_mrd');
             $table->date('tanggal_mulai');
             $table->date('tanggal_selesai');
-            $table->string('hasil');
+            $table->string('status');
             $table->timestamps();
         });
     }

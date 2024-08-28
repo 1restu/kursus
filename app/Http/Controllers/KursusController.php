@@ -57,7 +57,7 @@ class KursusController extends Controller
             'biaya_krs.min' => 'Biaya kursus tidak boleh kurang dari 0.',
             'durasi.required' => 'Durasi kursus wajib diisi.',
             'durasi.integer' => 'Durasi kursus harus berupa bilangan bulat.',
-            'durasi.min' => 'Durasi kursus minimal adalah 1 bulan.'
+            'durasi.min' => 'Durasi kursus tidak boleh dibawah 0.'
         ]);
 
         if($request->hasFile('gambar')){
@@ -132,7 +132,7 @@ class KursusController extends Controller
             'biaya_krs.min' => 'Biaya kursus tidak boleh kurang dari 0.',
             'durasi.required' => 'Durasi kursus wajib diisi.',
             'durasi.integer' => 'Durasi kursus harus berupa bilangan bulat.',
-            'durasi.min' => 'Durasi kursus minimal adalah 1 bulan.'
+            'durasi.min' => 'Durasi kursus tidak boleh dibawah 0.'
         ]);
 
         if($request->hasFile('gambar')){

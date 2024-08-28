@@ -31,12 +31,13 @@ class MuridController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama' => 'required|regex:/^[a-zA-Z\s]+$/',
+            'nama' => 'required|regex:/^[a-zA-Z\s]+$/|unique:murid,nama',
             'no_tlp' => 'required|unique:murid,no_tlp|regex:/^[0-9]+$/',
             'alamat' => 'required'
         ], [
             'nama.required' => 'Nama murid harus diisi.',
             'nama.regex' => 'Nama murid tidak boleh memiliki angka.',
+            'nama.unique' => 'Nama murid sudah ada, silahkan masukkan nama yang berbeda',
             'no_tlp.required' => 'Nomor telepon harus diisi.',
             'no_tlp.unique' => 'Nomor telepon ini sudah ada, silahkan masukkan nomor telepon yang berbeda.',
             'no_tlp.regex' => 'Nomor telepon hanya boleh berisi angka.',
