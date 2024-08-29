@@ -134,6 +134,9 @@ table.table td i {
 } 
 </style>
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+{{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> --}}
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 <div class="container">
     <div class="col-lg-8 border p-3 main-section bg-white">
         <div class="row hedding m-0 pl-3 pt-0 pb-3">
@@ -163,7 +166,7 @@ table.table td i {
                             <hr class="m-0 pt-2 mt-2">
                         </div>
                         <div class="col-lg-12 pt-2">
-                            <p class="tag-section"><strong>Durasi : {{ $course->durasi }} Hari</strong>
+                            <p class="tag-section"><strong>Durasi : {{ $course->jam }} Jam/{{ $course->durasi }} Hari</strong>
                         </div>
                         <div class="col-lg-12 pt-2">
                             {{-- @foreach ($course->materi as $matery) --}}
@@ -204,6 +207,6 @@ table.table td i {
             </div>
         </div>
     </div>
-    @include('partials.regist')
+    @include('partials.regist',['course_id' => $course->id, 'regists' => $regists])
 </div>
 @endsection

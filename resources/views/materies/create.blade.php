@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Tambah Materi')
 @section('content')
-
 
 <div id="main-content" class="file_manager">
   @if (session('success'))
@@ -33,7 +33,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
+            <div class="card" style="box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);">
                 <div class="card-header">{{ __('Upload Materi Baru') }}</div>
 
                 <div class="card-body">
@@ -41,12 +41,12 @@
                         @csrf
 
                         <!-- Input Nama Materi -->
-                        <div class="form-group">
+                        <div class="form-group mb-2">
                             <label for="nama_materi">{{ __('Nama Materi') }}</label>
                             <input type="text" class="form-control" id="nama_materi" name="nama_mtr" placeholder="Masukkan nama materi" value="{{ old('nama_mtr') }}">
                         </div>
                         
-                        <div class="form-group">
+                        <div class="form-group mb-2">
                             <label for="kategori">Kategori</label>
                             <select name="id_ktg" id="kategori" class="form-control">
                                 <option value="">Pilih Kategori</option>
@@ -57,19 +57,20 @@
                       </div>
 
                         <!-- Input Deskripsi -->
-                        <div class="form-group">
+                        <div class="form-group mb-2">
                             <label for="deskripsi">{{ __('Deskripsi') }}</label>
-                            <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3" placeholder="Masukkan deskripsi materi" value="{{ old('deskripsi') }}"></textarea>
+                            <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3" placeholder="Masukkan deskripsi materi">{{ old('deskripsi') }}</textarea>
                         </div>
 
                         <!-- Input File Materi -->
-                        <div class="form-group">
-                            <label for="file_materi">{{ __('File Materi') }}</label>
-                            <input type="file" class="form-control-file" id="file_materi" name="file_mtr">
+                        <div class="form-group mb-2">
+                            <label for="formFile">{{ __('File Materi') }}</label>
+                            <br><small class="text-danger">{{ __('Upload file dalam bentuk PDF, DOC, DOCX dan TXT') }}</small>
+                            <br><input type="file" class="form-control" id="formFile" name="file_mtr">
                         </div>
 
                         <!-- Submit Button -->
-                        <button type="submit" class="btn btn-primary">{{ __('Upload Materi') }}</button>
+                        <button type="submit" class="btn btn-primary mt-2">{{ __('Upload Materi') }}</button>
                     </form>
                 </div>
             </div>

@@ -1,16 +1,17 @@
 @extends('layouts.app')
 
+@section('title', 'Halaman Materi')
 @section('content')
 
 <!-- Font Awesome (versi yang sama) -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 
 <!-- jQuery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <!-- Bootstrap 5 (yang sama) -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script> --}}
 
 <style>
     body {
@@ -64,7 +65,7 @@
     }
     .file_manager .file .file-name {
         padding: 10px;
-        border-top: 1px solid #f7f7f7;
+        border-top: 1px solid #ebe5e5;
     }
     .file_manager .file .file-name small .date {
         float: right;
@@ -99,6 +100,7 @@
     .file_manager .file:hover .hover {
     display: block; /* Tampilkan elemen saat hover */
 }
+
 </style>
 
 @if (session('success'))
@@ -125,7 +127,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 @endif
-
+<h4 class="text-center font-weight-bold mb-4">MATERI</h4>
 <div id="main-content" class="file_manager">
     <div class="d-flex justify-content-end mb-3">
         <a href="{{ route('materies.create') }}" class="btn btn-primary mb-3">Tambah Materi</a>
@@ -134,8 +136,9 @@
         <div class="row clearfix">
             @foreach ($materies as $matery)
                 @php
+                    $filePath = public_path("assets/files/$matery->file_mtr");
+                    $fileSize = file_exists($filePath) ? filesize($filePath) / 1048576 : 0;
                     $fileName = pathinfo($matery->file_mtr, PATHINFO_EXTENSION);
-                    $fileSize = filesize(public_path("assets/files/$matery->file_mtr")) / 1048576;
                 @endphp
                 <div class="col-lg-3 col-md-4 col-sm-12">
                     <div class="card">
@@ -165,7 +168,7 @@
                                     </button>
                                 </form>
                             </div>
-                            <div class="icon">
+                            <div class="icon badge-secondary">
                                 @if (in_array($fileName, ['pdf']))
                                     <i class="fa fa-file-pdf-o text-danger"></i>
                                 @elseif (in_array($fileName, ['doc', 'docx']))
@@ -178,7 +181,8 @@
                             </div>
                             <div class="file-name">
                                 <p class="m-b-5 text-muted">{{ $matery->nama_mtr }}</p>
-                                <small>Size: {{ number_format($fileSize, 2) }} MB <span class="date text-muted">{{ $matery->created_at->format('M d, Y') }}</span></small>
+                                <small>Tipe File: {{ $fileName }}</small>
+                                <small>Ukuran: {{ number_format($fileSize, 2) }} MB <span class="date text-muted">{{ $matery->created_at->translatedFormat('d F Y') }}</span></small>
                             </div>
                         </div>
                     </div>

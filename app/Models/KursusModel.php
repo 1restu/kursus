@@ -19,7 +19,8 @@ class KursusModel extends Model
         'deskripsi',
         'id_mtr',
         'biaya_krs',
-        'durasi'
+        'durasi',
+        'jam'
     ];
 
     public function materi()

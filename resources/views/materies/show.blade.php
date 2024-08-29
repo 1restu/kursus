@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+@section('title', 'Detail Materi')
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -9,28 +10,30 @@
                     {{ __('Detail Materi') }}
                 </div>
                 <div class="card-body">
-                    <form>
-                        <div class="mb-3">
-                            <label for="nama" class="form-label">Nama</label>
-                            <input type="text" class="form-control" id="nama" readonly value="{{ $materies->nama_mtr }}">
-                        </div>
-                        <div class="mb-3">
-                            <label for="deskripsi" class="form-label">Deskripsi</label>
-                            <textarea class="form-control" id="deskripsi" rows="4" readonly>{{ $materies->deskripsi }}</textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label for="kategori" class="form-label">Kategori</label>
-                            <input type="text" class="form-control" id="kategori" readonly value="{{ $materies->kategori->nama_ktg }}">
-                        </div>
-                        <div class="mb-3">
-                            <label for="file" class="form-label">File</label>
-                            <input type="text" class="form-control" id="file" readonly value="{{ $materies->file_mtr }}">
-                        </div>
-                        <div class="mb-3">
-                            <label for="file" class="form-label">Ditambahkan</label>
-                            <input type="text" class="form-control" id="file" readonly value="{{ $materies->created_at->format('d M Y, H:i') }}">
-                        </div>                        
-                    </form>
+                    <div class="mb-3">
+                        <h5>Nama:</h5>
+                        <p class="form-control-plaintext">{{ $materies->nama_mtr }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <h5>Deskripsi:</h5>
+                        <p class="form-control-plaintext">{{ $materies->deskripsi }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <h5>Kategori:</h5>
+                        <p class="form-control-plaintext">{{ $materies->kategori->nama_ktg }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <h5>File:</h5>
+                        <p class="form-control-plaintext">{{ $materies->file_mtr }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <h5>Ditambahkan:</h5>
+                        <p class="form-control-plaintext">{{ $materies->created_at->translatedFormat('d F Y') }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <h5>Ukuran File:</h5>
+                        <p class="form-control-plaintext">{{ number_format(filesize(public_path("assets/files/{$materies->file_mtr}")) / 1048576, 2) }} MB</p>
+                    </div>                    
                     <div class="d-flex justify-content-between">
                         <a href="{{ url()->previous() }}" class="btn btn-secondary">Kembali</a>
                         <a href="/assets/files/{{ $materies->file_mtr }}" class="btn btn-primary" target="_blank">Download File</a>

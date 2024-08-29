@@ -11,11 +11,34 @@ class MuridController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $students = MuridModel::latest('created_at')->get();
+        $search = $request->input('search');
+        $query = MuridModel::query();
+
+        // Jika ada input pencarian
+        if ($search) {
+            $query->where(function($q) use ($search) {
+                $q->where('nama', 'like', "%{$search}%")
+                  ->orWhere('no_tlp', 'like', "%{$search}%")
+                  ->orWhere('alamat', 'like', "%{$search}%");
+            });
+
+            $students = $query->latest('created_at')->get();
+
+            if ($students->isEmpty()) {
+                return redirect()->route('students.index')
+                                 ->with('error', 'Tidak ada hasil ditemukan untuk pencarian: ' . $search)
+                                 ->withInput(); // Mengingatkan input pencarian sebelumnya
+            }
+        } else {
+            $students = MuridModel::latest('created_at')->get();
+        }
+
         return view('students.index', compact('students'));
     }
+
+
 
     /**
      * Show the form for creating a new resource.

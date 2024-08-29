@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('murid', function(Blueprint $table) {
             $table->id();
             $table->string('nama')->unique();
-            $table->Integer('no_tlp')->unique();
-            $table->string('alamat');
+            $table->string('no_tlp')->unique();
+            $table->text('alamat');
             $table->timestamps();
         });
     }

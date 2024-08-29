@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('murid', function (Blueprint $table) {
-            $table->string('no_tlp')->change();
-            $table->text('alamat')->change();
+        Schema::table('kursus', function (Blueprint $table) {
+            $table->integer('jam');
         });
     }
 
@@ -22,9 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('murid', function (Blueprint $table) {
-            $table->Integer('no_tlp')->unique();
-            $table->string('alamat');
+        Schema::table('kursus', function (Blueprint $table) {
+            $table->dropColumn('jam');
         });
     }
 };

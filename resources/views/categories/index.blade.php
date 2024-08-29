@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Daftar Produk')
+@section('title', 'Daftar Kategori')
 
 @section('content')
 <h3>Halaman Kategori</h3>
@@ -31,9 +31,17 @@
     </div>
 @endif
 
-<div class="d-flex justify-content-end mb-3">
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambahproduk">Tambah Katgori Baru</button>
+<div class="d-flex justify-content-between mb-3">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambahproduk">Tambah Kategori Baru</button>
+    <form action="{{ route('categories.index') }}" method="GET" class="d-flex">
+        <input type="text" name="search" class="form-control me-2" placeholder="Cari kategori..." value="{{ request()->get('search') }}">
+        <button type="submit" class="btn btn-secondary">Cari</button>
+    </form>
 </div>
+
+{{-- <div class="d-flex justify-content-end mb-3">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambahproduk">Tambah Katgori Baru</button>
+</div> --}}
 
 <!-- Modal Tambah Produk -->
 <div class="modal fade" id="tambahproduk" tabindex="-1" aria-labelledby="tambahprodukLabel" aria-hidden="true">
