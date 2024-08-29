@@ -34,9 +34,9 @@
     $jumlah = count($cours);
     @endphp --}}
     @foreach($courses as $cours)
-    <div class="card mr-2 ml-2 mb-4" style="width: 16rem;">
+    <div class="card mr-2 mx-2 mb-4" style="width: 16rem;">
         <img src="{{ asset('assets/images/' . $cours->gambar) }}" class="card-img-top" alt="...">
-        <div class="card-body bg-light">
+        <div class="card-body bg-light mb-2">
             <h5 class="card-title">{{ $cours->nama_krs }}</h5>
             <p class="card-text">{{ 'Rp ' . number_format($cours->biaya_krs, 0, ',', '.') }}</p>
             {{-- <p class="card-text">{{  }}</p> --}}

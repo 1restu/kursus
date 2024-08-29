@@ -31,7 +31,7 @@
   <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
+            <div class="card" style="box-shadow: 2px rgba(0, 0, 0, 0.1);">
                 <div class="card-header">{{ __('Kursus Baru') }}</div>
 
                 <div class="card-body">

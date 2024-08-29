@@ -14,10 +14,17 @@ class KtgMateriController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        $kategori = KtgMateriModel::latest('created_at')->get();
-        return view('categories.index', compact('kategori'));
+{
+    $query = KtgMateriModel::latest('created_at');
+
+    if ($search = request()->get('search')) {
+        $query->where('nama_ktg', 'like', "%{$search}%");
     }
+
+    $kategori = $query->get();
+    return view('categories.index', compact('kategori'));
+}
+
 
     /**
      * Show the form for creating a new resource.

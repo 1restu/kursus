@@ -36,8 +36,4 @@ class PdKursusModel extends Model
         return $this->belongsTo(MuridModel::class, 'id_mrd');
     }
 
-    public function Biaya()
-    {
-        return $this->belongsTo(KursusModel::class);
-    }
 }

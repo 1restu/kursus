@@ -31,8 +31,12 @@
     </div>
 @endif
 
-<div class="d-flex justify-content-end mb-3">
+<div class="d-flex justify-content-between mb-3">
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambahmurid">Tambah Murid Baru</button>
+    <form action="{{ route('students.index') }}" method="GET" class="d-flex">
+        <input type="text" name="search" class="form-control me-2" placeholder="Cari kategori..." value="{{ request()->get('search') }}">
+        <button type="submit" class="btn btn-secondary">Cari</button>
+    </form>
 </div>
 
 <!-- Modal Tambah Murid -->
@@ -80,12 +84,19 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($students as $student)
+            @forelse($students as $student)
+            <tr>
+                <td>{{ $loop->iteration }}</td>
+                <td>{{ $student->nama }}</td>
+                <td>{{ $student->no_tlp }}</td>
+                <td>{{ $student->alamat }}</td>
+                <!-- Tambahkan kolom lain sesuai kebutuhan -->
+            {{-- @foreach($students as $student)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $student->nama }}</td>
                     <td>{{ $student->no_tlp }}</td>
-                    <td>{{ $student->alamat }}</td>
+                    <td>{{ $student->alamat }}</td> --}}
                     <td class="text-center">
                         <button class="btn btn-warning btn-sm me-2" data-bs-toggle="modal" data-bs-target="#modalMuridEdit{{ $student->id }}">Edit</button>
 
@@ -131,7 +142,11 @@
                         </form> 
                     </td>
                 </tr>
-            @endforeach
+                @empty
+                <tr>
+                    <td colspan="4"><center class="bg-danger text-white">Data tidak ditemukan</center></td>
+                </tr>
+                @endforelse
         </tbody>
     </table>
 </div>

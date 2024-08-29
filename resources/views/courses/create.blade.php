@@ -31,7 +31,7 @@
   <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
+            <div class="card" style="box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);">
                 <div class="card-header">{{ __('Kursus Baru') }}</div>
 
                 <div class="card-body">
@@ -61,7 +61,8 @@
 
                         <div class="form-group">
                             <label for="gambar">{{ __('Gambar') }}</label>
-                            <input type="file" class="form-control-file" id="gambar" name="gambar">
+                            <br><small class="text-danger">{{ __('Upload gambar dalam bentuk JPEG, PNG, JPG') }}</small>
+                            <br><input type="file" class="form-control" id="gambar" name="gambar">
                         </div>
 
                         <div class="form-group">
@@ -71,11 +72,18 @@
 
                         <div class="form-group">
                             <label for="durasi">{{ __('Durasi Kursus') }}</label>
-                            <input type="number" class="form-control" id="durasi" name="durasi" placeholder="Masukkan durasi kursus" value="{{ old('durasi') }}">
+                            <br><small class="text-danger">{{ __('Durasi dalam hitungan hari') }}</small>
+                            <br><input type="number" class="form-control" id="durasi" name="durasi" placeholder="Masukkan durasi kursus" value="{{ old('durasi') }}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="jam">{{ __('Durasi per Hari') }}</label>
+                            <br><small class="text-danger">{{ __('Durasi jam pelajaran dalam sehari') }}</small>
+                            <br><input type="number" class="form-control" id="jam" name="jam" placeholder="Masukkan durasi perhari" value="{{ old('jam') }}">
                         </div>
 
                         <!-- Submit Button -->
-                        <button type="submit" class="btn btn-primary">{{ __('Tambah') }}</button>
+                        <button type="submit" class="btn btn-primary mt-2">{{ __('Tambah') }}</button>
                     </form>
                 </div>
             </div>

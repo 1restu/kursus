@@ -42,17 +42,17 @@
                         @method('PUT')
 
                         <!-- Input Nama Materi -->
-                        <div class="form-group">
+                        <div class="form-group mb-2">
                             <label for="nama_kursus">{{ __('Nama Kursus') }}</label>
                             <input type="text" class="form-control" id="nama_kursus" name="nama_krs" placeholder="Masukkan nama kursus" value="{{ old('nama_krs', $course->nama_krs ) }}">
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group mb-2">
                             <label for="deskripsi">{{ __('Deskripsi') }}</label>
-                            <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3" placeholder="Masukkan deskripsi kursus" value="{{ old('deskripsi', $course->deskripsi) }}"></textarea>
+                            <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3" placeholder="Masukkan deskripsi kursus">{{ old('deskripsi', $course->deskripsi) }}</textarea>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group mb-2">
                             <label for="kategori">Materi</label>
                             <select name="id_mtr" id="kategori" class="form-control">
                                 <option value="">Pilih Materi</option>
@@ -62,19 +62,31 @@
                             </select>
                         </div>
 
-                        <div class="form-group">
-                            <label for="gambar">{{ __('Gambar') }}</label>
-                            <input type="file" class="form-control-file" id="gambar" name="gambar">
+                        <div class="form-group mb-2">
+                            <label for="gambar" class="mt-4">{{ __('Gambar') }}</label>
+                            <br>
+                            <a href="{{ asset('assets/images/' . $course->gambar) }}" target="_blank">
+                                <img src="{{ asset('assets/images/' . $course->gambar) }}" alt="{{ $course->gambar }}" style="max-width: 200px; max-height: 200px;">
+                            </a>
+                            <br><small class="text-danger">{{ __('Upload gambar dalam bentuk JPEG, PNG, JPG') }}</small>
+                            <br><input type="file" class="form-control" id="gambar" name="gambar">
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group mb-2">
                             <label for="biaya">{{ __('Biaya Kursus') }}</label>
                             <input type="number" class="form-control" id="biaya" name="biaya_krs" placeholder="Masukkan biaya kursus" value="{{ old('biaya_krs', $course->biaya_krs) }}">
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group mb-2">
                             <label for="durasi">{{ __('Durasi Kursus') }}</label>
-                            <input type="number" class="form-control" id="durasi" name="durasi" placeholder="Masukkan durasi kursus" value="{{ old('durasi', $course->durasi) }}">
+                            <br><small class="text-danger">{{ __('Durasi dalam hitungan hari') }}</small>
+                            <br><input type="number" class="form-control" id="durasi" name="durasi" placeholder="Masukkan durasi kursus" value="{{ old('durasi', $course->durasi) }}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="jam">{{ __('Durasi per Hari') }}</label>
+                            <br><small class="text-danger">{{ __('Durasi jam pelajaran dalam sehari') }}</small>
+                            <br><input type="number" class="form-control" id="jam" name="jam" placeholder="Masukkan durasi perhari" value="{{ old('jam') }}">
                         </div>
 
                         <!-- Submit Button -->

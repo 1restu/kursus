@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\History;
+use App\Models\HistoryModel;
+use App\Models\KursusModel;
+use App\Models\MuridModel;
 use Illuminate\Http\Request;
 
 class HistoryController extends Controller
@@ -12,9 +15,10 @@ class HistoryController extends Controller
      */
     public function index()
     {
-        $histories = History::latest('created_at')->get();
-        // return view('histories.index', compact('histories'));
-        return view('histories.example', compact('histories'));
+        $histories = HistoryModel::with('kursus', 'murid')->latest('created_at')->get();
+    
+        return view('histories.index', compact('histories'));
+        // return view('histories.example', compact('histories'));
     }
 
     /**
