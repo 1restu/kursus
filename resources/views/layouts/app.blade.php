@@ -11,8 +11,9 @@
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://unpkg.com/feather-icons"></script>
 
     <!-- Scripts -->
@@ -26,7 +27,7 @@
             padding-top: 56px;
             height: 100vh; /* Menutupi seluruh tinggi layar */
         }
-
+    
         #sidebar-wrapper {
             width: 250px;
             background-color: #343a40; /* Warna sidebar yang lebih gelap dan modern */
@@ -40,20 +41,20 @@
             flex-direction: column; /* Mengatur elemen di dalamnya secara vertikal */
             height: 100vh; /* Menutupi seluruh tinggi layar */
         }
-
+    
         #page-content-wrapper {
             width: calc(100% - 250px);
             padding: 10px;
             margin-left: 250px;
             flex: 1; /* Isi sisa ruang yang tersedia */
         }
-
+    
         @media (min-width: 768px) {
             #page-content-wrapper {
                 padding: 20px;
             }
         }
-
+    
         /* Gaya untuk item sidebar */
         .list-group-item {
             display: flex;
@@ -65,18 +66,18 @@
             border-radius: 8px; /* Rounded corners */
             color: #000000; /* Warna teks putih */
         }
-
+    
         .list-group-item span[data-feather] {
             margin-right: 10px;
             display: inline-block;
             vertical-align: middle;
         }
-
+    
         .list-group-item:hover {
             background-color: rgba(13, 110, 253, 0.2);
             transform: translateX(5px); /* Efek kecil saat hover */
         }
-
+    
         /* Gaya untuk link yang aktif */
         .list-group-item.active {
             background-color: #0d6efd;
@@ -86,17 +87,15 @@
             padding-right: 15px;
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Shadow untuk link aktif */
         }
-
+    
         main.py-4 {
             margin-top: 2px;
         }
-
+    
         .navbar-brand {
             margin-left: 20px;
         }
-    </style>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
-
+    </style> 
 </head>
 <body>
     <div id="wrapper">

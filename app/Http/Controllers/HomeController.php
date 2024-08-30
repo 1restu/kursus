@@ -2,7 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\HistoryModel;
+use App\Models\KtgMateriModel;
+use App\Models\KursusModel;
+use App\Models\MateriModel;
+use App\Models\MuridModel;
+use App\Models\PdKursusModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class HomeController extends Controller
 {
@@ -23,6 +30,17 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $studentCount = MuridModel::count();
+        $categoryCount = KtgMateriModel::count();
+        $courseCount = KursusModel::count();
+        $materyCount = MateriModel::count();
+        $regists = PdKursusModel::orderBy('created_at', 'desc')->take(5)->get();
+        $activeCourses = PdKursusModel::where('tanggal_mulai', '<=', Carbon::now())
+                                    ->where('tanggal_selesai', '>=', Carbon::now())
+                                    ->count();
+        $revenue = PdKursusModel::where('status', 'lunas')
+                                    ->sum('biaya');
+        return view('home', 
+        compact('studentCount', 'categoryCount', 'courseCount', 'materyCount', 'regists', 'activeCourses', 'revenue'));
     }
 }
