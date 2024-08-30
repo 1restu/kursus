@@ -13,13 +13,31 @@ class HistoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
+    public function index(Request $request)
+{
+    $search = $request->input('search');
+    $query = HistoryModel::query();
+
+    if ($search) {
+        $query->whereHas('murid', function($q) use ($search) {
+            $q->where('nama', 'like', "%{$search}%");
+        })->orWhereHas('kursus', function($q) use ($search) {
+            $q->where('nama_krs', 'like', "%{$search}%");
+        });
+
+        $histories = $query->latest('created_at')->get();
+
+        if ($histories->isEmpty()) {
+            return redirect()->route('histories.index')
+                             ->with('error', 'Tidak ada hasil ditemukan untuk pencarian: ' . $search)
+                             ->withInput();
+        }
+    } else {
         $histories = HistoryModel::with('kursus', 'murid')->latest('created_at')->get();
-    
-        return view('histories.index', compact('histories'));
-        // return view('histories.example', compact('histories'));
     }
+
+    return view('histories.index', compact('histories'));
+}
 
     /**
      * Show the form for creating a new resource.

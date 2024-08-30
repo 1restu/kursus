@@ -86,7 +86,7 @@
                         <div class="form-group">
                             <label for="jam">{{ __('Durasi per Hari') }}</label>
                             <br><small class="text-danger">{{ __('Durasi jam pelajaran dalam sehari') }}</small>
-                            <br><input type="number" class="form-control" id="jam" name="jam" placeholder="Masukkan durasi perhari" value="{{ old('jam') }}">
+                            <br><input type="number" class="form-control" id="jam" name="jam" placeholder="Masukkan durasi perhari" value="{{ old('jam', $course->jam) }}">
                         </div>
 
                         <!-- Submit Button -->

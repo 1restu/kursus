@@ -94,12 +94,13 @@ class KursusController extends Controller
                     'deskripsi' => $request->deskripsi,
                     'id_mtr' => $request->id_mtr,
                     'biaya_krs' => $request->biaya_krs,
-                    'durasi' => $request->durasi
+                    'durasi' => $request->durasi,
+                    'jam' => $request->jam
                 ]);
 
-                return redirect('/courses')->with('succes', 'Kursus baru berhasil ditambahkan');
+                return redirect('/courses')->with('success', 'Kursus baru berhasil ditambahkan');
             } catch(\Exception $e) {
-                return redirect('/courses')->with('error', "$e");
+                return redirect('/courses')->with('error', 'Kursus baru gagal untuk di tambahkan');
             }
         }
     }
