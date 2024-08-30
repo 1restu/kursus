@@ -11,7 +11,7 @@ class MateriController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $search = $request->input('search');
         $query = MateriModel::query();

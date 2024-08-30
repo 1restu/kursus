@@ -34,7 +34,7 @@
 <div class="d-flex justify-content-between mb-3">
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambahmurid">Tambah Murid Baru</button>
     <form action="{{ route('students.index') }}" method="GET" class="d-flex">
-        <input type="text" name="search" class="form-control me-2" placeholder="Cari kategori..." value="{{ request()->get('search') }}">
+        <input type="text" name="search" class="form-control me-2" placeholder="Cari Murid..." value="{{ request()->get('search') }}">
         <button type="submit" class="btn btn-secondary">Cari</button>
     </form>
 </div>
