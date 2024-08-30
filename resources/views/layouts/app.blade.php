@@ -11,8 +11,9 @@
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://unpkg.com/feather-icons"></script>
 
     <!-- Scripts -->
@@ -26,7 +27,7 @@
     width: 100%;
     align-items: stretch;
     padding-top: 56px;
-    height: 100vh; /* Menutupi seluruh tinggi layar */
+    height: 100vh; 
 }
 
 #sidebar-wrapper {
@@ -39,15 +40,15 @@
     border: none;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     display: flex;
-    flex-direction: column; /* Mengatur elemen di dalamnya secara vertikal */
-    height: 100vh; /* Menutupi seluruh tinggi layar */
+    flex-direction: column;
+    height: 100vh;
 }
 
 #page-content-wrapper {
     width: calc(100% - 250px);
     padding: 10px;
     margin-left: 250px;
-    flex: 1; /* Isi sisa ruang yang tersedia */
+    flex: 1;
 }
 
 @media (min-width: 768px) {
@@ -57,13 +58,13 @@
 }
 
 /* Atur margin dan gaya tambahan sesuai kebutuhan Anda */
-main.py-4 {
+/* main.py-4 {
     margin-top: 2px;
-}
+} */
 
-.navbar-brand {
+/* .navbar-brand {
     margin-left: 20px;
-}
+} */
 
 .list-group-item.active {
     background-color: #0d6efd;
@@ -74,29 +75,25 @@ main.py-4 {
 }
 
 .list-group-item {
-    display: flex; /* Flexbox untuk mengatur ikon dan teks sejajar secara horizontal */
-    align-items: center; /* Pastikan ikon dan teks sejajar di tengah secara vertikal */
+    display: flex;
+    align-items: center;
     padding: 8px 15px;
     margin-bottom: 5px;
     border: none;
     transition: background-color 0.3s ease;
 }
-
-
 .list-group-item span[data-feather] {
-    margin-right: 10px; /* Tambahkan jarak yang diinginkan */
-    display: inline-block; /* Pastikan ikon dan teks berada dalam satu baris */
-    vertical-align: middle; /* Sejajarkan ikon secara vertikal dengan teks */
+    margin-right: 10px; 
+    display: inline-block; 
+    vertical-align: middle; 
 }
 
-.list-group-item:hover {
+/* .list-group-item:hover {
     background-color: rgba(13, 110, 253, 0.1);
     border-radius: 8px;
-}
+} */
 
     </style>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
-
 </head>
 <body>
     <div id="wrapper">

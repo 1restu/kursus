@@ -8,6 +8,7 @@ use App\Http\Controllers\KtgMateriController;
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HistoryController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KursusController;
 use App\Http\Controllers\MuridController;
 use App\Http\Controllers\PdKursusController;
@@ -16,11 +17,9 @@ use App\Http\Controlllers\Auth\RegisterController;
 Auth::routes();
 
 Route::middleware(['auth:admin'])->group(function () {
-    Route::get('/', function
-     () {
-        return view('home');
-    })->name('home');
-
+    // Route::get('/', function() {return view('home');
+    // })->name('home');
+    Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::resource('categories', KtgMateriController::class);
     Route::resource('materies', MateriController::class);
     Route::resource('histories', HistoryController::class);
