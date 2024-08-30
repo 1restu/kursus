@@ -163,27 +163,26 @@ class PdKursusController extends Controller
     public function destroy($id)
 {
     try {
-        $pdkursus = PdKursusModel::findOrFail($id);
+        $pdkursus = PdKursusModel::with('kursus', 'murid')->findOrFail($id);
 
         if ($pdkursus->status == 'lunas') {
-            // Jika status 'lunas', salin ke HistoryModel terlebih dahulu
             HistoryModel::create([
                 'id_krs' => $pdkursus->id_krs,
+                'nama_krs' => $pdkursus->kursus->nama_krs,
                 'id_mrd' => $pdkursus->id_mrd,
+                'nama' => $pdkursus->murid->nama,
                 'tanggal_mulai' => $pdkursus->tanggal_mulai,
                 'tanggal_selesai' => $pdkursus->tanggal_selesai,
                 'status' => 'selesai',
             ]);
         }
 
-        // Hapus data dari PdKursusModel
         $pdkursus->delete();
 
         return redirect()->route('courses.show', $pdkursus->id_krs)
                         ->with('success', 'Pendaftaran berhasil dihapus.');
 
     } catch (\Exception $e) {
-        // Tangani exception dan arahkan dengan pesan error
         return redirect()->route('courses.show', $id)
                         ->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
     }

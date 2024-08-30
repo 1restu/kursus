@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::create('history', function(Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_krs');
+            $table->string('nama_krs');
             $table->unsignedBigInteger('id_mrd');
+            $table->string('nama');
             $table->date('tanggal_mulai');
             $table->date('tanggal_selesai');
             $table->string('status');
