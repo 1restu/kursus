@@ -13,9 +13,26 @@ class KursusController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $courses = KursusModel::latest('created_at')->get();
+        $search = $request->input('search');
+        $query = KursusModel::query();
+
+        if ($search) {
+            $query->where(function($q) use ($search) {
+                $q->where('nama_krs', 'like', "%{$search}%");
+            });
+
+            $courses = $query->latest('created_at')->get();
+
+            if ($courses->isEmpty()) {
+                return redirect()->route('courses.index')
+                                 ->with('error', 'Tidak ada hasil ditemukan untuk pencarian: ' . $search)
+                                 ->withInput();
+            }
+        } else {
+            $courses = KursusModel::latest('created_at')->get();
+        }
         return view('courses.index', compact('courses'));
     }
 

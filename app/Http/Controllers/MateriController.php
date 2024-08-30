@@ -13,7 +13,25 @@ class MateriController extends Controller
      */
     public function index()
     {
-        $materies = MateriModel::with('kategori')->latest('created_at')->get();
+        $search = $request->input('search');
+        $query = MateriModel::query();
+
+        if ($search) {
+            $query->where(function($q) use ($search) {
+                $q->where('nama_mtr', 'like', "%{$search}%")
+                  ->orWhere('file_mtr', 'like', "%{$search}%");
+            });
+
+            $materies = $query->latest('created_at')->get();
+
+            if ($materies->isEmpty()) {
+                return redirect()->route('materies.index')
+                                 ->with('error', 'Tidak ada hasil ditemukan untuk pencarian: ' . $search)
+                                 ->withInput();
+            }
+        } else {
+            $materies = MateriModel::with('kategori')->latest('created_at')->get();
+        }
         return view('materies.index', compact('materies'));
     }
 

@@ -13,11 +13,31 @@ class PdKursusController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
+    public function index(Request $request)
+{
+    $search = $request->input('search');
+    $query = PdKursusModel::query();
+
+    if ($search) {
+        $query->whereHas('murid', function($q) use ($search) {
+            $q->where('nama', 'like', "%{$search}%");
+        })->orWhereHas('kursus', function($q) use ($search) {
+            $q->where('nama_krs', 'like', "%{$search}%");
+        });
+
+        $pdkursus = $query->latest('created_at')->get();
+
+        if ($pdkursus->isEmpty()) {
+            return redirect()->route('pd_kursus.index')
+                             ->with('error', 'Tidak ada hasil ditemukan untuk pencarian: ' . $search)
+                             ->withInput();
+        }
+    } else {
         $pdkursus = PdKursusModel::latest('tanggal_daftar')->get();
-        return view('pd_kursus.index', compact('pdkursus'));
     }
+
+    return view('pd_kursus.index', compact('pdkursus'));
+}
 
     /**
      * Show the form for creating a new resource.
