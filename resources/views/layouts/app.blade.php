@@ -27,7 +27,7 @@
             padding-top: 56px;
             height: 100vh; /* Menutupi seluruh tinggi layar */
         }
-    
+
         #sidebar-wrapper {
             width: 250px;
             background-color: #343a40; /* Warna sidebar yang lebih gelap dan modern */
@@ -41,20 +41,20 @@
             flex-direction: column; /* Mengatur elemen di dalamnya secara vertikal */
             height: 100vh; /* Menutupi seluruh tinggi layar */
         }
-    
+
         #page-content-wrapper {
             width: calc(100% - 250px);
             padding: 10px;
             margin-left: 250px;
             flex: 1; /* Isi sisa ruang yang tersedia */
         }
-    
+
         @media (min-width: 768px) {
             #page-content-wrapper {
                 padding: 20px;
             }
         }
-    
+
         /* Gaya untuk item sidebar */
         .list-group-item {
             display: flex;
@@ -66,18 +66,18 @@
             border-radius: 8px; /* Rounded corners */
             color: #000000; /* Warna teks putih */
         }
-    
+
         .list-group-item span[data-feather] {
             margin-right: 10px;
             display: inline-block;
             vertical-align: middle;
         }
-    
+
         .list-group-item:hover {
             background-color: rgba(13, 110, 253, 0.2);
             transform: translateX(5px); /* Efek kecil saat hover */
         }
-    
+
         /* Gaya untuk link yang aktif */
         .list-group-item.active {
             background-color: #0d6efd;
@@ -87,15 +87,17 @@
             padding-right: 15px;
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Shadow untuk link aktif */
         }
-    
+
         main.py-4 {
             margin-top: 2px;
         }
-    
+
         .navbar-brand {
             margin-left: 20px;
         }
-    </style> 
+    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+
 </head>
 <body>
     <div id="wrapper">
@@ -123,6 +125,7 @@
                 </a>                
             </div>
         </div>
+        
         @endauth
         <!-- Page content wrapper-->
         <div id="page-content-wrapper">
@@ -183,9 +186,12 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9z6Ovh/p8itNzMja" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script>
     <script>
-        feather.replace();
-    </script>
+        window.addEventListener('DOMContentLoaded', event => {
+            // Inisialisasi Feather Icons
+            feather.replace();
+        });
+    </script>    
 </body>
 </html>
