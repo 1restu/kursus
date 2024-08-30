@@ -18,82 +18,82 @@
     <!-- Scripts -->
     @vite(['resources/sass/app.scss'])
     <style>
-        /* Style yang sama seperti sebelumnya */
         /* Gaya untuk wrapper sidebar */
-/* Gaya untuk wrapper sidebar */
-#wrapper {
-    display: flex;
-    width: 100%;
-    align-items: stretch;
-    padding-top: 56px;
-    height: 100vh; /* Menutupi seluruh tinggi layar */
-}
+        #wrapper {
+            display: flex;
+            width: 100%;
+            align-items: stretch;
+            padding-top: 56px;
+            height: 100vh; /* Menutupi seluruh tinggi layar */
+        }
 
-#sidebar-wrapper {
-    width: 250px;
-    background-color: #f8f9fa;
-    padding-top: 10px;
-    z-index: 1030;
-    position: fixed;
-    left: 0;
-    border: none;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column; /* Mengatur elemen di dalamnya secara vertikal */
-    height: 100vh; /* Menutupi seluruh tinggi layar */
-}
+        #sidebar-wrapper {
+            width: 250px;
+            background-color: #343a40; /* Warna sidebar yang lebih gelap dan modern */
+            padding-top: 10px;
+            z-index: 1030;
+            position: fixed;
+            left: 0;
+            border: none;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2); /* Menambahkan shadow */
+            display: flex;
+            flex-direction: column; /* Mengatur elemen di dalamnya secara vertikal */
+            height: 100vh; /* Menutupi seluruh tinggi layar */
+        }
 
-#page-content-wrapper {
-    width: calc(100% - 250px);
-    padding: 10px;
-    margin-left: 250px;
-    flex: 1; /* Isi sisa ruang yang tersedia */
-}
+        #page-content-wrapper {
+            width: calc(100% - 250px);
+            padding: 10px;
+            margin-left: 250px;
+            flex: 1; /* Isi sisa ruang yang tersedia */
+        }
 
-@media (min-width: 768px) {
-    #page-content-wrapper {
-        padding: 20px;
-    }
-}
+        @media (min-width: 768px) {
+            #page-content-wrapper {
+                padding: 20px;
+            }
+        }
 
-/* Atur margin dan gaya tambahan sesuai kebutuhan Anda */
-main.py-4 {
-    margin-top: 2px;
-}
+        /* Gaya untuk item sidebar */
+        .list-group-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 15px;
+            margin-bottom: 5px;
+            border: none;
+            transition: background-color 0.3s ease, transform 0.2s ease; /* Transisi smooth */
+            border-radius: 8px; /* Rounded corners */
+            color: #000000; /* Warna teks putih */
+        }
 
-.navbar-brand {
-    margin-left: 20px;
-}
+        .list-group-item span[data-feather] {
+            margin-right: 10px;
+            display: inline-block;
+            vertical-align: middle;
+        }
 
-.list-group-item.active {
-    background-color: #0d6efd;
-    color: white;
-    border-radius: 8px;
-    border: none;
-    padding-right: 15px;
-}
+        .list-group-item:hover {
+            background-color: rgba(13, 110, 253, 0.2);
+            transform: translateX(5px); /* Efek kecil saat hover */
+        }
 
-.list-group-item {
-    display: flex; /* Flexbox untuk mengatur ikon dan teks sejajar secara horizontal */
-    align-items: center; /* Pastikan ikon dan teks sejajar di tengah secara vertikal */
-    padding: 8px 15px;
-    margin-bottom: 5px;
-    border: none;
-    transition: background-color 0.3s ease;
-}
+        /* Gaya untuk link yang aktif */
+        .list-group-item.active {
+            background-color: #0d6efd;
+            color: white;
+            border-radius: 8px;
+            border: none;
+            padding-right: 15px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Shadow untuk link aktif */
+        }
 
+        main.py-4 {
+            margin-top: 2px;
+        }
 
-.list-group-item span[data-feather] {
-    margin-right: 10px; /* Tambahkan jarak yang diinginkan */
-    display: inline-block; /* Pastikan ikon dan teks berada dalam satu baris */
-    vertical-align: middle; /* Sejajarkan ikon secara vertikal dengan teks */
-}
-
-.list-group-item:hover {
-    background-color: rgba(13, 110, 253, 0.1);
-    border-radius: 8px;
-}
-
+        .navbar-brand {
+            margin-left: 20px;
+        }
     </style>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
 
@@ -124,7 +124,6 @@ main.py-4 {
                 </a>                
             </div>
         </div>
-        
         @endauth
         <!-- Page content wrapper-->
         <div id="page-content-wrapper">
@@ -185,12 +184,9 @@ main.py-4 {
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9z6Ovh/p8itNzMja" crossorigin="anonymous"></script>
     <script>
-        window.addEventListener('DOMContentLoaded', event => {
-            // Inisialisasi Feather Icons
-            feather.replace();
-        });
-    </script>    
+        feather.replace();
+    </script>
 </body>
 </html>
