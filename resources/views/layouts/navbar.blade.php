@@ -23,7 +23,7 @@
             <div class="navbar-nav ms-auto my-dropdown d-flex align-items-center">
                 <i class="fa-solid fa-user my-nav-icon"></i> <!-- Ikon user disamping kiri ul -->
                 <ul class="navbar-nav ms-auto">
-                    @guest
+                    @guest('admin')
                         @if (Route::has('login'))
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>

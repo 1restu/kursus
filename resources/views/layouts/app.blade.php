@@ -33,18 +33,30 @@
         }
         .navbar {
             margin-left: 250px; /* Sesuaikan dengan lebar sidebar */
-            z-index: 1020; /* Lebih rendah dari sidebar */
+            z-index: 1040; /* Lebih rendah dari sidebar */
             width: calc(100% - 250px); /* Lebar menyesuaikan */
+            position: fixed;
+            top: 0;
+            right: 0;
         }
         #bdSidebar {
-            z-index: 1030; /* Lebih tinggi dari z-index default header */
+            z-index: 1010; /* Lebih tinggi dari z-index default header */
             position: fixed; /* Buat sidebar tetap */
             top: 0;
             bottom: 0;
             width: 250px; /* Lebar sidebar */
+            background-color: #333; /* Warna latar belakang sidebar */
+            overflow-y: auto; /* Agar sidebar bisa di-scroll jika konten panjang */
         }
+        .dropdown-menu {
+            z-index: 1080; /* Tambahkan z-index ke dropdown untuk memastikan di atas elemen lain */
+            position: absolute;
+        }   
         .mynav {
             color: #fff;
+            list-style: none;
+            padding: 0;
+            margin: 0;
         }
         .mynav li a {
             color: #fff;
@@ -53,6 +65,7 @@
             display: block;
             border-radius: 5px;
             padding: 8px 5px;
+            transition: background 0.3s ease;
         }
         .mynav li a.active {
             background-color: rgba(255, 255, 255, 0.2); /* Latar belakang untuk link aktif */
@@ -82,11 +95,7 @@
             margin-left: 250px; /* Sesuaikan dengan lebar sidebar */
             padding: 20px;
             width: calc(100% - 250px); /* Sesuaikan lebar konten */
-            overflow: auto; /* Mengatasi konten yang tertimpa */
-        }
-        .navbar, .content-area {
-            margin-left: 250px; /* Sesuaikan dengan lebar sidebar */
-            width: calc(100% - 250px); /* Atur ulang lebar konten */
+            overflow-y: auto; /* Mengatasi konten yang tertimpa */
             position: relative;
             z-index: 1020; /* Lebih rendah dari sidebar */
         }
