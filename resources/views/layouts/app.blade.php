@@ -173,9 +173,6 @@
                     </nav>
                     <hr>
                     <div class="row">
-                        {{-- <div class="col">
-                            <p>Konten halaman di sini</p>
-                        </div> --}}
                     </div>
                     @yield('content')
                 </main>
