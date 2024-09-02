@@ -23,26 +23,26 @@ class HistoryModel extends Model
         'status',
     ];
 
-    // public function kursus()
-    // {
-    //     return $this->belongsTo(KursusModel::class, 'id_krs');
-    // }
+    public function kursus()
+    {
+        return $this->belongsTo(KursusModel::class, 'id_krs');
+    }
 
-    // // Relasi ke MuridModel
-    // public function murid()
-    // {
-    //     return $this->belongsTo(MuridModel::class, 'id');
-    // }
+    // Relasi ke MuridModel
+    public function murid()
+    {
+        return $this->belongsTo(MuridModel::class, 'id');
+    }
 
-    // // Akses data nama kursus
-    // public function getNamaKursusAttribute()
-    // {
-    //     return $this->kursus ? $this->kursus->nama_krs : 'Tidak ditemukan';
-    // }
+    // Akses data nama kursus
+    public function getNamaKursusAttribute()
+    {
+        return $this->kursus ? $this->kursus->nama_krs : 'Tidak ditemukan';
+    }
 
-    // // Akses data nama murid
-    // public function getNamaMuridAttribute()
-    // {
-    //     return $this->murid ? $this->murid->nama : 'Tidak ditemukan';
-    // }
+    // Akses data nama murid
+    public function getNamaMuridAttribute()
+    {
+        return $this->murid ? $this->murid->nama : 'Tidak ditemukan';
+    }
 }

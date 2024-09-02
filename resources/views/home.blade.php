@@ -20,9 +20,9 @@
     </div>
 
     <div class="col-md-3">
-        <div class="card">
+        <div class="card pb-2">
             <div class="card-body d-flex align-items-center">
-                <i class="fas fa-hourglass-half fa-2x mr-3"></i>
+                <i class="fas fa-hourglass-half fa-2x mr-4"></i>
                 <div>
                     <h5 class="card-title">Kursus Aktif</h5>
                     <h3 class="card-text">{{ $activeCourses }}</h3>
@@ -34,7 +34,7 @@
     <div class="col-md-3">
         <div class="card">
             <div class="card-body d-flex align-items-center">
-                <i class="fas fa-hourglass-half fa-2x mr-3"></i>
+                <i class="fas fa-hourglass-half fa-2x mr-2"></i>
                 <div>
                     <h5 class="card-title">Pendapatan</h5>
                     <h3 class="card-text">{{ $revenue }}</h3>
