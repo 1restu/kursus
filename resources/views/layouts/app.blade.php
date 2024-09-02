@@ -9,14 +9,15 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    <!-- Bootstrap & CSS Dependencies -->
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.5/css/dataTables.bootstrap5.css">
-    <link rel="stylesheet" href="
-    https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"
-        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/iconly@1.0.0-beta2/css/iconly.css">
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     {{-- @vite(['resources/sass/app.scss']) --}}
@@ -83,10 +84,6 @@
             width: calc(100% - 250px); /* Sesuaikan lebar konten */
             overflow: auto; /* Mengatasi konten yang tertimpa */
         }
-        /* .d-flex i.fa-book {
-            font-size: 24px;
-            margin-right: 10px; /* Ukuran font lebih besar */
-        } */
         .navbar, .content-area {
             margin-left: 250px; /* Sesuaikan dengan lebar sidebar */
             width: calc(100% - 250px); /* Atur ulang lebar konten */
@@ -100,14 +97,12 @@
             display: flex;
             align-items: center; /* Sejajarkan konten secara vertikal */
         }
-
         .my-nav-icon {
             font-size: 18px;
             color: #555;
             margin-right: 5px; /* Jarak antara ikon dan ul */
             margin-left: 5px; /* Jarak antara ikon dan ul */
         }
-
         .my-dropdown .dropdown-menu {
             border-radius: 15px; /* Rounded rectangle untuk menu dropdown */
             border: 1px solid #555;
@@ -129,7 +124,6 @@
             width: 100%;
             padding: 0;
         }
-    
         .login-page main {
             display: flex;
             justify-content: center;
@@ -166,20 +160,24 @@
                             </li>
                             <li class="breadcrumb-item">Konten Pembelajaran</li>
                             <li class="breadcrumb-item">Halaman Berikutnya</li>
-                        </ol>
+                        </ol> --}}
                     </nav>
                     <hr>
                     <div class="row">
                         <div class="col">
                             <p>Konten halaman di sini</p>
                         </div>
-                    </div> --}}
+                    </div>
                     @yield('content')
                 </main>
             </div>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6IfUX/WbWhiCZhOV+kwtVsJjvsb+8HYpK1gFk1O2OsPSpGgnmlKq" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/2.1.5/js/jquery.dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.1.5/js/dataTables.bootstrap5.js"></script>
+    @stack('scripts')
 </body>
 </html>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>

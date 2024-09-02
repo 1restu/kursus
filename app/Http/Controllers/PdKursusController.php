@@ -68,6 +68,22 @@ class PdKursusController extends Controller
     $tanggal_mulai = \Carbon\Carbon::parse($request->tanggal_mulai);
     $tanggal_selesai = $tanggal_mulai->copy()->addDays($kursus->durasi);
 
+    $existingRegistration = PdKursusModel::where('id_krs', $request->id_krs)
+        ->where('id_mrd', $request->id_mrd)
+        ->where(function ($query) use ($tanggal_mulai, $tanggal_selesai) {
+            $query->whereBetween('tanggal_mulai', [$tanggal_mulai, $tanggal_selesai])
+                ->orWhereBetween('tanggal_selesai', [$tanggal_mulai, $tanggal_selesai])
+                ->orWhere(function ($query) use ($tanggal_mulai, $tanggal_selesai) {
+                    $query->where('tanggal_mulai', '<=', $tanggal_mulai)
+                        ->where('tanggal_selesai', '>=', $tanggal_selesai);
+                });
+        })
+        ->first();
+
+    if ($existingRegistration) {
+        return redirect()->back()->withErrors(['error' => 'Murid sudah terdaftar di kursus ini dalam periode yang sama.'])->withInput();
+    }
+
     try {
         PdKursusModel::create([
             'id_krs' => $kursus->id,
@@ -103,37 +119,55 @@ class PdKursusController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, $id)
-    {
-        $pdkursus = PdKursusModel::findOrFail($id);
+{
+    $pdkursus = PdKursusModel::findOrFail($id);
 
-        if ($pdkursus->status == 'lunas') {
-            return redirect()->route('pd_kursus.index')->with('error', 'Pendaftaran tidak bisa di edit setelah status lunas.');
-        }
+    if ($pdkursus->status == 'lunas') {
+        return redirect()->route('pd_kursus.index')->with('error', 'Pendaftaran tidak bisa di edit setelah status lunas.');
+    }
 
-        $request->validate([
-            'id_krs' => 'required|exists:kursus,id',
-            'id_mrd' => 'required|exists:murid,id',
-            'tanggal_mulai' => 'required|date|after_or_equal:today'
+    $request->validate([
+        'id_krs' => 'required|exists:kursus,id',
+        'id_mrd' => 'required|exists:murid,id',
+        'tanggal_mulai' => 'required|date|after_or_equal:today'
+    ]);
+
+    $kursus = KursusModel::find($request->id_krs);
+    $tanggal_mulai = \Carbon\Carbon::parse($request->tanggal_mulai);
+    $tanggal_selesai = $tanggal_mulai->copy()->addDays($kursus->durasi);
+
+    // Cek apakah murid sudah terdaftar di kursus ini dalam periode yang sama
+    $existingRegistration = PdKursusModel::where('id_krs', $request->id_krs)
+        ->where('id_mrd', $request->id_mrd)
+        ->where('id', '!=', $id) // Mengecualikan pendaftaran saat ini
+        ->where(function ($query) use ($tanggal_mulai, $tanggal_selesai) {
+            $query->whereBetween('tanggal_mulai', [$tanggal_mulai, $tanggal_selesai])
+                ->orWhereBetween('tanggal_selesai', [$tanggal_mulai, $tanggal_selesai])
+                ->orWhere(function ($query) use ($tanggal_mulai, $tanggal_selesai) {
+                    $query->where('tanggal_mulai', '<=', $tanggal_mulai)
+                        ->where('tanggal_selesai', '>=', $tanggal_selesai);
+                });
+        })
+        ->first();
+
+    if ($existingRegistration) {
+        return redirect()->back()->withErrors(['error' => 'Murid sudah terdaftar di kursus ini dalam periode yang sama.'])->withInput();
+    }
+
+    try {
+        $pdkursus->update([
+            'id_krs' => $kursus->id,
+            'id_mrd' => $request->id_mrd,
+            'biaya' => $kursus->biaya_krs,
+            'tanggal_mulai' => $tanggal_mulai,
+            'tanggal_selesai' => $tanggal_selesai
         ]);
 
-        $kursus = KursusModel::find($request->id_krs);
-        $tanggal_mulai = \Carbon\Carbon::parse($request->tanggal_mulai);
-        $tanggal_selesai = $tanggal_mulai->copy()->addDays($kursus->durasi);
-
-        try {
-            $pdkursus->update([
-                'id_krs' => $kursus->id,
-                'id_mrd' => $request->id_mrd,
-                'biaya' => $kursus->biaya_krs,
-                'tanggal_mulai' => $tanggal_mulai,
-                'tanggal_selesai' => $tanggal_selesai
-            ]);
-
-            return redirect()->route('pd_kursus.index')->with('success', 'Pendaftaran berhasil diperbarui.');
-        } catch (\Exception $e) {
-            return redirect()->route('pd_kursus.edit', $id)->with('error', 'Gagal memperbarui pendaftaran.');
-        }
+        return redirect()->route('pd_kursus.index')->with('success', 'Pendaftaran berhasil diperbarui.');
+    } catch (\Exception $e) {
+        return redirect()->route('pd_kursus.edit', $id)->with('error', 'Gagal memperbarui pendaftaran.');
     }
+}
 
     /**
      * Confirm the payment of the specified resource.
