@@ -173,9 +173,6 @@
                     </nav>
                     <hr>
                     <div class="row">
-                        <div class="col">
-                            <p></p>
-                        </div>
                     </div>
                     @yield('content')
                 </main>

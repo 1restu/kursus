@@ -38,9 +38,13 @@ class HomeController extends Controller
         $activeCourses = PdKursusModel::where('tanggal_mulai', '<=', Carbon::now())
                                     ->where('tanggal_selesai', '>=', Carbon::now())
                                     ->count();
+        $courseList = KursusModel::withCount('pendaftar')
+                                    ->orderBy('created_at', 'desc')
+                                    ->take(5)
+                                    ->get();
         $revenue = PdKursusModel::where('status', 'lunas')
                                     ->sum('biaya');
         return view('home', 
-        compact('studentCount', 'categoryCount', 'courseCount', 'materyCount', 'regists', 'activeCourses', 'revenue'));
+        compact('studentCount', 'categoryCount', 'courseCount', 'materyCount', 'regists', 'activeCourses', 'revenue', 'courseList'));
     }
 }

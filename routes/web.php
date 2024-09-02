@@ -30,4 +30,7 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::get('/example', function () {
         return view('materies.example');
     });
+    Route::get('/homez', function () {
+        return view('homez');
+    });
 });
