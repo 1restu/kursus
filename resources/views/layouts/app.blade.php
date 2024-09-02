@@ -164,9 +164,9 @@
                     </nav>
                     <hr>
                     <div class="row">
-                        <div class="col">
+                        {{-- <div class="col">
                             <p>Konten halaman di sini</p>
-                        </div>
+                        </div> --}}
                     </div>
                     @yield('content')
                 </main>

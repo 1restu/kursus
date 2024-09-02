@@ -14,10 +14,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script> --}}
 
 <style>
-    body {
-        background-color: #f4f7f6;
-        margin-top: 20px;
-    }
     .file_manager .file a:hover .hover,
     .file_manager .file .file-name small {
         display: block;

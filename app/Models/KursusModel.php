@@ -32,4 +32,10 @@ class KursusModel extends Model
     {
         return $this->hasMany(PdKursusModel::class, 'id_krs');
     }
+
+    public function pendaftar()
+    {
+        return $this->hasMany(PdKursusModel::class, 'id_krs', 'id');
+    }
+
 }
