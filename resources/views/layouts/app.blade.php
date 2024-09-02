@@ -3,195 +3,183 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
     <title>@yield('title', 'Kursus Online')</title>
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.5/css/dataTables.bootstrap5.css">
+    <link rel="stylesheet" href="
+    https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://unpkg.com/feather-icons"></script>
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/iconly@1.0.0-beta2/css/iconly.css">
     <!-- Scripts -->
-    @vite(['resources/sass/app.scss'])
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    {{-- @vite(['resources/sass/app.scss']) --}}
     <style>
-        /* Gaya untuk wrapper sidebar */
-        #wrapper {
-            display: flex;
+        html, body {
+            height: 100%;
+            font-family: 'Ubuntu', sans-serif;
+            margin: 0;
+        }
+        .gfg {
+            height: 50px;
+            width: 50px;
+        }
+        .navbar {
+            margin-left: 250px; /* Sesuaikan dengan lebar sidebar */
+            z-index: 1020; /* Lebih rendah dari sidebar */
+            width: calc(100% - 250px); /* Lebar menyesuaikan */
+        }
+        #bdSidebar {
+            z-index: 1030; /* Lebih tinggi dari z-index default header */
+            position: fixed; /* Buat sidebar tetap */
+            top: 0;
+            bottom: 0;
+            width: 250px; /* Lebar sidebar */
+        }
+        .mynav {
+            color: #fff;
+        }
+        .mynav li a {
+            color: #fff;
+            text-decoration: none;
             width: 100%;
-            align-items: stretch;
-            padding-top: 56px;
-            height: 100vh; /* Menutupi seluruh tinggi layar */
+            display: block;
+            border-radius: 5px;
+            padding: 8px 5px;
         }
-
-        #sidebar-wrapper {
-            width: 250px;
-            background-color: #343a40; /* Warna sidebar yang lebih gelap dan modern */
-            padding-top: 10px;
-            z-index: 1030;
-            position: fixed;
-            left: 0;
-            border: none;
-            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2); /* Menambahkan shadow */
+        .mynav li a.active {
+            background-color: rgba(255, 255, 255, 0.2); /* Latar belakang untuk link aktif */
+            font-weight: bold; /* Membuat teks link lebih tebal */
+            color: #ffffff; /* Warna teks link aktif */
+            border-left: 4px solid #ffffff; /* Garis kiri untuk menandai link aktif */
+            padding-left: 12px; /* Menambahkan padding di sebelah kiri */
+        }
+        .mynav li a:hover {
+            background: rgba(255, 255, 255, 0.1); /* Latar belakang saat link di-hover */
+            color: #ffffff; /* Warna teks saat hover */
+            text-decoration: none; /* Menghilangkan garis bawah saat hover */
+        }
+        .mynav li a i {
+            width: 25px;
+            text-align: center;
+        }
+        .notification-badge {
+            background-color: rgba(255, 255, 255, 0.7);
+            float: right;
+            color: #222;
+            font-size: 14px;
+            padding: 0px 8px;
+            border-radius: 2px;
+        }
+        .content-area {
+            margin-left: 250px; /* Sesuaikan dengan lebar sidebar */
+            padding: 20px;
+            width: calc(100% - 250px); /* Sesuaikan lebar konten */
+            overflow: auto; /* Mengatasi konten yang tertimpa */
+        }
+        /* .d-flex i.fa-book {
+            font-size: 24px;
+            margin-right: 10px; /* Ukuran font lebih besar */
+        } */
+        .navbar, .content-area {
+            margin-left: 250px; /* Sesuaikan dengan lebar sidebar */
+            width: calc(100% - 250px); /* Atur ulang lebar konten */
+            position: relative;
+            z-index: 1020; /* Lebih rendah dari sidebar */
+        }
+        .my-dropdown {
+            border: 1px solid #555; /* Border untuk rectangle */
+            border-radius: 20px; /* Rounded rectangle */
+            padding: 0px 10px; /* Ruang di sekitar konten */
             display: flex;
-            flex-direction: column; /* Mengatur elemen di dalamnya secara vertikal */
-            height: 100vh; /* Menutupi seluruh tinggi layar */
+            align-items: center; /* Sejajarkan konten secara vertikal */
         }
 
-        #page-content-wrapper {
-            width: calc(100% - 250px);
-            padding: 10px;
-            margin-left: 250px;
-            flex: 1; /* Isi sisa ruang yang tersedia */
+        .my-nav-icon {
+            font-size: 18px;
+            color: #555;
+            margin-right: 5px; /* Jarak antara ikon dan ul */
+            margin-left: 5px; /* Jarak antara ikon dan ul */
         }
 
-        @media (min-width: 768px) {
-            #page-content-wrapper {
-                padding: 20px;
-            }
+        .my-dropdown .dropdown-menu {
+            border-radius: 15px; /* Rounded rectangle untuk menu dropdown */
+            border: 1px solid #555;
         }
-
-        /* Gaya untuk item sidebar */
-        .list-group-item {
+        .navbar-toggler-icon {
+            color: #007bff;
+        }
+        main {
+            margin-left: 250px; /* Sesuaikan dengan lebar sidebar */
+            width: calc(100% - 250px); /* Atur ulang lebar konten */
+            position: relative;
+            z-index: 1020; /* Lebih rendah dari sidebar */
+            padding: 20px; /* Menambahkan padding untuk ruang konten */
+        }
+        .login-page .navbar,
+        .login-page .content-area,
+        .login-page main {
+            margin-left: 0;
+            width: 100%;
+            padding: 0;
+        }
+    
+        .login-page main {
             display: flex;
+            justify-content: center;
             align-items: center;
-            padding: 8px 15px;
-            margin-bottom: 5px;
-            border: none;
-            transition: background-color 0.3s ease, transform 0.2s ease; /* Transisi smooth */
-            border-radius: 8px; /* Rounded corners */
-            color: #000000; /* Warna teks putih */
-        }
-
-        .list-group-item span[data-feather] {
-            margin-right: 10px;
-            display: inline-block;
-            vertical-align: middle;
-        }
-
-        .list-group-item:hover {
-            background-color: rgba(13, 110, 253, 0.2);
-            transform: translateX(5px); /* Efek kecil saat hover */
-        }
-
-        /* Gaya untuk link yang aktif */
-        .list-group-item.active {
-            background-color: #0d6efd;
-            color: white;
-            border-radius: 8px;
-            border: none;
-            padding-right: 15px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Shadow untuk link aktif */
-        }
-
-        main.py-4 {
-            margin-top: 2px;
-        }
-
-        .navbar-brand {
-            margin-left: 20px;
+            min-height: 100vh;
+            margin-left: 0;
+            width: 100%;
+            padding: 0;
         }
     </style>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
-
 </head>
-<body>
-    <div id="wrapper">
-        <!-- Sidebar-->
-        @auth
-        <div class="border-end bg-white" id="sidebar-wrapper">
-            <div class="list-group list-group-flush">
-                <a class="list-group-item list-group-item-action p-3 {{ Request::is('/') ? 'active' : '' }}" href="/">
-                    <i class="fas fa-home align-text-bottom mr-2"></i> Dashboard
-                </a>
-                <a class="list-group-item list-group-item-action p-3 {{ Request::is('categories*') ? 'active' : '' }}" href="/categories">
-                    <i class="fas fa-list mr-2"></i> Kategori
-                </a>
-                <a class="list-group-item list-group-item-action p-3 {{ Request::is('materies*') ? 'active' : '' }}" href="/materies">
-                    <i class="fas fa-book"></i> Materi
-                </a>
-                <a class="list-group-item list-group-item-action p-3 {{ Request::is('histories*') ? 'active' : '' }}" href="/histories">
-                    <i class="fas fa-clock"></i> Riwayat
-                </a>
-                <a class="list-group-item list-group-item-action p-3 {{ Request::is('courses*') ? 'active' : '' }}" href="/courses">
-                    <i class="fas fa-layer-group"></i> Daftar Kursus
-                </a>
-                <a class="list-group-item list-group-item-action p-3 {{ Request::is('students*') ? 'active' : '' }}" href="/students">
-                    <i class="fas fa-users"></i> Murid
-                </a>                
+<body @if(Route::is('login')) class="login-page" @endif>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <div id="app">
+        @if(!Route::is('login'))
+            @include('layouts.navbar')
+        @endif
+        <div class="container-fluid p-0 d-flex h-100 shadow-sm">
+            @if(!Route::is('login'))
+                @include('layouts.sidebar')
+            @endif
+            <div class="bg-light flex-fill">
+                <div class="p-2 d-md-none d-flex text-white bg-success">
+                    <a href="#" class="text-white" data-bs-toggle="offcanvas" data-bs-target="#bdSidebar">
+                        <i class="fa-solid fa-bars"></i>
+                    </a>
+                    <span class="ms-3">GFG Portal</span>
+                </div>
+                <main class="p-4">
+                    <nav style="--bs-breadcrumb-divider:'>';font-size:14px">
+                        {{-- <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <i class="fa-solid fa-house"></i>
+                            </li>
+                            <li class="breadcrumb-item">Konten Pembelajaran</li>
+                            <li class="breadcrumb-item">Halaman Berikutnya</li>
+                        </ol>
+                    </nav>
+                    <hr>
+                    <div class="row">
+                        <div class="col">
+                            <p>Konten halaman di sini</p>
+                        </div>
+                    </div> --}}
+                    @yield('content')
+                </main>
             </div>
         </div>
-        
-        @endauth
-        <!-- Page content wrapper-->
-        <div id="page-content-wrapper">
-            <!-- Top navigation-->
-            <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm fixed-top">
-                <div class="container">
-                    <a class="navbar-brand ml-5" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
-                    </a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <!-- Left Side Of Navbar -->
-                        <ul class="navbar-nav me-auto">
-                        </ul>
-
-                        <!-- Right Side Of Navbar -->
-                        <ul class="navbar-nav ms-auto px-3">
-                            @guest
-                                @if (Route::has('login'))
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                    </li>
-                                @endif
-                                @if (Route::has('register'))
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                    </li>
-                                @endif
-                            @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                        onclick="event.preventDefault();
-                                                 document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>                            
-                            @endguest
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-
-            <main class="py-4">
-                @yield('content')
-            </main>
-        </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script>
-    <script>
-        window.addEventListener('DOMContentLoaded', event => {
-            // Inisialisasi Feather Icons
-            feather.replace();
-        });
-    </script>    
 </body>
 </html>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
