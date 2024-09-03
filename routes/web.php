@@ -20,6 +20,7 @@ Route::middleware(['auth:admin'])->group(function () {
     // Route::get('/', function() {return view('home');
     // })->name('home');
     Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::resource('categories', KtgMateriController::class);
     Route::resource('materies', MateriController::class);
     Route::resource('histories', HistoryController::class);

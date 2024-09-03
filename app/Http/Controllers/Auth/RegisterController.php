@@ -15,7 +15,7 @@ class RegisterController extends Controller
 
     public function __construct()
     {
-        $this->middleware('guest:admin');
+        $this->middleware('guest');
     }
 
     public function showRegistrationForm()
