@@ -9,11 +9,15 @@ use App\Models\AdminModel;
 
 class LoginController extends Controller
 {
+    protected $redirectTo = '/';
     public function showLoginForm()
     {
         return view('auth.login');
     }
-
+    public function __construct()
+    {
+        $this->middleware('guest:admin')->except('logout');
+    }
     public function login(Request $request)
 {
     $this->validate($request, [
