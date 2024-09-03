@@ -105,8 +105,12 @@
 <h4 class="text-center font-weight-bold mb-4">MATERI</h4>
 
 <div id="main-content" class="file_manager container">
-    <div class="d-flex justify-content-end mb-3">
+    <div class="d-flex justify-content-between mb-3">
         <a href="{{ route('materies.create') }}" class="btn btn-primary">Tambah Materi</a>
+        <form action="{{ route('materies.index') }}" method="GET" class="d-flex">
+            <input type="text" name="search" class="form-control me-2" placeholder="Cari Materi..." value="{{ request()->get('search') }}">
+            <button type="submit" class="btn btn-secondary">Cari</button>
+        </form>
     </div>
     <div class="row">
         @foreach ($materies as $matery)

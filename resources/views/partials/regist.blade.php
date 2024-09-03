@@ -53,10 +53,10 @@
             <h2 class="card-title mt-1 mb-1">Daftar Data</h2>
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <a href="{{ route('regists.create', ['id_krs' => $course_id]) }}" class="btn btn-primary">Tambah Data Baru</a>
-                <form action="#" method="GET" class="d-flex">
-                    <input type="text" name="search" class="form-control" placeholder="Cari...">
+                {{-- <form action=""{{ route('courses.show', ['course' => $course->id]) }}"" method="GET" class="d-flex">
+                    <input type="text" name="search" class="form-control" placeholder="Cari..." value="{{ request()->get('search') }}">
                     <button type="submit" class="btn btn-secondary ms-2">Search</button>
-                </form>
+                </form> --}}
             </div>
             <table class="table table-striped table-hover table-bordered">
                 <thead>
