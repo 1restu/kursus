@@ -42,11 +42,10 @@ table th {
         <div class="col-12 mb-3 mb-lg-5">
             <div class="position-relative card table-card">
                 <div class="card-header align-items-center">
-                    <h5 class="mb-0">History</h5>
-                    <p class="mb-0 small text-muted">{{ count($histories) }} Data</p>
-                    <div class="d-flex justify-content-end align-items-center mb-3">
-                        <form action="#" method="GET" class="d-flex">
-                            <input type="text" name="search" class="form-control" placeholder="Cari...">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="mb-0">History</h5>
+                        <form action="{{ route('histories.index') }}" method="GET" class="d-flex">
+                            <input type="text" name="search" class="form-control" placeholder="Cari..." value="{{ request()->get('search') }}">
                             <button type="submit" class="btn btn-secondary ms-2">Search</button>
                         </form>
                     </div>
@@ -67,8 +66,8 @@ table th {
                             @foreach($histories as $history)
                             <tr class="align-middle">
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $history->nama_krs }}</td>
-                                <td>{{ $history->nama }}</td>
+                                <td>{{ $history->kursus->nama_krs }}</td>
+                                <td>{{ $history->murid->nama }}</td>
                                 <td>{{ $history->tanggal_mulai }}</td>
                                 <td>{{ $history->tanggal_selesai }}</td>
                                 {{-- <td>

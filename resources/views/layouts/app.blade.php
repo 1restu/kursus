@@ -25,7 +25,10 @@
         html, body {
             height: 100%;
             font-family: 'Ubuntu', sans-serif;
-            margin: 0;
+            margin-top: 20px;
+            margin-bottom: 0px;
+            margin-right: 0px;
+            margin-left: 0px;
         }
         .gfg {
             height: 50px;

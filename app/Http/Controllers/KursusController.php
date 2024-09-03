@@ -108,11 +108,27 @@ class KursusController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id){
+    public function show(string $id, Request $request){
     $course = KursusModel::with('materi')->findOrFail($id);
 
-    // $regists = PdKursusModel::where('id_krs', $id)->get();
-    // $nameCourse = KursusModel::where('id', $id)->get();
+    $search = $request->input('search');
+    $query = PdKursusModel::where('id_krs', $id)->with('murid');
+
+    if ($search) {
+        $query->whereHas('murid', function($q) use ($search) {
+            $q->where('nama', 'like', "%{$search}%");
+        });
+
+        $regists = $query->latest('created_at')->get();
+
+        if ($regists->isEmpty()) {
+            return back()
+                             ->with('error', 'Tidak ada hasil ditemukan untuk pencarian: ' . $search)
+                             ->withInput();
+        }
+    } else {
+        $regists = PdKursusModel::latest('tanggal_mulai')->get();
+    }
     $regists = PdKursusModel::where('id_krs', $id)->with('kursus', 'murid')->get();
     
     // Mengirim data ke view

@@ -29,8 +29,12 @@
     </div>
 @endif
 <h4 class="text-center font-weight-bold m-4">KURSUS</h4>
-<div class="d-flex justify-content-end mb-3">
+<div class="d-flex justify-content-between mb-3">
     <a href="{{ route('courses.create') }}" class="btn btn-primary mb-3">Tambah Kursus</a>
+    <form action="{{ route('courses.index') }}" method="GET" class="d-flex">
+        <input type="text" name="search" class="form-control me-2" placeholder="Cari Kursus..." value="{{ request()->get('search') }}">
+        <button type="submit" class="btn btn-secondary">Cari</button>
+    </form>
 </div>
 <div class="row mx-auto">
     {{-- @php
