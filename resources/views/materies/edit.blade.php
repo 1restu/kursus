@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
 @section('title', 'Ubah Materi')
-
+@php
+    $breadcrumbSecond = 'Halaman Ubah Materi';
+@endphp
 @section('content')
 <div class="container">
     <div class="d-flex justify-content-center align-items-center flex-column">

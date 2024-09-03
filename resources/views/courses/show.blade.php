@@ -1,10 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-    
+@php
+    $breadcrumbSecond = 'Halaman Detail Kursus';
+@endphp
 <style>
     body {
-    font-family: 'Roboto Condensed', sans-serif;
+    /* font-family: 'Roboto Condensed', sans-serif; */
     background-color: #f5f5f5;
     }
 
@@ -77,7 +79,7 @@
     margin: 8px 0 0;
     font-size: 22px;
 }
-.search-box {
+/* .search-box {
     position: relative;        
     float: right;
 }
@@ -128,14 +130,14 @@ table.table td a.edit {
 }
 table.table td a.delete {
     color: #E34724;
-}
+} */
 table.table td i {
     font-size: 19px;
 } 
 </style>
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-{{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> --}}
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+{{-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> --}}
 
 <div class="container">
     <div class="col-lg-8 border p-3 main-section bg-white">
@@ -144,7 +146,9 @@ table.table td i {
         </div>
         <div class="row m-0">
             <div class="col-lg-4 left-side-product-box pb-3">
-                <img src="{{ asset('assets/images/' . $course->gambar) }}" class="border p-3" alt="...">
+                <a href="{{ asset('assets/images/' . $course->gambar) }}" target="_blank">
+                    <img src="{{ asset('assets/images/' . $course->gambar) }}" class="border p-3" alt="...">
+                </a>
             </div>
             <div class="col-lg-8">
                 <div class="right-side-pro-detail border p-3 m-0">
@@ -178,7 +182,7 @@ table.table td i {
                                 @if (in_array($fileName, ['pdf']))
                                     <i class="fa fa-file-pdf-o text-danger">{{ $course->materi->nama_mtr }}</i>
                                 @elseif (in_array($fileName, ['doc', 'docx']))
-                                    <i class="fa fa-file-word-o text-primary">  {{ $course->materi->nama_mtr }}</i>
+                                    <i class="fa fa-file-word-o text-primary">{{ $course->materi->nama_mtr }}</i>
                                 @elseif (in_array($fileName, ['txt']))
                                     <i class="fa fa-file-text text-warning">{{ $course->materi->nama_mtr }}</i>
                                 @else

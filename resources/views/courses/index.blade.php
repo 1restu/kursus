@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+@php
+    $breadcrumbSecond = 'Halaman Daftar Kursus';
+@endphp
 @if (session('success'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
         {{ session('success') }}
@@ -38,8 +41,8 @@
         <img src="{{ asset('assets/images/' . $cours->gambar) }}" class="card-img-top" alt="...">
         <div class="card-body bg-light mb-2">
             <h5 class="card-title">{{ $cours->nama_krs }}</h5>
-            <p class="card-text">{{ 'Rp ' . number_format($cours->biaya_krs, 0, ',', '.') }}</p>
-            {{-- <p class="card-text">{{  }}</p> --}}
+            {{-- <p class="card-text">{{ 'Rp ' . number_format($cours->biaya_krs, 0, ',', '.') }}</p> --}}
+            <p class="card-text">{{ $cours->deskripsi }}</p>
             {{-- @if($cours->stok_produk != 0) --}}
                 <a href="{{ route('courses.show', $cours->id) }}" class="btn btn-info">Detail</a>
             {{-- @if($cours->stok_produk != 0)
