@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-
-
+@php
+    $breadcrumbSecond = 'Halaman Ubah Kursus';
+@endphp
 <div id="main-content" class="file_manager">
   @if (session('success'))
   <div class="alert alert-success alert-dismissible fade show" role="alert">

@@ -1,5 +1,8 @@
 @extends('layouts.app')
 @section('content')
+@php
+    $breadcrumbSecond = 'Halaman Dashboard';
+@endphp
 <style>
     .card {
         border-radius: 8px;
@@ -69,7 +72,7 @@
                     </div>
                     <div>
                         <h1 class="fw-bold">{{ $courseCount }}</h1>
-                        <p class="mb-0"><span class="text-dark me-2">{{ $courseCount }}</span>Kurus Tersedia</p>
+                        <p class="mb-0"><span class="text-dark me-2">{{ $courseCount }}</span>Kursus Tersedia</p>
                     </div>
                 </div>
             </div>
@@ -82,12 +85,12 @@
                             <h4 class="mb-0">Pendapatan</h4>
                         </div>
                         <div class="icon-shape icon-md bg-light-primary text-primary rounded-2">
-                            <i class="fas fa-hourglass-half fs-4"></i>
+                            <i class="fas fa-dollar-sign fs-4"></i>
                         </div>
                     </div>
                     <div>
-                        <h1 class="fw-bold">{{ $revenue }}</h1>
-                        <p class="mb-0"><span class="text-success me-2">{{ $revenue }}</span>Didapatkan</p>
+                        <h1 class="fw-bold">{{ 'Rp ' . number_format($revenue, 0, ',', '.') }}</h1>
+                        <p class="mb-0"><span class="text-success me-2">{{ 'Rp ' . number_format($revenue, 0, ',', '.') }}</span>Didapatkan</p>
                     </div>
                 </div>
             </div>
@@ -106,12 +109,12 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Kursus</th>
+                                <th>Nama Kursus</th>
                                 <th>Nama Murid</th>
-                                <th>Biaya</th>
-                                <th>Status</th>
                                 <th>Tanggal Mulai</th>
                                 <th>Tanggal Selesai</th>
+                                <th>Biaya Kursus</th>
+                                <th>Status Pembayaran</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -139,8 +142,8 @@
         <!-- List Items Column (30% width) -->
         <div class="col-xl-4 col-lg-4 col-md-12 custom-margin-top">
             <div class="card h-100">
-                <div class="d-flex align-items-center justify-content-between">
-                    <h4 class="mt-2 ml-2">{{ __('Pendaftar Terbaru') }}</h4>
+                <div class="card-header">
+                    <h4 class="mt-2 ml-2">{{ __('Kursus Terbaru') }}</h4>
                 </div>
                 <div class="card-body">
                     <ol class="list-group list-group-numbered">

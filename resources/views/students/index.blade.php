@@ -3,6 +3,9 @@
 @section('title', 'Daftar Murid')
 
 @section('content')
+@php
+    $breadcrumbSecond = 'Halaman Daftar Murid';
+@endphp
 <h3>Halaman Murid</h3>
 
 <!-- Alert messages -->
@@ -74,7 +77,7 @@
 
 <div class="table-responsive">
     <table class="table table-striped table-bordered">
-        <thead class="table-dark">
+        <thead class="table">
             <tr>
                 <th scope="col">No</th>
                 <th scope="col">Nama</th>

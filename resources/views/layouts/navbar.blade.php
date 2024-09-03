@@ -2,12 +2,22 @@
     <div class="container">
         <ol class="breadcrumb mb-0">
             <li class="breadcrumb-item">
-                {{-- <a href="{{ url('/') }}"> --}}
+                @if (Request::is('categories*'))
+                    <i class="fas fa-list"></i> Kategori
+                @elseif (Request::is('students*'))
+                    <i class="fas fa-users"></i> Murid
+                @elseif (Request::is('materies*'))
+                    <i class="fas fa-book"></i> Materi
+                @elseif (Request::is('courses*'))
+                    <i class="fas fa-layer-group"></i> Daftar Kursus
+                @elseif (Request::is('histories*'))
+                    <i class="fas fa-clock"></i> Riwayat
+                @else
                     <i class="fa-solid fa-house"></i> Home
-                {{-- </a> --}}
+                @endif
+                {{-- <i class="fa-solid fa-house"></i>Home --}}
             </li>
-            <li class="breadcrumb-item">Konten Pembelajaran</li>
-            <li class="breadcrumb-item active" aria-current="page">Halaman Berikutnya</li>
+            <li class="breadcrumb-item">{{ $breadcrumbSecond ?? 'Konten'}}</li>
         </ol>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
             <span class="navbar-toggler-icon"></span>

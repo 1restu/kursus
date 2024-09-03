@@ -8,7 +8,9 @@
 @extends('layouts.app')
 
 @section('content')
-
+@php
+    $breadcrumbSecond = 'Halaman Pendaftaran Kursus';
+@endphp
 
 <div id="main-content" class="file_manager">
   @if (session('success'))

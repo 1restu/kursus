@@ -29,21 +29,34 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 @endif
-                    <div class="col-sm-4"><h2>Pendaftar</b></h2></div>
-                    <div class="col-sm-4">
-                        <div class="d-flex justify-content-center">
+                    {{-- <div class="col-sm-4"></div>
+                    <div class="col-sm-4 d-flex justify-content-sm-start">
+                        <h2 class="card-title">Pendaftar</b></h2>
+                        <div class="d-flex">
                             {{-- <div class="search-box me-2">
                                 <i class="material-icons">&#xE8B6;</i>
                                 <input type="text" class="form-control" placeholder="Search&hellip;">
                             </div> --}}
+                            {{-- <a href="{{ route('regists.create', ['id_krs' => $course_id]) }}" class="btn btn-primary">Tambah Data Baru</a>
                         </div>
                     </div>
                     <div class="col-sm-4">
-                        <div class="d-flex justify-content-end">
-                            <a href="{{ route('regists.create', ['id_krs' => $course_id]) }}" class="btn btn-primary">Tambah Data Baru</a>
+                        <div class="d-flex justify-content-between">
+                            <form action="#" method="GET" class="d-flex">
+                                <input type="text" name="search" class="form-control" placeholder="Cari...">
+                                <button type="submit" class="btn btn-secondary ms-2">Search</button>
+                            </form>
                         </div>
                     </div>
                 </div>
+            </div> --}}
+            <h2 class="card-title mt-1 mb-1">Daftar Data</h2>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <a href="{{ route('regists.create', ['id_krs' => $course_id]) }}" class="btn btn-primary">Tambah Data Baru</a>
+                <form action="#" method="GET" class="d-flex">
+                    <input type="text" name="search" class="form-control" placeholder="Cari...">
+                    <button type="submit" class="btn btn-secondary ms-2">Search</button>
+                </form>
             </div>
             <table class="table table-striped table-hover table-bordered">
                 <thead>
@@ -71,13 +84,13 @@
                             <td>{{ \Carbon\Carbon::parse($regist->tanggal_selesai)->format('d-m-Y') }}</td>
                             <td>
                                 @if ($regist->status !== 'lunas')
-                                <a href="{{ route('regists.edit', $regist->id) }}" class="payments" title="Edit" data-bs-toggle="modal" data-bs-target="#confirmPaymentModal"><i class="material-icons" style="color: rgb(223, 223, 56);">attach_money</i></a>
+                                <a href="{{ route('regists.edit', $regist->id) }}" title="Edit" data-bs-toggle="modal" data-bs-target="#confirmPaymentModal"><i class="fas fa-dollar-sign" style="color: rgb(223, 223, 56);"></i></a>
                                 @endif
                                 <form action="{{ route('regists.destroy', $regist->id) }}" method="POST" style="display:inline;" class="delete-form">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit">
-                                        <i class="material-icons" style="color: red;">delete</i>
+                                    <button type="submit" style="border: none; background-color: transparent;">
+                                        <i class="fas fa-trash" style="color: red;"></i>
                                     </button>
                                 </form>
                             </td>

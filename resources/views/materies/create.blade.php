@@ -2,7 +2,9 @@
 
 @section('title', 'Tambah Materi')
 @section('content')
-
+@php
+    $breadcrumbSecond = 'Halaman Tambah Materi';
+@endphp
 <div id="main-content" class="file_manager">
   @if (session('success'))
   <div class="alert alert-success alert-dismissible fade show" role="alert">

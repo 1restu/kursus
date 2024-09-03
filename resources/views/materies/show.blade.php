@@ -2,6 +2,9 @@
 
 @section('title', 'Detail Materi')
 @section('content')
+@php
+    $breadcrumbSecond = 'Halaman Detail Materi';
+@endphp
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">

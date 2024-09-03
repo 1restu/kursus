@@ -1,8 +1,11 @@
 @extends('layouts.app')
 
 @section('title', 'Daftar Kategori')
-
+@section('breadcum')
 @section('content')
+@php
+    $breadcrumbSecond = 'Halaman Kategori';
+@endphp
 <h3>Halaman Kategori</h3>
 
 <!-- Alert messages -->
@@ -70,7 +73,7 @@
 
 <div class="table-responsive">
     <table class="table table-striped table-bordered">
-        <thead class="table-dark">
+        <thead class="table">
             <tr>
                 <th scope="col">No</th>
                 <th scope="col">Nama</th>
