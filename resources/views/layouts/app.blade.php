@@ -122,8 +122,7 @@
         main {
             margin-left: 250px; /* Sesuaikan dengan lebar sidebar */
             width: calc(100% - 250px); /* Atur ulang lebar konten */
-            position: relative;
-            z-index: 1020; /* Lebih rendah dari sidebar */
+            position: relative; 
             padding: 20px; /* Menambahkan padding untuk ruang konten */
         }
         .login-page .navbar,
