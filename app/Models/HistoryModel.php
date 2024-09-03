@@ -31,18 +31,6 @@ class HistoryModel extends Model
     // Relasi ke MuridModel
     public function murid()
     {
-        return $this->belongsTo(MuridModel::class, 'id');
-    }
-
-    // Akses data nama kursus
-    public function getNamaKursusAttribute()
-    {
-        return $this->kursus ? $this->kursus->nama_krs : 'Tidak ditemukan';
-    }
-
-    // Akses data nama murid
-    public function getNamaMuridAttribute()
-    {
-        return $this->murid ? $this->murid->nama : 'Tidak ditemukan';
+        return $this->belongsTo(MuridModel::class, 'id_mrd');
     }
 }

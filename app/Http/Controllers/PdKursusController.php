@@ -68,6 +68,7 @@ class PdKursusController extends Controller
     $tanggal_mulai = \Carbon\Carbon::parse($request->tanggal_mulai);
     $tanggal_selesai = $tanggal_mulai->copy()->addDays($kursus->durasi);
 
+    // Cek pendaftaran yang bertabrakan di PdKursusModel
     $existingRegistration = PdKursusModel::where('id_krs', $request->id_krs)
         ->where('id_mrd', $request->id_mrd)
         ->where(function ($query) use ($tanggal_mulai, $tanggal_selesai) {
@@ -80,7 +81,20 @@ class PdKursusController extends Controller
         })
         ->first();
 
-    if ($existingRegistration) {
+    // Cek pendaftaran yang bertabrakan di HistoryModel
+    $existingHistory = HistoryModel::where('id_krs', $request->id_krs)
+        ->where('id_mrd', $request->id_mrd)
+        ->where(function ($query) use ($tanggal_mulai, $tanggal_selesai) {
+            $query->whereBetween('tanggal_mulai', [$tanggal_mulai, $tanggal_selesai])
+                ->orWhereBetween('tanggal_selesai', [$tanggal_mulai, $tanggal_selesai])
+                ->orWhere(function ($query) use ($tanggal_mulai, $tanggal_selesai) {
+                    $query->where('tanggal_mulai', '<=', $tanggal_mulai)
+                        ->where('tanggal_selesai', '>=', $tanggal_selesai);
+                });
+        })
+        ->first();
+
+    if ($existingRegistration || $existingHistory) {
         return redirect()->back()->withErrors(['error' => 'Murid sudah terdaftar di kursus ini dalam periode yang sama.'])->withInput();
     }
 
@@ -136,7 +150,7 @@ class PdKursusController extends Controller
     $tanggal_mulai = \Carbon\Carbon::parse($request->tanggal_mulai);
     $tanggal_selesai = $tanggal_mulai->copy()->addDays($kursus->durasi);
 
-    // Cek apakah murid sudah terdaftar di kursus ini dalam periode yang sama
+    // Cek pendaftaran yang bertabrakan di PdKursusModel
     $existingRegistration = PdKursusModel::where('id_krs', $request->id_krs)
         ->where('id_mrd', $request->id_mrd)
         ->where('id', '!=', $id) // Mengecualikan pendaftaran saat ini
@@ -150,7 +164,20 @@ class PdKursusController extends Controller
         })
         ->first();
 
-    if ($existingRegistration) {
+    // Cek pendaftaran yang bertabrakan di HistoryModel
+    $existingHistory = HistoryModel::where('id_krs', $request->id_krs)
+        ->where('id_mrd', $request->id_mrd)
+        ->where(function ($query) use ($tanggal_mulai, $tanggal_selesai) {
+            $query->whereBetween('tanggal_mulai', [$tanggal_mulai, $tanggal_selesai])
+                ->orWhereBetween('tanggal_selesai', [$tanggal_mulai, $tanggal_selesai])
+                ->orWhere(function ($query) use ($tanggal_mulai, $tanggal_selesai) {
+                    $query->where('tanggal_mulai', '<=', $tanggal_mulai)
+                        ->where('tanggal_selesai', '>=', $tanggal_selesai);
+                });
+        })
+        ->first();
+
+    if ($existingRegistration || $existingHistory) {
         return redirect()->back()->withErrors(['error' => 'Murid sudah terdaftar di kursus ini dalam periode yang sama.'])->withInput();
     }
 
@@ -168,28 +195,6 @@ class PdKursusController extends Controller
         return redirect()->route('pd_kursus.edit', $id)->with('error', 'Gagal memperbarui pendaftaran.');
     }
 }
-
-    /**
-     * Confirm the payment of the specified resource.
-     */
-    public function confirmPayment($id)
-    {
-        $pdkursus = PdKursusModel::findOrFail($id);
-
-        if ($pdkursus->status == 'lunas') {
-            return redirect()->route('courses.show', $pdkursus->id_krs)->with('error', 'Pembayaran sudah dikonfirmasi.');
-        }
-
-        try {
-            $pdkursus->update([
-                'status' => 'lunas'
-            ]);
-
-            return redirect()->route('courses.show', $pdkursus->id_krs)->with('success', 'Pembayaran berhasil dikonfirmasi.');
-        } catch (\Exception $e) {
-            return redirect()->route('courses.show', $pdkursus->id_krs)->with('error', 'Gagal mengonfirmasi pembayaran.');
-        }
-    }
 
     /**
      * Remove the specified resource from storage.

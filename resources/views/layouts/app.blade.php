@@ -23,141 +23,124 @@
     {{-- @vite(['resources/sass/app.scss']) --}}
     <style>
         html, body {
-    height: 100%;
-    font-family: 'Ubuntu', sans-serif;
-    margin-top: 20px;
-    margin-right: 0px;
-    margin-bottom: 0;
-}
-.gfg {
-    height: 50px;
-    width: 50px;
-}
-.navbar {
-    margin-left: 250px; /* Sesuaikan dengan lebar sidebar */
-    z-index: 1030; /* Lebih rendah dari modal dan dropdown */
-    width: calc(100% - 250px); /* Lebar menyesuaikan */
-    position: fixed;
-    top: 0;
-    right: 0;
-}
-#bdSidebar {
-    z-index: 1020; /* Lebih tinggi dari konten tapi lebih rendah dari navbar dan dropdown */
-    position: fixed; /* Buat sidebar tetap */
-    top: 0;
-    bottom: 0;
-    width: 250px; /* Lebar sidebar */
-    background-color: #333; /* Warna latar belakang sidebar */
-    overflow-y: auto; /* Agar sidebar bisa di-scroll jika konten panjang */
-}
-.dropdown-menu {
-    z-index: 1050; /* Lebih tinggi dari sidebar dan navbar, lebih rendah dari modal */
-    position: absolute;
-}   
-.mynav {
-    color: #fff;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-.mynav li a {
-    color: #fff;
-    text-decoration: none;
-    width: 100%;
-    display: block;
-    border-radius: 5px;
-    padding: 8px 5px;
-    transition: background 0.3s ease;
-}
-.mynav li a.active {
-    background-color: rgba(255, 255, 255, 0.2); /* Latar belakang untuk link aktif */
-    font-weight: bold; /* Membuat teks link lebih tebal */
-    color: #ffffff; /* Warna teks link aktif */
-    border-left: 4px solid #ffffff; /* Garis kiri untuk menandai link aktif */
-    padding-left: 12px; /* Menambahkan padding di sebelah kiri */
-}
-.mynav li a:hover {
-    background: rgba(255, 255, 255, 0.1); /* Latar belakang saat link di-hover */
-    color: #ffffff; /* Warna teks saat hover */
-    text-decoration: none; /* Menghilangkan garis bawah saat hover */
-}
-.mynav li a i {
-    width: 25px;
-    text-align: center;
-}
-.notification-badge {
-    background-color: rgba(255, 255, 255, 0.7);
-    float: right;
-    color: #222;
-    font-size: 14px;
-    padding: 0px 8px;
-    border-radius: 2px;
-}
-.content-area {
-    margin-left: 250px; /* Sesuaikan dengan lebar sidebar */
-    padding: 20px;
-    width: calc(100% - 250px); /* Sesuaikan lebar konten */
-    overflow-y: auto; /* Mengatasi konten yang tertimpa */
-    position: relative;
-    z-index: 1010; /* Lebih rendah dari sidebar, navbar, dan dropdown */
-}
-.my-dropdown {
-    border: 1px solid #555; /* Border untuk rectangle */
-    border-radius: 20px; /* Rounded rectangle */
-    padding: 0px 10px; /* Ruang di sekitar konten */
-    display: flex;
-    align-items: center; /* Sejajarkan konten secara vertikal */
-}
-.my-nav-icon {
-    font-size: 18px;
-    color: #555;
-    margin-right: 5px; /* Jarak antara ikon dan ul */
-    margin-left: 5px; /* Jarak antara ikon dan ul */
-}
-.my-dropdown .dropdown-menu {
-    border-radius: 15px; /* Rounded rectangle untuk menu dropdown */
-    border: 1px solid #555;
-}
-.navbar-toggler-icon {
-    color: #007bff;
-}
-main {
-    margin-left: 250px; /* Sesuaikan dengan lebar sidebar */
-    width: calc(100% - 250px); /* Atur ulang lebar konten */
-    position: relative;
-    z-index: 1010;
-    padding: 20px; /* Menambahkan padding untuk ruang konten */
-}
-.login-page .navbar,
-.login-page .content-area,
-.login-page main {
-    margin-left: 0;
-    width: 100%;
-    padding: 0;
-}
-.login-page main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    margin-left: 0;
-    width: 100%;
-    padding: 0;
-}
-.modal.fade .modal-dialog {
-    margin-top: 10vh; /* Bisa disesuaikan untuk memastikan modal berada di tengah secara vertikal */
-    z-index: 1090; /* Lebih tinggi dari dropdown, lebih rendah dari backdrop modal */
-}
-.modal {
-    z-index: 1090; /* Lebih tinggi dari dropdown */
-}
-.modal-backdrop {
-    z-index: 1095; /* Lebih tinggi dari dropdown, lebih rendah dari modal */
-}
-.modal,
-.modal-backdrop {
-    position: fixed; /* atau absolute */
-}
+            height: 100%;
+            font-family: 'Ubuntu', sans-serif;
+            margin: 0;
+        }
+        .gfg {
+            height: 50px;
+            width: 50px;
+        }
+        .navbar {
+            margin-left: 250px; /* Sesuaikan dengan lebar sidebar */
+            z-index: 1040; /* Lebih rendah dari sidebar */
+            width: calc(100% - 250px); /* Lebar menyesuaikan */
+            position: fixed;
+            top: 0;
+            right: 0;
+        }
+        #bdSidebar {
+            z-index: 1010; /* Lebih tinggi dari z-index default header */
+            position: fixed; /* Buat sidebar tetap */
+            top: 0;
+            bottom: 0;
+            width: 250px; /* Lebar sidebar */
+            background-color: #333; /* Warna latar belakang sidebar */
+            overflow-y: auto; /* Agar sidebar bisa di-scroll jika konten panjang */
+        }
+        .dropdown-menu {
+            z-index: 1080; /* Tambahkan z-index ke dropdown untuk memastikan di atas elemen lain */
+            position: absolute;
+        }   
+        .mynav {
+            color: #fff;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .mynav li a {
+            color: #fff;
+            text-decoration: none;
+            width: 100%;
+            display: block;
+            border-radius: 5px;
+            padding: 8px 5px;
+            transition: background 0.3s ease;
+        }
+        .mynav li a.active {
+            background-color: rgba(255, 255, 255, 0.2); /* Latar belakang untuk link aktif */
+            font-weight: bold; /* Membuat teks link lebih tebal */
+            color: #ffffff; /* Warna teks link aktif */
+            border-left: 4px solid #ffffff; /* Garis kiri untuk menandai link aktif */
+            padding-left: 12px; /* Menambahkan padding di sebelah kiri */
+        }
+        .mynav li a:hover {
+            background: rgba(255, 255, 255, 0.1); /* Latar belakang saat link di-hover */
+            color: #ffffff; /* Warna teks saat hover */
+            text-decoration: none; /* Menghilangkan garis bawah saat hover */
+        }
+        .mynav li a i {
+            width: 25px;
+            text-align: center;
+        }
+        .notification-badge {
+            background-color: rgba(255, 255, 255, 0.7);
+            float: right;
+            color: #222;
+            font-size: 14px;
+            padding: 0px 8px;
+            border-radius: 2px;
+        }
+        .content-area {
+            margin-left: 250px; /* Sesuaikan dengan lebar sidebar */
+            padding: 20px;
+            width: calc(100% - 250px); /* Sesuaikan lebar konten */
+            overflow-y: auto; /* Mengatasi konten yang tertimpa */
+            position: relative;
+            z-index: 1020; /* Lebih rendah dari sidebar */
+        }
+        .my-dropdown {
+            border: 1px solid #555; /* Border untuk rectangle */
+            border-radius: 20px; /* Rounded rectangle */
+            padding: 0px 10px; /* Ruang di sekitar konten */
+            display: flex;
+            align-items: center; /* Sejajarkan konten secara vertikal */
+        }
+        .my-nav-icon {
+            font-size: 18px;
+            color: #555;
+            margin-right: 5px; /* Jarak antara ikon dan ul */
+            margin-left: 5px; /* Jarak antara ikon dan ul */
+        }
+        .my-dropdown .dropdown-menu {
+            border-radius: 15px; /* Rounded rectangle untuk menu dropdown */
+            border: 1px solid #555;
+        }
+        .navbar-toggler-icon {
+            color: #007bff;
+        }
+        main {
+            margin-left: 250px; /* Sesuaikan dengan lebar sidebar */
+            width: calc(100% - 250px); /* Atur ulang lebar konten */
+            position: relative; 
+            padding: 20px; /* Menambahkan padding untuk ruang konten */
+        }
+        .login-page .navbar,
+        .login-page .content-area,
+        .login-page main {
+            margin-left: 0;
+            width: 100%;
+            padding: 0;
+        }
+        .login-page main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin-left: 0;
+            width: 100%;
+            padding: 0;
+        }
     </style>
 </head>
 <body @if(Route::is('login')) class="login-page" @endif>
