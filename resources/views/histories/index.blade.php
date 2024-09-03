@@ -67,8 +67,8 @@ table th {
                             @foreach($histories as $history)
                             <tr class="align-middle">
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $history->nama_kursus }}</td>
-                                <td>{{ $history->nama_murid }}</td>
+                                <td>{{ $history->nama_krs }}</td>
+                                <td>{{ $history->nama }}</td>
                                 <td>{{ $history->tanggal_mulai }}</td>
                                 <td>{{ $history->tanggal_selesai }}</td>
                                 {{-- <td>
