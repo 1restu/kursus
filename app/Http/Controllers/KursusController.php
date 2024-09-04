@@ -55,7 +55,7 @@ class KursusController extends Controller
             'nama_krs' => 'required|unique:kursus,nama_krs|regex:/^[a-zA-Z\s]+$/',
             'gambar' => 'required|image|max:5280|mimes:jpeg,png,jpg',
             'deskripsi' => 'required|min:10',
-            'id_mtr' => 'required|exists:materi,id',
+            'id_mtr' => 'required|array|max:3|exists:materi,id',
             'biaya_krs' => 'required|numeric|min:0',
             'durasi' => 'required|integer|min:1',
             'jam' => 'required|integer|min:1'
@@ -69,7 +69,8 @@ class KursusController extends Controller
             'gambar.max' => 'Ukuran gambar tidak boleh lebih dari 2MB.',
             'deskripsi.required' => 'Deskripsi kursus wajib diisi.',
             'deskripsi.min' => 'Deskripsi minimal memiliki 10 karakter.',
-            'id_mtr.required' => 'Materi tidak boleh kosong.',
+            'id_mtr.max' => 'Kursus hanya bisa memiliki maksimal 3 materi.',
+            'id_mtr.required' => 'Pilih minimal satu materi untuk kursus ini.',
             'id_mtr.exists' => 'Materi tidak valid.',
             'biaya_krs.required' => 'Biaya kursus wajib diisi.',
             'biaya_krs.numeric' => 'Biaya kursus hanya boleh berupa angka.',
@@ -88,19 +89,20 @@ class KursusController extends Controller
             $file->move(public_path('assets/images'), $filename);
 
             try {
-                KursusModel::create([
+                $kursus = KursusModel::create([
                     'nama_krs' => $request->nama_krs,
                     'gambar' => $filename,
                     'deskripsi' => $request->deskripsi,
-                    'id_mtr' => $request->id_mtr,
                     'biaya_krs' => $request->biaya_krs,
                     'durasi' => $request->durasi,
                     'jam' => $request->jam
                 ]);
 
+                $kursus->materi()->sync($request->id_mtr);
+
                 return redirect('/courses')->with('success', 'Kursus baru berhasil ditambahkan');
             } catch(\Exception $e) {
-                return redirect('/courses')->with('error', 'Kursus baru gagal untuk di tambahkan');
+                return redirect('/courses')->with('error', 'Kursus baru gagal untuk di tambahkan. Error: ' . $e->getMessage());
             }
         }
     }
@@ -156,7 +158,7 @@ class KursusController extends Controller
             'nama_krs' => 'required|unique:kursus,nama_krs,' . $id . '|regex:/^[a-zA-Z\s]+$/',
             'gambar' => 'nullable|image|max:5280|mimes:jpeg,png,jpg',
             'deskripsi' => 'required|min:10',
-            'id_mtr' => 'required|exists:materi,id',
+            'id_mtr' => 'required|array|max:3|exists:materi,id',
             'biaya_krs' => 'required|numeric|min:0',
             'durasi' => 'required|integer|min:1',
             'jam' => 'required|integer|min:1'
@@ -169,7 +171,8 @@ class KursusController extends Controller
             'gambar.max' => 'Ukuran gambar tidak boleh lebih dari 5MB.',
             'deskripsi.required' => 'Deskripsi kursus wajib diisi.',
             'deskripsi.min' => 'Deskripsi minimal memiliki 10 karakter.',
-            'id_mtr.required' => 'Materi tidak boleh kosong.',
+            'id_mtr.max' => 'Kursus hanya bisa memiliki maksimal 3 materi.',
+            'id_mtr.required' => 'Pilih minimal satu materi untuk kursus ini.',
             'id_mtr.exists' => 'Materi tidak valid.',
             'biaya_krs.required' => 'Biaya kursus wajib diisi.',
             'biaya_krs.numeric' => 'Biaya kursus hanya boleh berupa angka.',
@@ -205,11 +208,11 @@ class KursusController extends Controller
                 'nama_krs' => $request->nama_krs,
                 'gambar' => $kursus->gambar ?? $kursus->gambar,  // Tetap gunakan gambar lama jika tidak diubah
                 'deskripsi' => $request->deskripsi,
-                'id_mtr' => $request->id_mtr,
                 'biaya_krs' => $request->biaya_krs,
                 'durasi' => $request->durasi,
                 'jam' => $request->jam
             ]);
+            $kursus->materi()->sync($request->id_mtr);
 
             return redirect('/courses')->with('success', 'Kursus berhasil diedit');
         } catch (\Exception $e) {

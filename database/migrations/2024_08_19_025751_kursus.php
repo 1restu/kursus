@@ -16,9 +16,9 @@ return new class extends Migration
             $table->string('nama_krs');
             $table->string('gambar');
             $table->text('deskripsi');
-            $table->foreignId('id_mtr')->constrained('materi')->onDelete('restrict')->onUpdate('restrict');
             $table->decimal('biaya_krs');
             $table->string('durasi');
+            $table->integer('jam');
             $table->timestamps();
         });
     }
