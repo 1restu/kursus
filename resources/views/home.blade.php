@@ -148,19 +148,23 @@
                 <div class="card-body">
                     <ol class="list-group list-group-numbered">
                         @foreach ($courseList as $list)
-                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <li class="list-group-item d-flex justify-content-between align-items-start position-relative" style="padding-right: 60px;">
                             <div class="ms-2 me-auto">
                                 <div class="fw-bold">{{ $list->nama_krs }}</div>
-                                {{ $list->deskripsi }}
+                                <p class="text-truncate" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                    {{ $list->deskripsi }}
+                                </p>
                             </div>
-                            <span class="badge bg-primary rounded-pill">{{ $list->pendaftar->count() }} Pendaftar</span>
+                            <span class="badge bg-primary rounded-pill position-absolute top-0 end-0 mt-2 me-2">
+                                {{ $list->pendaftar->count() }} Pendaftar
+                            </span>
                         </li>
                         @endforeach
-                        <!-- Additional list items as needed -->
                     </ol>
                 </div>
             </div>
-        </div>
+        </div>        
+
     </div>
 </div>
 @endsection

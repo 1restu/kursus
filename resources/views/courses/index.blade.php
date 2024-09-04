@@ -37,23 +37,15 @@
     </form>
 </div>
 <div class="row mx-auto">
-    {{-- @php
-    $jumlah = count($cours);
-    @endphp --}}
     @foreach($courses as $cours)
     <div class="card mr-2 mx-2 mb-4" style="width: 16rem;">
-        <img src="{{ asset('assets/images/' . $cours->gambar) }}" class="card-img-top" alt="...">
+        <div style="height: 150px; overflow: hidden;">
+            <img src="{{ asset('assets/images/' . $cours->gambar) }}" class="card-img-top" alt="{{ $cours->nama_krs }}" style="height: 100%; object-fit: cover;">
+        </div>
         <div class="card-body bg-light mb-2">
             <h5 class="card-title">{{ $cours->nama_krs }}</h5>
-            {{-- <p class="card-text">{{ 'Rp ' . number_format($cours->biaya_krs, 0, ',', '.') }}</p> --}}
-            <p class="card-text">{{ $cours->deskripsi }}</p>
-            {{-- @if($cours->stok_produk != 0) --}}
-                <a href="{{ route('courses.show', $cours->id) }}" class="btn btn-info">Detail</a>
-            {{-- @if($cours->stok_produk != 0)
-                <a href="{{ route('courses.show', ['id' => $cours->id]) }}" class="btn btn-info">Detail</a>
-            @else
-                <strong class="badge badge-warning text-weight-bold">PENUH</strong>
-            @endif --}}
+            <p class="card-text text-truncate" style="max-height: 3.6em; overflow: hidden; line-height: 1.2em;">{{ $cours->deskripsi }}</p>
+            <a href="{{ route('courses.show', $cours->id) }}" class="btn btn-info">Detail</a>
         </div>
     </div>
     @endforeach

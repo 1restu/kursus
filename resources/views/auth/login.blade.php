@@ -5,6 +5,7 @@
     <div class="card">
         <div class="card-header text-center">
             <i class="fas fa-user"></i>
+            <br>
             {{ __('Login') }}
         </div>
         <form method="POST" action="{{ route('login') }}">
