@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('kursus', function (Blueprint $table) {
-            $table->integer('jam');
+        Schema::create('kursus_materi', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('id_krs')->constrained('kursus')->onDelete('restrict');
+            $table->foreignId('id_mtr')->constrained('materi')->onDelete('restrict');
+            $table->timestamps();
         });
     }
 
@@ -21,8 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('kursus', function (Blueprint $table) {
-            $table->dropColumn('jam');
-        });
+        Schema::dropIfExists('kursus_materi');
     }
 };

@@ -195,6 +195,28 @@ class PdKursusController extends Controller
         return redirect()->route('pd_kursus.edit', $id)->with('error', 'Gagal memperbarui pendaftaran.');
     }
 }
+   
+    public function confirmPayment($id)
+{
+    try {
+        $pdkursus = PdKursusModel::findOrFail($id);
+
+        // Periksa apakah status sudah lunas
+        if ($pdkursus->status == 'lunas') {
+            return redirect()->back()->with('info', 'Pendaftaran sudah lunas.');
+        }
+
+        // Update status menjadi 'lunas'
+        $pdkursus->update([
+            'status' => 'lunas'
+        ]);
+
+        return redirect()->back()->with('success', 'Pembayaran berhasil dikonfirmasi.');
+    } catch (\Exception $e) {
+        return redirect()->back()->with('error', 'Gagal mengonfirmasi pembayaran: ' . $e->getMessage());
+    }
+}
+
 
     /**
      * Remove the specified resource from storage.
