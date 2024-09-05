@@ -197,25 +197,25 @@ class PdKursusController extends Controller
 }
    
     public function confirmPayment($id)
-{
-    try {
-        $pdkursus = PdKursusModel::findOrFail($id);
+    {
+        try {
+            $pdkursus = PdKursusModel::findOrFail($id);
 
-        // Periksa apakah status sudah lunas
-        if ($pdkursus->status == 'lunas') {
-            return redirect()->back()->with('info', 'Pendaftaran sudah lunas.');
+            // Periksa apakah status sudah lunas
+            if ($pdkursus->status == 'lunas') {
+                return redirect()->back()->with('info', 'Pendaftaran sudah lunas.');
+            }
+
+            // Update status menjadi 'lunas'
+            $pdkursus->update([
+                'status' => 'lunas'
+            ]);
+
+            return redirect()->back()->with('success', 'Pembayaran berhasil dikonfirmasi.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal mengonfirmasi pembayaran: ' . $e->getMessage());
         }
-
-        // Update status menjadi 'lunas'
-        $pdkursus->update([
-            'status' => 'lunas'
-        ]);
-
-        return redirect()->back()->with('success', 'Pembayaran berhasil dikonfirmasi.');
-    } catch (\Exception $e) {
-        return redirect()->back()->with('error', 'Gagal mengonfirmasi pembayaran: ' . $e->getMessage());
     }
-}
 
 
     /**
@@ -245,7 +245,7 @@ class PdKursusController extends Controller
 
     } catch (\Exception $e) {
         return redirect()->route('courses.show', $id)
-                        ->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+                        ->with('error', 'Terjadi kesalahan saat menghapus data');
     }
 }
 

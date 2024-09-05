@@ -149,16 +149,16 @@
     </div>
 </div>
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        setTimeout(function() {
-            let alertElement = document.querySelector('.alert');
-            if (alertElement) {
-                alertElement.classList.remove('show');
-                alertElement.classList.add('fade');
-                setTimeout(() => alertElement.remove(), 600);
-            }
-        }, 5000); 
-    });
+    // document.addEventListener("DOMContentLoaded", function() {
+    //     setTimeout(function() {
+    //         let alertElement = document.querySelector('.alert');
+    //         if (alertElement) {
+    //             alertElement.classList.remove('show');
+    //             alertElement.classList.add('fade');
+    //             setTimeout(() => alertElement.remove(), 600);
+    //         }
+    //     }, 5000); 
+    // });
     document.querySelectorAll('.delete-form').forEach(form => {
         form.addEventListener('submit', function(event) {
             if (!confirm('Apakah Anda yakin ingin menghapus data ini?')) {

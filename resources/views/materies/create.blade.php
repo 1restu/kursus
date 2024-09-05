@@ -56,7 +56,7 @@
                                     <option value="{{ $category->id }}">{{ $category->nama_ktg }}</option>
                                 @endforeach
                             </select>
-                      </div>
+                        </div>
 
                         <!-- Input Deskripsi -->
                         <div class="form-group mb-2">

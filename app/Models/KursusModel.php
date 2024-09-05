@@ -17,7 +17,6 @@ class KursusModel extends Model
         'nama_krs',
         'gambar',
         'deskripsi',
-        'id_mtr',
         'biaya_krs',
         'durasi',
         'jam'

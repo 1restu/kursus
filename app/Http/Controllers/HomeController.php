@@ -42,8 +42,15 @@ class HomeController extends Controller
                                     ->orderBy('created_at', 'desc')
                                     ->take(5)
                                     ->get();
-        $revenue = PdKursusModel::where('status', 'lunas')
-                                    ->sum('biaya');
+
+        $revenueKursusLunas = PdKursusModel::where('status', 'lunas')->sum('biaya');
+
+                                    // Step 2: Hitung pendapatan dari tabel history (kursus yang dihapus namun sudah lunas)
+        $revenueHistory = HistoryModel::join('kursus', 'history.id_krs', '=', 'kursus.id')  // pastikan ada kolom yang menandakan status pembayaran
+                        ->sum('kursus.biaya_krs');
+
+                                    // Step 3: Gabungkan kedua pendapatan
+        $revenue = $revenueKursusLunas + $revenueHistory;
         return view('home', 
         compact('studentCount', 'categoryCount', 'courseCount', 'materyCount', 'regists', 'activeCourses', 'revenue', 'courseList'));
     }

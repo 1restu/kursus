@@ -102,7 +102,7 @@
                                             @method('PUT')
                                             <div class="mb-3">
                                                 <label for="nama_ktg" class="form-label">Nama</label>
-                                                <input type="text" class="form-control" id="nama_ktg" name="nama_ktg" value="{{ $ktg->nama_ktg }}">
+                                                <input type="text" class="form-control" id="nama_ktg" name="nama_ktg" value="{{ old('nama_ktg') !== null ? old('nama') : $ktg->nama_ktg }}">
                                             </div>
                                             <div class="text-end">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>

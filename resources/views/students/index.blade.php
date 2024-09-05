@@ -82,7 +82,7 @@
                 <th scope="col">No</th>
                 <th scope="col">Nama</th>
                 <th scope="col">No Telepon</th>
-                <th scope="col">Alamat</th>
+                <th scope="col" style="word-wrap: break-word; white-space: normal; max-width: 200px;">Alamat</th>
                 <th scope="col">Aksi</th>
             </tr>
         </thead>
@@ -92,7 +92,7 @@
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $student->nama }}</td>
                 <td>{{ $student->no_tlp }}</td>
-                <td>{{ $student->alamat }}</td>
+                <td style="word-wrap: break-word; white-space: normal; max-width: 200px;">{{ $student->alamat }}</td>
                 <!-- Tambahkan kolom lain sesuai kebutuhan -->
             {{-- @foreach($students as $student)
                 <tr>
@@ -117,15 +117,15 @@
                                             @method('PUT')
                                             <div class="mb-3">
                                                 <label for="nama" class="form-label">Nama</label>
-                                                <input type="text" class="form-control" id="nama" name="nama" value="{{ old('nama', $student->nama) }}">
+                                                <input type="text" class="form-control" id="nama" name="nama" value="{{ old('nama') !== null ? old('nama') : $student->nama }}">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="no_tlp" class="form-label">No Telepon</label>
-                                                <input type="text" class="form-control" id="no_tlp" name="no_tlp" value="{{ old('no_tlp', $student->no_tlp) }}">
+                                                <input type="text" class="form-control" id="no_tlp" name="no_tlp" value="{{ old('no_tlp') !== null ? old('no_tlp') : $student->no_tlp }}">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="alamat" class="form-label">Alamat</label>
-                                                <textarea class="form-control" id="alamat" name="alamat" rows="4">{{ old('alamat', $student->alamat) }}</textarea>
+                                                <textarea class="form-control" id="alamat" name="alamat" rows="4">{{ old('alamat') !== null ? old('alamat') : $student->alamat }}</textarea>
                                             </div>
                                             <div class="text-end">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>

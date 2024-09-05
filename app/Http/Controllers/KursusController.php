@@ -42,7 +42,13 @@ class KursusController extends Controller
     public function create()
     {
         $categories = KtgMateriModel::latest('created_at')->get();
-        $materies = MateriModel::latest('created_at')->get();
+
+        // Mengambil ID materi yang sudah digunakan di tabel pivot kursus_materi
+        $usedMateriIds = KursusModel::with('materi')->get()->pluck('materi.*.id')->flatten()->toArray();
+
+        // Mendapatkan materi yang belum digunakan
+        $materies = MateriModel::whereNotIn('id', $usedMateriIds)->latest('created_at')->get();
+
         return view('courses.create', compact('categories', 'materies'));
     }
 
@@ -144,8 +150,23 @@ class KursusController extends Controller
     {
         $course = KursusModel::findOrFail($id);
         $categories = KtgMateriModel::latest('created_at')->get();
-        $materies = MateriModel::latest('created_at')->get();
-        return view('courses.edit', compact('course','categories', 'materies'));
+        $materiSelectedIds = $course->materi->pluck('id')->toArray();
+
+    // Ambil semua materi yang digunakan oleh kursus lain
+    $usedMateriIds = KursusModel::where('id', '!=', $id)
+                                ->with('materi')
+                                ->get()
+                                ->pluck('materi.*.id')
+                                ->flatten()
+                                ->toArray();
+
+    // Ambil semua materi, tapi jangan sertakan materi yang digunakan oleh kursus lain, kecuali materi yang sudah digunakan di kursus ini
+    $materies = MateriModel::whereNotIn('id', $usedMateriIds)
+                            ->orWhereIn('id', $materiSelectedIds)
+                            ->latest('created_at')
+                            ->get();
+
+    return view('courses.edit', compact('course', 'categories', 'materies', 'materiSelectedIds'));
     }
 
     /**
@@ -235,13 +256,13 @@ class KursusController extends Controller
         }
         $kursus->delete();
 
-        return redirect()->route('coursees.index')->with('success', 'Kursus berhasil dihapus.');
+        return redirect()->route('courses.index')->with('success', 'Kursus berhasil dihapus.');
     } catch (\Exception $e) {
         if ($e->getCode() == 23000) {
             return redirect()->route('courses.index')->with('error', 'Kursus tidak dapat dihapus karena masih terkait dengan pendaftaran kursus.');
         }
 
-        return redirect()->route('courses.index')->with('error', 'Gagal menghapus kursus.');
+        return redirect()->route('courses.index')->with("error", "Gagal menghapus kursus." . "$e");
     }
 }
 

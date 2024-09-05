@@ -25,8 +25,9 @@ class MateriModel extends Model
         return $this->belongsTo(KtgMateriModel::class, 'id_ktg');
     }
 
-    public function Kursus()
+    public function kursus()
     {
-        return $this->belongsToMany(KursusModel::class, 'kursus_materi', 'id_mtr', 'id_krs');
+        return $this->belongsToMany(KursusModel::class, 'kursus_materi', 'id_mtr', 'id_krs')->withTimestamps();
+
     }
 }
