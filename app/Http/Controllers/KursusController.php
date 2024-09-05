@@ -87,7 +87,7 @@ class KursusController extends Controller
             'jam.required' => 'Durasi jam perhari wajib diisi.',
             'jam.integer' => 'Durasi jam perhari harus berupa bilangan bulat.',
             'jam.min' => 'Durasi jam perhari tidak boleh dibawah 0.',
-            'jam.max' => 'Durasi jam perhari tak boleh lebih dari 6 jam.'
+            'jam.max' => 'Durasi jam perhari tak boleh lebih dari '
         ]);
 
         if($request->hasFile('gambar')){
