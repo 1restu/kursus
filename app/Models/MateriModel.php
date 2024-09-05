@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\KtgMateriModel;
+use App\Models\KursusModel;
 
 class MateriModel extends Model
 {
@@ -27,5 +28,6 @@ class MateriModel extends Model
     public function kursus()
     {
         return $this->belongsToMany(KursusModel::class, 'kursus_materi', 'id_mtr', 'id_krs')->withTimestamps();
+
     }
-};
+}

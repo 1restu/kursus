@@ -109,7 +109,7 @@ class MateriController extends Controller
         public function update(Request $request, string $id)
             {
                 $materi = MateriModel::findOrFail($id);
-                if ($materi->Kursus()->exists()) {
+                if ($materi->kursus()->exists()) {
                     return redirect()->back()->with('error', 'Materi tidak dapat diubah karena masih terkait dengan kursus.');
                 }
 
