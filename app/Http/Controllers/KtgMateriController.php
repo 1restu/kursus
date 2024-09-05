@@ -89,7 +89,7 @@ class KtgMateriController extends Controller
         }
 
         $request->validate([
-            'nama_ktg' => 'required|unique:ktg_materi,nama_ktg|regex:/^[a-zA-Z\s]+$/'
+            'nama_ktg' => 'required|unique:ktg_materi,nama_ktg,' . $id . '|regex:/^[a-zA-Z\s]+$/'
         ], [
             'nama_ktg.required' => 'Nama kategori harus di isi.',
             'nama_ktg.unique' => 'Kategori ini sudah ada, silahkan masukan nama kategori yang berbeda.',
