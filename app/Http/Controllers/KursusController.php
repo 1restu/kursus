@@ -58,7 +58,7 @@ class KursusController extends Controller
             'id_mtr' => 'required|array|max:3|exists:materi,id',
             'biaya_krs' => 'required|numeric|min:0',
             'durasi' => 'required|integer|min:1',
-            'jam' => 'required|integer|min:1'
+            'jam' => 'required|integer|min:1|max:6'
         ], [
             'nama_krs.required' => 'Nama kursus wajib diisi.',
             'nama_krs.unique' => 'Nama kursus sudah ada, silahkan masukkan nama yang lain.',
@@ -80,7 +80,8 @@ class KursusController extends Controller
             'durasi.min' => 'Durasi kursus tidak boleh dibawah 0.',
             'jam.required' => 'Durasi jam perhari wajib diisi.',
             'jam.integer' => 'Durasi jam perhari harus berupa bilangan bulat.',
-            'jam.min' => 'Durasi jam perhari tidak boleh dibawah 0.'
+            'jam.min' => 'Durasi jam perhari tidak boleh dibawah 0.',
+            'jam.max' => 'Durasi jam perhari tak boleh lebih dari 6 jam.'
         ]);
 
         if($request->hasFile('gambar')){
