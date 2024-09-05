@@ -130,17 +130,13 @@
         }
         .login-page .navbar,
         .login-page .content-area,
-        .login-page main,
-        .register-page .navbar,
-        .register-page .content-area,
-        .register-page main {
+        .login-page main {
             margin-left: 0;
             width: 100%;
             padding: 0;
         }
 
-        .login-page main,
-        .register-page main {
+        .login-page main {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -152,13 +148,13 @@
     </style>
 </head>
 
-<body @if(Route::is('login') || Route::is('register')) class="login-page register-page" @endif>
+<body @if(Route::is('login')) class="login-page" @endif>
     <div id="app">
-        @if(!Route::is('login') && !Route::is('register'))
+        @if(!Route::is('login'))
             @include('layouts.navbar')
         @endif
         <div class="container-fluid p-0 d-flex h-100">
-            @if(!Route::is('login') && !Route::is('register'))
+            @if(!Route::is('login'))
                 @include('layouts.sidebar')
             @endif
             <div class="bg-light flex-fill">
