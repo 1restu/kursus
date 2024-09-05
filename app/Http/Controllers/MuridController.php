@@ -104,8 +104,8 @@ class MuridController extends Controller
     {
         $student = MuridModel::find($id);
 
-        if (!$student) {
-            return redirect('/students')->with('error', 'Murid tidak ditemukan.');
+        if ($student->PdKursus()->exists()) {
+            return redirect('/students')->with('error', 'data murid tak bisa di edit karna masih terkait dengan pendaftaran kursus.');
         }
 
         $request->validate([
@@ -148,7 +148,7 @@ class MuridController extends Controller
             return redirect('/students')->with('success', 'Murid berhasil dihapus.');
         } catch (QueryException $e) {
             if($e->getCode() == '23000') {
-                return redirect('/students')->with('error', 'Murid tidak dapat dihapus karena data murid masih digunakan.');
+                return redirect('/students')->with('error', 'Murid tidak dapat dihapus karena data murid masih terkait di pendaftaran kursus.');
             }
             return redirect('/students')->with('error', 'Terjadi kesalahan. Murid gagal dihapus.');
         }
