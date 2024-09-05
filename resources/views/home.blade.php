@@ -20,6 +20,13 @@
     .custom-margin-top {
         margin-top: 20px; /* Adjust the value as needed */
     }
+
+    .course-description {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
 </style>
 <div class="container-fluid mt-n22 px-6">
     <div class="row">
@@ -148,10 +155,15 @@
                 <div class="card-body">
                     <ol class="list-group list-group-numbered">
                         @foreach ($courseList as $list)
+                        @php
+                            $list->deskripsi = Str::limit($list->deskripsi, 27, '...');
+                        @endphp
                         <li class="list-group-item d-flex justify-content-between align-items-start position-relative" style="padding-right: 60px;">
                             <div class="ms-2 me-auto">
                                 <div class="fw-bold">{{ $list->nama_krs }}</div>
-                                <p class="text-truncate" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                <p class="course-description" style="white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;">
                                     {{ $list->deskripsi }}
                                 </p>
                             </div>
@@ -163,7 +175,7 @@
                     </ol>
                 </div>
             </div>
-        </div>        
+        </div        
 
     </div>
 </div>

@@ -4,6 +4,8 @@
 <div class="fullscreen-container d-flex justify-content-center align-items-center">
     <div class="card">
         <div class="card-header text-center">
+            <i class="fas fa-user text-primary"></i>
+            <br>
             {{ __('Register') }}
         </div>
 

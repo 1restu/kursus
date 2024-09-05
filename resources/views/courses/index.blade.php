@@ -28,6 +28,17 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 @endif
+<style>
+    .card {
+        transition: transform 0.3s ease-in-out;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+</style>
 <h4 class="text-center font-weight-bold m-4">KURSUS</h4>
 <div class="d-flex justify-content-between mb-3">
     <a href="{{ route('courses.create') }}" class="btn btn-primary mb-3">Tambah Kursus</a>
@@ -36,7 +47,7 @@
         <button type="submit" class="btn btn-secondary">Cari</button>
     </form>
 </div>
-<div class="row mx-auto">
+<div class="row mx-auto" id="content">
     @foreach($courses as $cours)
     <div class="card mr-2 mx-2 mb-4" style="width: 16rem;">
         <div style="height: 150px; overflow: hidden;">

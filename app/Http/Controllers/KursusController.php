@@ -42,7 +42,13 @@ class KursusController extends Controller
     public function create()
     {
         $categories = KtgMateriModel::latest('created_at')->get();
-        $materies = MateriModel::latest('created_at')->get();
+
+        // Mengambil ID materi yang sudah digunakan di tabel pivot kursus_materi
+        $usedMateriIds = KursusModel::with('materi')->get()->pluck('materi.*.id')->flatten()->toArray();
+
+        // Mendapatkan materi yang belum digunakan
+        $materies = MateriModel::whereNotIn('id', $usedMateriIds)->latest('created_at')->get();
+
         return view('courses.create', compact('categories', 'materies'));
     }
 
@@ -58,7 +64,7 @@ class KursusController extends Controller
             'id_mtr' => 'required|array|max:3|exists:materi,id',
             'biaya_krs' => 'required|numeric|min:0',
             'durasi' => 'required|integer|min:1',
-            'jam' => 'required|integer|min:1'
+            'jam' => 'required|integer|min:1|max:6'
         ], [
             'nama_krs.required' => 'Nama kursus wajib diisi.',
             'nama_krs.unique' => 'Nama kursus sudah ada, silahkan masukkan nama yang lain.',
@@ -80,7 +86,8 @@ class KursusController extends Controller
             'durasi.min' => 'Durasi kursus tidak boleh dibawah 0.',
             'jam.required' => 'Durasi jam perhari wajib diisi.',
             'jam.integer' => 'Durasi jam perhari harus berupa bilangan bulat.',
-            'jam.min' => 'Durasi jam perhari tidak boleh dibawah 0.'
+            'jam.min' => 'Durasi jam perhari tidak boleh dibawah 0.',
+            'jam.max' => 'Durasi jam perhari tidak boleh diatas 6.'
         ]);
 
         if($request->hasFile('gambar')){
@@ -143,8 +150,23 @@ class KursusController extends Controller
     {
         $course = KursusModel::findOrFail($id);
         $categories = KtgMateriModel::latest('created_at')->get();
-        $materies = MateriModel::latest('created_at')->get();
-        return view('courses.edit', compact('course','categories', 'materies'));
+        $materiSelectedIds = $course->materi->pluck('id')->toArray();
+
+    // Ambil semua materi yang digunakan oleh kursus lain
+    $usedMateriIds = KursusModel::where('id', '!=', $id)
+                                ->with('materi')
+                                ->get()
+                                ->pluck('materi.*.id')
+                                ->flatten()
+                                ->toArray();
+
+    // Ambil semua materi, tapi jangan sertakan materi yang digunakan oleh kursus lain, kecuali materi yang sudah digunakan di kursus ini
+    $materies = MateriModel::whereNotIn('id', $usedMateriIds)
+                            ->orWhereIn('id', $materiSelectedIds)
+                            ->latest('created_at')
+                            ->get();
+
+    return view('courses.edit', compact('course', 'categories', 'materies', 'materiSelectedIds'));
     }
 
     /**
@@ -234,13 +256,13 @@ class KursusController extends Controller
         }
         $kursus->delete();
 
-        return redirect()->route('coursees.index')->with('success', 'Kursus berhasil dihapus.');
+        return redirect()->route('courses.index')->with('success', 'Kursus berhasil dihapus.');
     } catch (\Exception $e) {
         if ($e->getCode() == 23000) {
             return redirect()->route('courses.index')->with('error', 'Kursus tidak dapat dihapus karena masih terkait dengan pendaftaran kursus.');
         }
 
-        return redirect()->route('courses.index')->with('error', 'Gagal menghapus kursus.');
+        return redirect()->route('courses.index')->with("error", "Gagal menghapus kursus." . "$e");
     }
 }
 

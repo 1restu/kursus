@@ -53,7 +53,7 @@
                             <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3" placeholder="Masukkan deskripsi kursus">{{ old('deskripsi', $course->deskripsi) }}</textarea>
                         </div>
 
-                        <div class="form-group mb-2">
+                        {{-- <div class="form-group mb-2">
                             <label for="kategori">Materi</label>
                             <select name="id_mtr" id="kategori" class="form-control">
                                 <option value="">Pilih Materi</option>
@@ -61,6 +61,21 @@
                                     <option value="{{ $matery->id }}" {{ $matery->id == old('id_mtr', $matery->id) ? 'selected' : ''}}>{{ $matery->nama_mtr }}</option>
                                 @endforeach
                             </select>
+                        </div> --}}
+
+                        <div class="form-group mb-2">
+                            <label for="materi">{{ __('Materi') }}</label>
+                            <div class="form-check">
+                                @foreach($materies as $matery)
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="id_mtr[]" value="{{ $matery->id }}" id="materi_{{ $matery->id }}"
+                                            {{ in_array($matery->id, old('id_mtr', $materiSelectedIds)) ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="materi_{{ $matery->id }}">
+                                            {{ $matery->nama_mtr }}
+                                        </label>
+                                    </div>
+                                @endforeach
+                            </div>
                         </div>
 
                         <div class="form-group mb-2">

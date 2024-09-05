@@ -33,7 +33,7 @@
                 
                 <div class="form-group">
                     <label for="nama_materi">{{ __('Nama Materi') }}</label>
-                    <input type="text" class="form-control" id="nama_materi" name="nama_mtr" value="{{ old('nama_mtr', $materi->nama_mtr) }}">
+                    <input type="text" class="form-control" id="nama_materi" name="nama_mtr" value="{{ old('nama_mtr') !== null ? old('alamat') : $materi->nama_mtr }}">
                 </div>
                 
                 <div class="form-group">
@@ -51,6 +51,7 @@
                 <!-- Input Deskripsi -->
                 <div class="form-group">
                     <label for="deskripsi">{{ __('Deskripsi') }}</label>
+                    <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3">{{ old('deskripsi', $materi->deskripsi) }}</textarea>
                     <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3">{{ old('deskripsi', $materi->deskripsi) }}</textarea>
                 </div>
 
