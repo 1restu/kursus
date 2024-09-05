@@ -19,6 +19,8 @@ class KtgMateriController extends Controller
 
     if ($search = request()->get('search')) {
         $query->where('nama_ktg', 'like', "%{$search}%");
+    } else {
+        return redirect('/categories')->with('error', 'tidak ada hasil pencarian apapun yang sesuai dengan : ' . $search)->withInput();
     }
 
     $kategori = $query->get();
@@ -80,17 +82,19 @@ class KtgMateriController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $ktg = KtgMateriModel::find($id);
+        $ktg = KtgMateriModel::findOrFail($id);
 
         if(!$ktg) {
             return redirect('/categories')->with('error', 'Kategori tak ditemukan.');
+        } else if($ktg->Materi()->exists()) {
+            return redirect('/categories')->with('error', 'kategori masih terkait dengan beberapa materi');
         }
 
         $request->validate([
             'nama_ktg' => 'required|unique:ktg_materi,nama_ktg|regex:/^[a-zA-Z\s]+$/'
         ], [
             'nama_ktg.required' => 'Nama kategori harus di isi.',
-            'nama_ktg.unique' => 'Kategori ini sudah ada, silahka masukan nama kategori yang berbeda.',
+            'nama_ktg.unique' => 'Kategori ini sudah ada, silahkan masukan nama kategori yang berbeda.',
             'nama_ktg.regex' => 'Nama kategori tidak boleh memiliki angka.'
         ]);
 
@@ -98,9 +102,6 @@ class KtgMateriController extends Controller
             $ktg->update($request->only('nama_ktg'));
             return redirect('/categories')->with('success', 'Kategori berhasil di edit.');
         } catch(QueryException $e) {
-            if($e->getcode() == '23000') {
-                return redirect('/categories')->with('error', 'Kategori gagal di edit karna masih terkait dengan materi.');
-            }
             return redirect('/categories')->with('error', 'Kategori gagal di edit.');
         }
     }
