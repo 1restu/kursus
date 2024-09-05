@@ -53,7 +53,7 @@
                             <select name="id_ktg" id="kategori" class="form-control">
                                 <option value="">Pilih Kategori</option>
                                 @foreach($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->nama_ktg }}</option>
+                                    <option value="{{ $category->id }}">{{ $category->id == old('id_ktg', $materi->id_ktg) }}</option>
                                 @endforeach
                             </select>
                         </div>
