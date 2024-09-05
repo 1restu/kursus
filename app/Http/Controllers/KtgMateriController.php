@@ -19,8 +19,6 @@ class KtgMateriController extends Controller
 
     if ($search = request()->get('search')) {
         $query->where('nama_ktg', 'like', "%{$search}%");
-    } else {
-        return redirect('/categories')->with('error', 'tidak ada hasil pencarian apapun yang sesuai dengan : ' . $search)->withInput();
     }
 
     $kategori = $query->get();
