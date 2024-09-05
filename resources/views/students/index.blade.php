@@ -82,7 +82,7 @@
                 <th scope="col">No</th>
                 <th scope="col">Nama</th>
                 <th scope="col">No Telepon</th>
-                <th scope="col">Alamat</th>
+                <th scope="col" style="word-wrap: break-word; white-space: normal; max-width: 200px;">Alamat</th>
                 <th scope="col">Aksi</th>
             </tr>
         </thead>
@@ -92,7 +92,7 @@
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $student->nama }}</td>
                 <td>{{ $student->no_tlp }}</td>
-                <td>{{ $student->alamat }}</td>
+                <td style="word-wrap: break-word; white-space: normal; max-width: 200px;">{{ $student->alamat }}</td>
                 <!-- Tambahkan kolom lain sesuai kebutuhan -->
             {{-- @foreach($students as $student)
                 <tr>
