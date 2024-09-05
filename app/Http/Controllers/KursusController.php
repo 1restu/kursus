@@ -248,12 +248,13 @@ class KursusController extends Controller
      */
     public function destroy($id)
 {
-    $kursus = KursusModel::find($id);
+    $kursus = KursusModel::findOrFail($id);
 
     try {
         if ($kursus->gambar && file_exists(public_path('assets/images' . $kursus->gambar))) {
             unlink(public_path('assets/images' . $kursus->gambar));
         }
+        $kursus->materi()->detach();
         $kursus->delete();
 
         return redirect()->route('courses.index')->with('success', 'Kursus berhasil dihapus.');
