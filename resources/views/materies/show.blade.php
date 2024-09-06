@@ -27,7 +27,7 @@
                     </div>
                     <div class="mb-3">
                         <h5>File:</h5>
-                        <p class="form-control-plaintext">{{ $materies->file_mtr }}</p>
+                        <p class="form-control-plaintext">{{ $materies->original_file_mtr }}</p>
                     </div>
                     <div class="mb-3">
                         <h5>Ditambahkan:</h5>
@@ -39,7 +39,7 @@
                     </div>                    
                     <div class="d-flex justify-content-between">
                         <a href="{{ url()->previous() }}" class="btn btn-secondary">Kembali</a>
-                        <a href="/assets/files/{{ $materies->file_mtr }}" class="btn btn-primary" target="_blank">Download File</a>
+                        <a href="{{ route('materi.download', $materies->id) }}" class="btn btn-primary">Download File</a>
                     </div>
                 </div>
             </div>

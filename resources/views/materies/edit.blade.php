@@ -33,7 +33,7 @@
                 
                 <div class="form-group">
                     <label for="nama_materi">{{ __('Nama Materi') }}</label>
-                    <input type="text" class="form-control" id="nama_materi" name="nama_mtr" value="{{ old('nama_mtr') !== null ? old('alamat') : $materi->nama_mtr }}">
+                    <input type="text" class="form-control" id="nama_materi" name="nama_mtr" value="{{ old('nama_mtr') !== null ? old('nama_mtr') : $materi->nama_mtr }}">
                 </div>
                 
                 <div class="form-group">
@@ -57,7 +57,7 @@
                 <!-- Input File Materi -->
                 <div class="form-group">
                     <label for="file_materi">{{ __('File Materi') }}</label>
-                    <br><p class="text-dark">{{ basename($materi->file_mtr) }}</p>
+                    <br><p class="text-dark">{{ basename($materi->original_file_mtr) }}</p>
                     <small class="text-danger">{{ __('Upload file dalam bentuk PDF, DOC, DOCX dan TXT') }}</small>
                     <br><input type="file" class="form-control" id="file_materi" name="file_mtr"><small class="text-muted"></small>
                 </div>

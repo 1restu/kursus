@@ -22,6 +22,7 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::resource('categories', KtgMateriController::class);
+    Route::get('/materi/download/{id}', [MateriController::class, 'download'])->name('materi.download');
     Route::resource('materies', MateriController::class);
     Route::resource('histories', HistoryController::class);
     Route::resource('courses', KursusController::class);

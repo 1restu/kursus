@@ -69,20 +69,21 @@ class MateriController extends Controller
 
             if ($request->hasFile('file_mtr')) {
                 $file = $request->file('file_mtr');
-                $fileName = time() . '_' . $file->getClientOriginalName();
+                $originalFileName = $file->getClientOriginalName();
+                $uniqueFileName = time() . '_' . uniqid() . '_' . $originalFileName;
 
-                $filePath = public_path('assets/files/' . $fileName);
-                if (file_exists($filePath)) {
-                    return redirect()->back()->with('error', 'File dengan nama yang sama sudah ada.');
+                if (MateriModel::where('original_file_mtr', $originalFileName)->exists()) {
+                    return redirect()->back()->with('error', 'File ini sudah digunakan oleh materi lain.')->withInput();
                 }
 
-                $file->move(public_path('assets/files'), $fileName);
+                $file->move(public_path('assets/files'), $uniqueFileName);
 
                 try {
                     MateriModel::create([
                         'nama_mtr' => $request->nama_mtr,
                         'deskripsi' => $request->deskripsi,
-                        'file_mtr' => $fileName,
+                        'file_mtr' => $uniqueFileName,
+                        'original_file_mtr' => $originalFileName,
                         'id_ktg' => $request->id_ktg
                     ]);
 
@@ -135,11 +136,13 @@ class MateriController extends Controller
         // Jika ada file yang diunggah
         if ($request->hasFile('file_mtr')) {
             $file = $request->file('file_mtr');
-            $fileName = time() . '_' . $file->getClientOriginalName();
+            $originalFileName = $file->getClientOriginalName();
+            $uniqueFileName = time() . '_' . uniqid() . '_' . $originalFileName;
 
-            $filePath = public_path('assets/files/' . $fileName);
-            if (file_exists($filePath)) {
-                return redirect()->back()->with('error', 'File dengan nama yang sama sudah ada.');
+            if (MateriModel::where('original_file_mtr', $originalFileName)
+            ->where('id', '!=', $materi->id)
+            ->exists()) {
+                return redirect()->back()->with('error', 'File ini sudah digunakan oleh materi lain.')->withInput();
             }
 
             // Hapus file lama jika ada
@@ -148,13 +151,14 @@ class MateriController extends Controller
             }
 
             // Pindahkan file baru
-            $file->move(public_path('assets/files'), $fileName);
+            $file->move(public_path('assets/files'), $uniqueFileName);
 
             // Update data
             $materi->update([
                 'nama_mtr' => $request->nama_mtr,
                 'deskripsi' => $request->deskripsi,
-                'file_mtr' => $fileName,
+                'file_mtr' => $uniqueFileName,
+                'original_file_mtr' => $originalFileName,
                 'id_ktg' => $request->id_ktg
             ]);
 
@@ -179,6 +183,19 @@ class MateriController extends Controller
         $materies = MateriModel::with('kategori')->findOrFail($id); // Ambil data materi dan relasinya
         return view('materies.show', compact('materies')); 
     }
+
+    public function download($id)
+{
+    $materi = MateriModel::findOrFail($id);
+    $filePath = public_path('assets/files/' . $materi->file_mtr);
+
+    if (!file_exists($filePath)) {
+        return redirect()->back()->with('error', 'File tidak ditemukan.');
+    }
+
+    return response()->download($filePath, $materi->original_file_mtr);
+}
+
 
     /**
      * Remove the specified resource from storage.

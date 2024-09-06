@@ -17,6 +17,7 @@ class MateriModel extends Model
         'nama_mtr',
         'deskripsi',
         'file_mtr',
+        'original_file_mtr',
         'id_ktg'
     ];
 
