@@ -56,7 +56,9 @@ table th {
                             <tr>
                                 <th>No</th>
                                 <th>Kursus</th>
+                                <th>Biaya</th>
                                 <th>Nama Murid</th>
+                                <th>No Telepon</th>
                                 <th>Mulai</th>
                                 <th>Selesai</th>
                                 {{-- <th>Status</th> --}}
@@ -67,7 +69,9 @@ table th {
                             <tr class="align-middle">
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $history->nama_krs }}</td>
+                                <td>{{ $history->biaya }}</td>
                                 <td>{{ $history->nama }}</td>
+                                <td>{{ $history->telepon }}</td>
                                 <td>{{ $history->tanggal_mulai }}</td>
                                 <td>{{ $history->tanggal_selesai }}</td>
                                 {{-- <td>
