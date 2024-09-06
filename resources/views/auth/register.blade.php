@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+@php
+    $breadcrumbSecond = 'Halaman Tambah Admin';
+@endphp
 <div class="fullscreen-container d-flex justify-content-center align-items-center">
     <div class="card">
         <div class="card-header text-center">

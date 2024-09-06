@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Log;
 class RegisterController extends Controller
 {
 
-    protected $redirectTo = '/login'; 
+    protected $redirectTo = '/'; 
 
     public function __construct()
     {
@@ -73,9 +73,9 @@ class RegisterController extends Controller
         $admin = $this->create($request->all());
 
         if ($admin) {
-            return redirect($this->redirectTo)->with('success', 'Registrasi berhasil, silakan login.');
+            return redirect($this->redirectTo)->with('successs', 'Admin baru berhasil di tambahkan.');
         }
 
-        return back()->with('error', 'Registrasi gagal, silakan coba lagi.');
+        return back()->with('errorr', 'Admin baru gagal untuk di tambahkan.');
     }
 }
