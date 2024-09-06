@@ -92,7 +92,11 @@ class KursusController extends Controller
 
         if($request->hasFile('gambar')){
             $file = $request->file('gambar');
-            $filename=time() . '_' . $file->getClientOriginalName();
+            $filename= $file->getClientOriginalName();
+
+            if (KursusModel::where('gambar', $filename)->exists()) {
+                return redirect()->back()->with('error', 'Gambar ini telah digunakan oleh kursus lain silahkan upload gambar yang berbeda.')->withInput();
+            }
             $file->move(public_path('assets/images'), $filename);
 
             try {
@@ -210,7 +214,11 @@ class KursusController extends Controller
         // Cek jika ada file gambar yang diunggah
         if ($request->hasFile('gambar')) {
             $file = $request->file('gambar');
-            $filename = time() . '_' . $file->getClientOriginalName();
+            $filename = $file->getClientOriginalName();
+
+            if (KursusModel::where('gambar', $filename)->where('id', '!=', $id)->exists()) {
+                return redirect()->back()->with('error', 'Gambar ini sudah digunakan di kursus lain.')->withInput();
+            }
 
             // Hapus file gambar lama jika ada
             if ($kursus->gambar && file_exists(public_path('assets/images/' . $kursus->gambar))) {
