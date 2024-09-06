@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\MuridModel;
+use Database\Factories\CategoryFactory;
 use Database\Factories\StudentsFactory;
 use Illuminate\Database\Seeder;
 
@@ -22,6 +23,7 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
         // 
-        StudentsFactory::new()->count(10)->create();
+        // StudentsFactory::new()->count(10)->create();
+        CategoryFactory::new()->count(10)->create();
     }
 }
