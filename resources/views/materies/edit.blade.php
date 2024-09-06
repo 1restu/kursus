@@ -51,8 +51,7 @@
                 <!-- Input Deskripsi -->
                 <div class="form-group">
                     <label for="deskripsi">{{ __('Deskripsi') }}</label>
-                    <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3">{{ old('deskripsi', $materi->deskripsi) }}</textarea>
-                    <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3">{{ old('deskripsi', $materi->deskripsi) }}</textarea>
+                    <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3">{{ old('deskripsi') !== null ? old('deskripsi') : $materi->deskripsi }}</textarea>
                 </div>
 
                 <!-- Input File Materi -->

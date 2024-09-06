@@ -34,10 +34,10 @@
                 {{ __('Login') }}
             </button>
         </form>
-        <div class="signup-link">
+        {{-- <div class="signup-link">
             {{ __("Bukan Atmin?") }} 
             <a href="{{ route('register') }}">{{ __('Register!') }}</a>
-        </div>
+        </div> --}}
     </div>
 </div>
 

@@ -28,6 +28,19 @@
     }
 
 </style>
+@if (session('successs'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('successs') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+@endif
+
+@if (session('errorr'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ session('errorr') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+@endif
 <div class="container-fluid mt-n22 px-6">
     <div class="row">
         <div class="col-xl-3 col-lg-6 col-md-12 col-12 mt-6">
