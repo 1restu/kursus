@@ -49,7 +49,14 @@ class KursusController extends Controller
         // Mendapatkan materi yang belum digunakan
         $materies = MateriModel::whereNotIn('id', $usedMateriIds)->latest('created_at')->get();
 
-        return view('courses.create', compact('categories', 'materies'));
+        $message = '';
+        if ($materies->isEmpty() && $usedMateriIds) {
+            $message = 'Semua materi sudah digunakan';
+        } elseif ($materies->isEmpty()) {
+            $message = 'Tidak ada data';
+        }
+
+        return view('courses.create', compact('categories', 'materies', 'message'));
     }
 
     /**

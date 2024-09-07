@@ -43,7 +43,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($regists as $regist)
+            @forelse($regists as $regist)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $regist->courses->nama_krs ?? 'N/A' }}</td>
@@ -60,7 +60,11 @@
                         </form>
                     </td>
                 </tr>
-            @endforeach
+            @empty
+                <tr>
+                    <td colspan="7"><center class="bg-danger text-white">Data tidak ada</center></td>
+                </tr>
+            @endforelse
         </tbody>
     </table>
 </div>
