@@ -58,7 +58,7 @@
                 <div class="form-group">
                     <label for="file_materi">{{ __('File Materi') }}</label>
                     <br><p class="text-dark">{{ basename($materi->original_file_mtr) }}</p>
-                    <small class="text-danger">{{ __('Upload file dalam bentuk PDF, DOC, DOCX dan TXT') }}</small>
+                    <small class="text-danger">{{ __('Upload file dalam bentuk PDF, DOC, DOCX, PPT, PPTX dan TXT') }}</small>
                     <br><input type="file" class="form-control" id="file_materi" name="file_mtr"><small class="text-muted"></small>
                 </div>
 

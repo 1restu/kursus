@@ -52,7 +52,7 @@ class MateriController extends Controller
             $request->validate([
                 'nama_mtr' => 'required|unique:materi,nama_mtr|regex:/^[a-zA-Z\s]+$/|min:5|max:20',
                 'deskripsi' => 'required|min:10|max:100',
-                'file_mtr' => 'required|file|max:10240|mimes:pdf,doc,docx,txt',
+                'file_mtr' => 'required|file|max:10240|mimes:pdf,doc,docx,txt,ppt,pptx',
                 'id_ktg' => 'required|exists:ktg_materi,id'
             ], [
                 'nama_mtr.required' => 'Nama materi wajib di isi.',
@@ -65,7 +65,7 @@ class MateriController extends Controller
                 'deskripsi.max' => 'Deskripsi maksimal 100 karakter.',
                 'file_mtr.required' => 'File materi wajib diunggah.',
                 'file_mtr.max' => 'Ukuran file tidak boleh lebih dari 10MB.',
-                'file_mtr.mimes' => 'Format file harus berupa PDF, DOC, DOCX, atau TXT.',
+                'file_mtr.mimes' => 'Format file harus berupa PDF, DOC, DOCX, PPT, PPTX atau TXT.',
                 'id_ktg.required' => 'Kategori tidak boleh kosong.',
                 'id_ktg.exists' => 'Kategori tidak valid.'
             ]);
@@ -121,7 +121,7 @@ class MateriController extends Controller
         $request->validate([
             'nama_mtr' => 'required|unique:materi,nama_mtr,' . $id . '|regex:/^[a-zA-Z\s]+$/|min:5|max:20',
             'deskripsi' => 'required|min:10',
-            'file_mtr' => 'nullable|file|max:10240|mimes:pdf,doc,docx,txt',
+            'file_mtr' => 'nullable|file|max:10240|mimes:pdf,doc,docx,txt,ppt,pptx',
             'id_ktg' => 'required|exists:ktg_materi,id' // Tambahkan nama tabel dan kolom untuk validasi
         ], [
             'nama_mtr.required' => 'Nama materi wajib di isi.',
@@ -134,7 +134,7 @@ class MateriController extends Controller
             'deskripsi.max' => 'Deskripsi maksimal 100 karakter.',
             'file_mtr.nullable' => 'File materi tidak wajib diunggah.',
             'file_mtr.max' => 'Ukuran file tidak boleh lebih dari 10MB.',
-            'file_mtr.mimes' => 'Format file harus berupa PDF, DOC, DOCX, atau TXT.',
+            'file_mtr.mimes' => 'Format file harus berupa PDF, DOC, DOCX, PPT, PPTX atau TXT.',
             'id_ktg.required' => 'Kategori tidak boleh kosong',
             'id_ktg.exists' => 'Kategori tidak valid.'
         ]);

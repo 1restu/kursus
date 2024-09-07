@@ -133,10 +133,13 @@
                 @elseif (in_array($fileName, ['doc', 'docx']))
                     <i class="fa-solid fa-file-word text-primary"></i>
                 @elseif (in_array($fileName, ['txt']))
-                    <i class="fa-solid fa-file-lines text-warning"></i>
+                    <i class="fa-solid fa-file-lines text-secondary"></i>
+                @elseif (in_array($fileName, ['ppt', 'pptx']))
+                    <i class="fa-solid fa-file-powerpoint text-warning"></i>
                 @else
                     <i class="fa-solid fa-file text-muted"></i>
                 @endif
+
             </div>
             <div class="file-name">
                 <p class="text-muted">{{ $matery->nama_mtr }}</p>

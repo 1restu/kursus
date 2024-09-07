@@ -67,7 +67,7 @@
                         <!-- Input File Materi -->
                         <div class="form-group mb-2">
                             <label for="formFile">{{ __('File Materi') }}</label>
-                            <br><small class="text-danger">{{ __('Upload file dalam bentuk PDF, DOC, DOCX dan TXT') }}</small>
+                            <br><small class="text-danger">{{ __('Upload file dalam bentuk PDF, DOC, DOCX, PPT, PPTX dan TXT') }}</small>
                             <br><input type="file" class="form-control" id="formFile" name="file_mtr">
                         </div>
 

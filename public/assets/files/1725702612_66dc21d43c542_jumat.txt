@@ -1,0 +1,17 @@
+url task 
+bikin controller. make:controller --api API/TaskController
+buat route
+copy route resource ganti user jadi task control
+optimize
+membuat index res. make:resource task/taskindexresource
+copy index ganti taskinpasang aut masukin token barer 
+taskcon setelah query . with user
+copy
+func to aray return id user>user>nsme email title desc creat(dfy)
+posman add request in task name create method post url task body raw formdata kalo uplod {copy model task titledescupluser. petik1->2} keynya ganti titledescupluser ganti file
+task model  
+git uploadnya artisan storage:link
+pubfuncstor : $req > file (upload_file)>store(public)     
+
+
+task php
