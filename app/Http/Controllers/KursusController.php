@@ -106,16 +106,18 @@ class KursusController extends Controller
         if($request->hasFile('gambar')){
             $file = $request->file('gambar');
             $filename= $file->getClientOriginalName();
+            $uniqName = time() . '_' . uniqid() . '_' . $filename;
 
             if (KursusModel::where('gambar', $filename)->exists()) {
                 return redirect()->back()->with('error', 'Gambar ini telah digunakan oleh kursus lain silahkan upload gambar yang berbeda.')->withInput();
             }
-            $file->move(public_path('assets/images'), $filename);
+            $file->move(public_path('assets/images'), $uniqName);
 
             try {
                 $kursus = KursusModel::create([
                     'nama_krs' => $request->nama_krs,
-                    'gambar' => $filename,
+                    'gambar' => $uniqName,
+                    'original_gambar' => $filename,
                     'deskripsi' => $request->deskripsi,
                     'biaya_krs' => $request->biaya_krs,
                     'durasi' => $request->durasi,
@@ -233,9 +235,10 @@ class KursusController extends Controller
         // Cek jika ada file gambar yang diunggah
         if ($request->hasFile('gambar')) {
             $file = $request->file('gambar');
-            $filename = $file->getClientOriginalName();
+            $origin = $file->getClientOriginalName();
+            $uniqName = time() . '_' . uniqid() . '_' . $origin;
 
-            if (KursusModel::where('gambar', $filename)->where('id', '!=', $id)->exists()) {
+            if (KursusModel::where('original_gambar', $origin)->where('id', '!=', $id)->exists()) {
                 return redirect()->back()->with('error', 'Gambar ini sudah digunakan di kursus lain.')->withInput();
             }
 
@@ -245,22 +248,24 @@ class KursusController extends Controller
             }
 
             // Pindahkan file gambar baru ke folder assets/images
-            $file->move(public_path('assets/images'), $filename);
+            $file->move(public_path('assets/images'), $uniqName);
 
             // Update nama file gambar di database
-            $kursus->gambar = $filename;
+            $kursus->gambar = $uniqName;
         }
 
         try {
             // Update data kursus
             $kursus->update([
                 'nama_krs' => $request->nama_krs,
-                'gambar' => $kursus->gambar ?? $kursus->gambar,  // Tetap gunakan gambar lama jika tidak diubah
+                'gambar' => $kursus->gambar, // Tetap gunakan gambar lama jika tidak diubah
                 'deskripsi' => $request->deskripsi,
                 'biaya_krs' => $request->biaya_krs,
                 'durasi' => $request->durasi,
                 'jam' => $request->jam
             ]);
+        
+            // Sinkronisasi materi dengan kursus
             $kursus->materi()->sync($request->id_mtr);
 
             return redirect('/courses')->with('success', 'Kursus berhasil diedit');
@@ -278,8 +283,8 @@ class KursusController extends Controller
     $kursus = KursusModel::findOrFail($id);
 
     try {
-        if ($kursus->gambar && file_exists(public_path('assets/images' . $kursus->gambar))) {
-            unlink(public_path('assets/images' . $kursus->gambar));
+        if ($kursus->gambar && file_exists(public_path('assets/images/' . $kursus->gambar))) {
+            unlink(public_path('assets/images/' . $kursus->gambar));
         }
         $kursus->materi()->detach();
         $kursus->delete();
