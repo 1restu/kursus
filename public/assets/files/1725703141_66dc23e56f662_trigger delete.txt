@@ -1,7 +1,0 @@
-CREATE TRIGGER 'trans_del_after' AFTER DELETE ON 'transaksi'
-FOR EACH ROW
-BEGIN
-SET @stok = (SELECT stok FROM barang WHERE idBarang = OLD.idBarang);
-SET @sisa = @stok + OLD.qty
-UPDATE barang SET stok = @sisa WHERE idBarang = OLD.idBarang;
-END

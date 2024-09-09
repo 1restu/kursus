@@ -108,7 +108,7 @@ class KursusController extends Controller
             $filename= $file->getClientOriginalName();
             $uniqName = time() . '_' . uniqid() . '_' . $filename;
 
-            if (KursusModel::where('gambar', $filename)->exists()) {
+            if (KursusModel::where('original_gambar', $filename)->exists()) {
                 return redirect()->back()->with('error', 'Gambar ini telah digunakan oleh kursus lain silahkan upload gambar yang berbeda.')->withInput();
             }
             $file->move(public_path('assets/images'), $uniqName);
