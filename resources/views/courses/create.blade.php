@@ -56,15 +56,19 @@
                         <div class="form-group">
                             <label for="materi">{{ __('Pilih Materi') }}</label>
                             <div class="form-check">
-                                @foreach($materies as $matery)
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="id_mtr[]" value="{{ $matery->id }}" id="materi_{{ $matery->id }}"
-                                            {{ in_array($matery->id, old('id_mtr', [])) ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="materi_{{ $matery->id }}">
-                                            {{ $matery->nama_mtr }}
-                                        </label>
-                                    </div>
-                                @endforeach
+                                @if($materies->isEmpty())
+                                    <p class="text-muted">{{ $message }}</p>
+                                @else
+                                    @foreach($materies as $matery)
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="id_mtr[]" value="{{ $matery->id }}" id="materi_{{ $matery->id }}"
+                                                {{ in_array($matery->id, old('id_mtr', [])) ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="materi_{{ $matery->id }}">
+                                                {{ $matery->nama_mtr }}
+                                            </label>
+                                        </div>
+                                    @endforeach
+                                @endif
                             </div>
                         </div>
                     

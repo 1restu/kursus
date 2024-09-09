@@ -9,16 +9,13 @@
 <!-- Font Awesome (versi yang sama) -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 
-<!-- jQuery -->
-{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
-<!-- Bootstrap 5 (yang sama) -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script> --}}
 <style>
     body {
         background-color: #f8f9fa;
         margin-top: 20px;
+    }
+    .file_manager {
+        position: relative; /* Kontainer dengan posisi relatif */
     }
     .file_manager .file {
         padding: 0 !important;
@@ -75,6 +72,16 @@
         top: 10px;
         right: 10px;
     }
+    .full-center-alert {
+        position: absolute;
+        top: calc(100% + 20px); /* Tempatkan di bawah elemen pencarian dan tombol */
+        left: 50%;
+        transform: translate(-50%, 0);
+        text-align: center;
+        width: auto; /* Lebar otomatis sesuai konten */
+        max-width: 400px; /* Batas maksimal lebar */
+        z-index: 1000; /* Pastikan berada di atas elemen lain */
+    }
 </style>
 
 @if (session('success'))
@@ -103,7 +110,6 @@
 @endif
 
 <h4 class="text-center font-weight-bold mb-4">MATERI</h4>
-
 <div id="main-content" class="file_manager container">
     <div class="d-flex justify-content-between mb-3">
         <a href="{{ route('materies.create') }}" class="btn btn-primary">Tambah Materi</a>
@@ -113,68 +119,78 @@
         </form>
     </div>
     <div class="row">
-        @foreach ($materies as $matery)
-            @php
-                $filePath = public_path("assets/files/$matery->file_mtr");
-                $fileSize = file_exists($filePath) ? filesize($filePath) / 1048576 : 0;
-                $fileName = pathinfo($matery->file_mtr, PATHINFO_EXTENSION);
-            @endphp
-            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                <div class="card file">
-                    <div class="icon">
-                        @if (in_array($fileName, ['pdf']))
-                            <i class="fa-solid fa-file-pdf text-danger"></i>
-                        @elseif (in_array($fileName, ['doc', 'docx']))
-                            <i class="fa-solid fa-file-word text-primary"></i>
-                        @elseif (in_array($fileName, ['txt']))
-                            <i class="fa-solid fa-file-lines text-warning"></i>
-                        @else
-                            <i class="fa-solid fa-file text-muted"></i>
-                        @endif
-                    </div>
-                    <div class="file-name">
-                        <p class="text-muted">{{ $matery->nama_mtr }}</p>
-                        <small>Tipe File: {{ $fileName }}</small>
-                        <small>Ukuran: {{ number_format($fileSize, 2) }} MB</small>
-                        <small class="text-muted">{{ $matery->created_at->translatedFormat('d F Y') }}</small>
-                    </div>
-                    <div class="dropdown">
-                        <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i data-feather="more-horizontal"></i>
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <li><a class="dropdown-item" href="{{ route('materies.show', $matery->id) }}"><i data-feather="eye"></i> Lihat</a></li>
-                            <li><a class="dropdown-item" href="{{ route('materies.edit', $matery->id) }}"><i data-feather="edit"></i> Edit</a></li>
-                            <li>
-                                <form action="{{ route('materies.destroy', $matery->id) }}" method="POST" style="display:inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="dropdown-item text-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus materi ini?');">
-                                        <i data-feather="trash-2"></i> Hapus
-                                    </button>
-                                </form>
-                            </li>
-                        </ul>
-                    </div>
+        @forelse ($materies as $matery)
+        @php
+        $filePath = public_path("assets/files/$matery->file_mtr");
+        $fileSize = file_exists($filePath) ? filesize($filePath) / 1048576 : 0;
+        $fileName = pathinfo($matery->file_mtr, PATHINFO_EXTENSION);
+    @endphp
+    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+        <div class="card file">
+            <div class="icon">
+                @if (in_array($fileName, ['pdf']))
+                    <i class="fa-solid fa-file-pdf text-danger"></i>
+                @elseif (in_array($fileName, ['doc', 'docx']))
+                    <i class="fa-solid fa-file-word text-primary"></i>
+                @elseif (in_array($fileName, ['txt']))
+                    <i class="fa-solid fa-file-lines text-secondary"></i>
+                @elseif (in_array($fileName, ['ppt', 'pptx']))
+                    <i class="fa-solid fa-file-powerpoint text-warning"></i>
+                @else
+                    <i class="fa-solid fa-file text-muted"></i>
+                @endif
+
+            </div>
+            <div class="file-name">
+                <p class="text-muted">{{ $matery->nama_mtr }}</p>
+                <small>Tipe File: {{ $fileName }}</small>
+                <small>Ukuran: {{ number_format($fileSize, 2) }} MB</small>
+                <small class="text-muted">{{ $matery->created_at->translatedFormat('d F Y') }}</small>
+            </div>
+            <div class="dropdown">
+                <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i data-feather="more-horizontal"></i>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li><a class="dropdown-item" href="{{ route('materies.show', $matery->id) }}"><i data-feather="eye"></i> Lihat</a></li>
+                    <li><a class="dropdown-item" href="{{ route('materies.edit', $matery->id) }}"><i data-feather="edit"></i> Edit</a></li>
+                    <li>
+                        <form action="{{ route('materies.destroy', $matery->id) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="dropdown-item text-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus materi ini?');">
+                                <i data-feather="trash-2"></i> Hapus
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+        @empty
+            <div class="full-center-alert">
+                <div class="alert alert-warning">
+                    Tidak ada data
                 </div>
             </div>
-        @endforeach
+        @endforelse
     </div>
 </div>
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        setTimeout(function() {
-            let alertElement = document.querySelector('.alert');
+    setTimeout(function() {
+        let alertElements = document.querySelectorAll('.alert.alert-dismissible'); // Hanya sembunyikan alert yang bisa ditutup
+        alertElements.forEach(function(alertElement) {
             if (alertElement) {
                 alertElement.classList.remove('show');
                 alertElement.classList.add('fade');
                 setTimeout(() => alertElement.remove(), 600);
             }
-        }, 5000); 
+        });
+    }, 5000);
 
-        feather.replace(); // Ganti ikon dengan Feather
-    });
+    feather.replace(); // Ganti ikon dengan Feather
+});
 </script>
-
 @endsection

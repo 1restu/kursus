@@ -40,12 +40,14 @@ class KtgMateriController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama_ktg' => 'required|unique:ktg_materi,nama_ktg|regex:/^[a-zA-Z\s]+$/'
+            'nama_ktg' => 'required|unique:ktg_materi,nama_ktg|regex:/^[a-zA-Z\s]+$/|min:5|max:20'
         ], [
 
             'nama_ktg.required' => 'Nama kategori harus di isi.',
             'nama_ktg.unique' => 'Kategori ini sudah ada, silahka masukan nama kategori yang berbeda.',
-            'nama_ktg.regex' => 'Nama kategori tidak boleh memiliki angka.'
+            'nama_ktg.regex' => 'Nama kategori tidak boleh memiliki angka.',
+            'nama_ktg.min' => 'Nama kategori minimal harus 5 huruf.',
+            'nama_ktg.max' => 'Nama kategori tidak boleh melebihi 30 kata.'
         ]);
 
         try{
@@ -93,7 +95,9 @@ class KtgMateriController extends Controller
         ], [
             'nama_ktg.required' => 'Nama kategori harus di isi.',
             'nama_ktg.unique' => 'Kategori ini sudah ada, silahkan masukan nama kategori yang berbeda.',
-            'nama_ktg.regex' => 'Nama kategori tidak boleh memiliki angka.'
+            'nama_ktg.regex' => 'Nama kategori tidak boleh memiliki angka.',
+            'nama_ktg.min' => 'Nama kategori minimal harus 5 huruf.',
+            'nama_ktg.max' => 'Nama kategori tidak boleh melebihi 30 kata.'
         ]);
 
         try{

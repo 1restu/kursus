@@ -147,7 +147,7 @@
                 </tr>
                 @empty
                 <tr>
-                    {{-- <td colspan="4"><center class="bg-danger text-white">Data tidak ditemukan</center></td> --}}
+                    <td colspan="5"><center class="bg-danger text-white">Data tidak ada</center></td>
                 </tr>
                 @endforelse
         </tbody>

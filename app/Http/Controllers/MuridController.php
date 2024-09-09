@@ -54,16 +54,22 @@ class MuridController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama' => 'required|regex:/^[a-zA-Z\s]+$/',
-            'no_tlp' => 'required|unique:murid,no_tlp|regex:/^[0-9]+$/',
-            'alamat' => 'required'
+            'nama' => 'required|string|regex:/^[a-zA-Z\s]+$/|min:5|max:20',
+            'no_tlp' => 'required|unique:murid,no_tlp|regex:/^[0-9]+$/|min:10|max:15', // Validasi panjang nomor telepon
+            'alamat' => 'required|string|min:10|max:255' // Validasi panjang alamat
         ], [
             'nama.required' => 'Nama murid harus diisi.',
             'nama.regex' => 'Nama murid tidak boleh memiliki angka.',
+            'nama.min' => 'Nama murid harus memiliki minimal :min karakter.',
+            'nama.max' => 'Nama murid tidak boleh melebihi :max karakter.',
             'no_tlp.required' => 'Nomor telepon harus diisi.',
             'no_tlp.unique' => 'Nomor telepon ini sudah ada, silahkan masukkan nomor telepon yang berbeda.',
             'no_tlp.regex' => 'Nomor telepon hanya boleh berisi angka.',
-            'alamat.required' => 'Alamat harus diisi.'
+            'no_tlp.min' => 'Nomor telepon harus memiliki minimal :min digit.',
+            'no_tlp.max' => 'Nomor telepon tidak boleh melebihi :max digit.',
+            'alamat.required' => 'Alamat harus diisi.',
+            'alamat.min' => 'Alamat harus memiliki minimal :min karakter.',
+            'alamat.max' => 'Alamat tidak boleh melebihi :max karakter.'
         ]);
         
         try {
@@ -108,16 +114,22 @@ class MuridController extends Controller
         }
 
         $request->validate([
-            'nama' => 'required|regex:/^[a-zA-Z\s]+$/',
-            'no_tlp' => 'required|unique:murid,no_tlp,' . $id . '|regex:/^[0-9]+$/', // Allow current student's phone number
-            'alamat' => 'required'
+            'nama' => 'required|string|regex:/^[a-zA-Z\s]+$/|min:5|max:20',
+            'no_tlp' => 'required|unique:murid,no_tlp,' . $id . '|regex:/^[0-9]+$/|min:10|max:15', // Allow current student's phone number
+            'alamat' => 'required|string|min:10|max:255' // Validasi panjang alamat
         ], [
             'nama.required' => 'Nama murid harus diisi.',
             'nama.regex' => 'Nama murid tidak boleh memiliki angka.',
+            'nama.min' => 'Nama murid harus memiliki minimal :min karakter.',
+            'nama.max' => 'Nama murid tidak boleh melebihi :max karakter.',
             'no_tlp.required' => 'Nomor telepon harus diisi.',
             'no_tlp.unique' => 'Nomor telepon ini sudah ada, silahkan masukkan nomor telepon yang berbeda.',
             'no_tlp.regex' => 'Nomor telepon hanya boleh berisi angka.',
-            'alamat.required' => 'Alamat harus diisi.'
+            'no_tlp.min' => 'Nomor telepon harus memiliki minimal :min digit.',
+            'no_tlp.max' => 'Nomor telepon tidak boleh melebihi :max digit.',
+            'alamat.required' => 'Alamat harus diisi.',
+            'alamat.min' => 'Alamat harus memiliki minimal :min karakter.',
+            'alamat.max' => 'Alamat tidak boleh melebihi :max karakter.'
         ]);
 
         try {

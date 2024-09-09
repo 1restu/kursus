@@ -49,7 +49,14 @@ class KursusController extends Controller
         // Mendapatkan materi yang belum digunakan
         $materies = MateriModel::whereNotIn('id', $usedMateriIds)->latest('created_at')->get();
 
-        return view('courses.create', compact('categories', 'materies'));
+        $message = '';
+        if ($materies->isEmpty() && $usedMateriIds) {
+            $message = 'Semua materi sudah digunakan';
+        } elseif ($materies->isEmpty()) {
+            $message = 'Tidak ada data';
+        }
+
+        return view('courses.create', compact('categories', 'materies', 'message'));
     }
 
     /**
@@ -58,51 +65,59 @@ class KursusController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama_krs' => 'required|unique:kursus,nama_krs|regex:/^[a-zA-Z\s]+$/',
+            'nama_krs' => 'required|unique:kursus,nama_krs|regex:/^[a-zA-Z\s]+$/|min:5|max:20',
             'gambar' => 'required|image|max:5280|mimes:jpeg,png,jpg',
-            'deskripsi' => 'required|min:10',
-            'id_mtr' => 'required|array|max:3|exists:materi,id',
-            'biaya_krs' => 'required|numeric|min:0',
-            'durasi' => 'required|integer|min:1',
+            'deskripsi' => 'required|min:10|max:100',
+            'id_mtr' => 'required|array|max:3|exists:materi,id|min:1',
+            'biaya_krs' => 'required|numeric|min:0|max:5000000',
+            'durasi' => 'required|integer|min:1|max:365',
             'jam' => 'required|integer|min:1|max:6'
         ], [
             'nama_krs.required' => 'Nama kursus wajib diisi.',
             'nama_krs.unique' => 'Nama kursus sudah ada, silahkan masukkan nama yang lain.',
             'nama_krs.regex' => 'Nama kursus hanya boleh terdiri dari huruf.',
+            'nama_krs.min'=>'Nama tidak boleh kurang dari 5',
+            'nama_krs.max'=>'Nama tidak boleh lebih dari 20',
             'gambar.required' => 'Mohon lampirkan gambar.',
             'gambar.image' => 'File harus berupa gambar.',
             'gambar.mimes' => 'Format gambar harus berupa jpeg, png, jpg, atau gif.',
             'gambar.max' => 'Ukuran gambar tidak boleh lebih dari 2MB.',
             'deskripsi.required' => 'Deskripsi kursus wajib diisi.',
             'deskripsi.min' => 'Deskripsi minimal memiliki 10 karakter.',
+            'deskripsi.max' => 'Deskripsi maksimal 100 karakter.',
             'id_mtr.max' => 'Kursus hanya bisa memiliki maksimal 3 materi.',
+            'id_mtr.min' => 'Minimal kursus mempunyai 1 materi.',
             'id_mtr.required' => 'Pilih minimal satu materi untuk kursus ini.',
             'id_mtr.exists' => 'Materi tidak valid.',
             'biaya_krs.required' => 'Biaya kursus wajib diisi.',
             'biaya_krs.numeric' => 'Biaya kursus hanya boleh berupa angka.',
             'biaya_krs.min' => 'Biaya kursus tidak boleh kurang dari 0.',
+            'biaya_krs.max' => 'Biaya kursus tidak boleh lebih dari 5 juta.',
             'durasi.required' => 'Durasi kursus wajib diisi.',
             'durasi.integer' => 'Durasi kursus harus berupa bilangan bulat.',
             'durasi.min' => 'Durasi kursus tidak boleh dibawah 0.',
+            'durasi.max' => 'Durasi kursus tidak boleh lebih dari 1 tahun.',
             'jam.required' => 'Durasi jam perhari wajib diisi.',
             'jam.integer' => 'Durasi jam perhari harus berupa bilangan bulat.',
             'jam.min' => 'Durasi jam perhari tidak boleh dibawah 0.',
-            'jam.max' => 'Durasi jam perhari tak boleh lebih dari '
+            'jam.max' => 'Durasi jam perhari tak boleh lebih dari 6 jam'
         ]);
 
         if($request->hasFile('gambar')){
             $file = $request->file('gambar');
             $filename= $file->getClientOriginalName();
+            $uniqName = time() . '_' . uniqid() . '_' . $filename;
 
             if (KursusModel::where('gambar', $filename)->exists()) {
                 return redirect()->back()->with('error', 'Gambar ini telah digunakan oleh kursus lain silahkan upload gambar yang berbeda.')->withInput();
             }
-            $file->move(public_path('assets/images'), $filename);
+            $file->move(public_path('assets/images'), $uniqName);
 
             try {
                 $kursus = KursusModel::create([
                     'nama_krs' => $request->nama_krs,
-                    'gambar' => $filename,
+                    'gambar' => $uniqName,
+                    'original_gambar' => $filename,
                     'deskripsi' => $request->deskripsi,
                     'biaya_krs' => $request->biaya_krs,
                     'durasi' => $request->durasi,
@@ -192,31 +207,38 @@ class KursusController extends Controller
             'nama_krs.required' => 'Nama kursus wajib diisi.',
             'nama_krs.unique' => 'Nama kursus sudah ada, silahkan masukkan nama yang lain.',
             'nama_krs.regex' => 'Nama kursus hanya boleh terdiri dari huruf.',
+            'nama_krs.min'=>'Nama tidak boleh kurang dari 5',
+            'nama_krs.max'=>'Nama tidak boleh lebih dari 20',
             'gambar.image' => 'File harus berupa gambar.',
             'gambar.mimes' => 'Format gambar harus berupa jpeg, png, jpg.',
             'gambar.max' => 'Ukuran gambar tidak boleh lebih dari 5MB.',
             'deskripsi.required' => 'Deskripsi kursus wajib diisi.',
             'deskripsi.min' => 'Deskripsi minimal memiliki 10 karakter.',
+            'deskripsi.max' => 'Deskripsi maksimal 100 karakter.',
             'id_mtr.max' => 'Kursus hanya bisa memiliki maksimal 3 materi.',
             'id_mtr.required' => 'Pilih minimal satu materi untuk kursus ini.',
             'id_mtr.exists' => 'Materi tidak valid.',
+            'id_mtr.min' => 'Minimal kursus mempunyai 1 materi.',
             'biaya_krs.required' => 'Biaya kursus wajib diisi.',
             'biaya_krs.numeric' => 'Biaya kursus hanya boleh berupa angka.',
             'biaya_krs.min' => 'Biaya kursus tidak boleh kurang dari 0.',
+            'biaya_krs.max' => 'Biaya kursus tidak boleh lebih dari 5 juta.',
             'durasi.required' => 'Durasi kursus wajib diisi.',
             'durasi.integer' => 'Durasi kursus harus berupa bilangan bulat.',
             'durasi.min' => 'Durasi kursus tidak boleh dibawah 1.',
             'jam.required' => 'Durasi jam perhari wajib diisi.',
             'jam.integer' => 'Durasi jam perhari harus berupa bilangan bulat.',
-            'jam.min' => 'Durasi jam perhari tidak boleh dibawah 1.'
+            'jam.min' => 'Durasi jam perhari tidak boleh dibawah 1.',
+            'jam.max' => 'Durasi jam perhari tak boleh lebih dari 6 jam'
         ]);
 
         // Cek jika ada file gambar yang diunggah
         if ($request->hasFile('gambar')) {
             $file = $request->file('gambar');
-            $filename = $file->getClientOriginalName();
+            $origin = $file->getClientOriginalName();
+            $uniqName = time() . '_' . uniqid() . '_' . $origin;
 
-            if (KursusModel::where('gambar', $filename)->where('id', '!=', $id)->exists()) {
+            if (KursusModel::where('original_gambar', $origin)->where('id', '!=', $id)->exists()) {
                 return redirect()->back()->with('error', 'Gambar ini sudah digunakan di kursus lain.')->withInput();
             }
 
@@ -226,22 +248,24 @@ class KursusController extends Controller
             }
 
             // Pindahkan file gambar baru ke folder assets/images
-            $file->move(public_path('assets/images'), $filename);
+            $file->move(public_path('assets/images'), $uniqName);
 
             // Update nama file gambar di database
-            $kursus->gambar = $filename;
+            $kursus->gambar = $uniqName;
         }
 
         try {
             // Update data kursus
             $kursus->update([
                 'nama_krs' => $request->nama_krs,
-                'gambar' => $kursus->gambar ?? $kursus->gambar,  // Tetap gunakan gambar lama jika tidak diubah
+                'gambar' => $kursus->gambar, // Tetap gunakan gambar lama jika tidak diubah
                 'deskripsi' => $request->deskripsi,
                 'biaya_krs' => $request->biaya_krs,
                 'durasi' => $request->durasi,
                 'jam' => $request->jam
             ]);
+        
+            // Sinkronisasi materi dengan kursus
             $kursus->materi()->sync($request->id_mtr);
 
             return redirect('/courses')->with('success', 'Kursus berhasil diedit');
@@ -259,8 +283,8 @@ class KursusController extends Controller
     $kursus = KursusModel::findOrFail($id);
 
     try {
-        if ($kursus->gambar && file_exists(public_path('assets/images' . $kursus->gambar))) {
-            unlink(public_path('assets/images' . $kursus->gambar));
+        if ($kursus->gambar && file_exists(public_path('assets/images/' . $kursus->gambar))) {
+            unlink(public_path('assets/images/' . $kursus->gambar));
         }
         $kursus->materi()->detach();
         $kursus->delete();

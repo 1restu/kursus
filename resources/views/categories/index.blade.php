@@ -81,7 +81,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($kategori as $ktg)
+            @forelse($kategori as $ktg)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $ktg->nama_ktg }}</td>
@@ -122,7 +122,11 @@
                         </form> 
                     </td>
                 </tr>
-            @endforeach
+                @empty
+                <tr>
+                    <td colspan="3"><center class="bg-danger text-white">Data tidak ada</center></td>
+                </tr>
+                @endforelse
         </tbody>
     </table>
 </div>

@@ -56,18 +56,22 @@ table th {
                             <tr>
                                 <th>No</th>
                                 <th>Kursus</th>
+                                <th>Biaya</th>
                                 <th>Nama Murid</th>
+                                <th>No Telepon</th>
                                 <th>Mulai</th>
                                 <th>Selesai</th>
                                 {{-- <th>Status</th> --}}
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($histories as $history)
+                            @forelse($histories as $history)
                             <tr class="align-middle">
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $history->nama_krs }}</td>
+                                <td>{{ 'Rp ' . number_format($history->biaya, 0, ',', '.') }}</td>
                                 <td>{{ $history->nama }}</td>
+                                <td>{{ $history->telepon }}</td>
                                 <td>{{ $history->tanggal_mulai }}</td>
                                 <td>{{ $history->tanggal_selesai }}</td>
                                 {{-- <td>
@@ -76,7 +80,11 @@ table th {
                                     </span>
                                 </td> --}}
                             </tr>
-                            @endforeach
+                            @empty
+                            <tr>
+                                <td colspan="7"><center class="bg-danger text-white">Data tidak ada</center></td>
+                            </tr>
+                @endforelse
                         </tbody>
                     </table>
                 </div>

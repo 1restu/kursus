@@ -230,8 +230,10 @@ class PdKursusController extends Controller
             HistoryModel::create([
                 'id_krs' => $pdkursus->id_krs,
                 'nama_krs' => $pdkursus->kursus->nama_krs,
+                'biaya_krs' => $pdkursus->kursus->biaya_krs,
                 'id_mrd' => $pdkursus->id_mrd,
                 'nama' => $pdkursus->murid->nama,
+                'telepon' => $pdkursus->murid->no_tlp,
                 'tanggal_mulai' => $pdkursus->tanggal_mulai,
                 'tanggal_selesai' => $pdkursus->tanggal_selesai,
                 'status' => 'selesai',
