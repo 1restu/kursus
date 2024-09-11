@@ -25,7 +25,7 @@ class KursusModel extends Model
 
     public function materi()
     {
-        return $this->belongsToMany(MateriModel::class, 'kursus_materi', 'id_krs', 'id_mtr')->withTimestamps();
+        return $this->hasMany(MateriModel::class, 'kursus_id');
     }
 
     public function pdkursus()

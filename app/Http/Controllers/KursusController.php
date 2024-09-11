@@ -43,17 +43,12 @@ class KursusController extends Controller
     {
         $categories = KtgMateriModel::latest('created_at')->get();
 
-        // Mengambil ID materi yang sudah digunakan di tabel pivot kursus_materi
-        $usedMateriIds = KursusModel::with('materi')->get()->pluck('materi.*.id')->flatten()->toArray();
-
-        // Mendapatkan materi yang belum digunakan
-        $materies = MateriModel::whereNotIn('id', $usedMateriIds)->latest('created_at')->get();
+        // Mendapatkan materi yang belum memiliki kursus (kursus_id null)
+        $materies = MateriModel::whereNull('kursus_id')->latest('created_at')->get();
 
         $message = '';
-        if ($materies->isEmpty() && $usedMateriIds) {
-            $message = 'Semua materi sudah digunakan';
-        } elseif ($materies->isEmpty()) {
-            $message = 'Tidak ada data';
+        if ($materies->isEmpty()) {
+            $message = 'Tidak ada materi yang tersedia untuk ditambahkan.';
         }
 
         return view('courses.create', compact('categories', 'materies', 'message'));
@@ -124,7 +119,7 @@ class KursusController extends Controller
                     'jam' => $request->jam
                 ]);
 
-                $kursus->materi()->sync($request->id_mtr);
+                MateriModel::whereIn('id', $request->id_mtr)->update(['kursus_id' => $kursus->id]);
 
                 return redirect('/courses')->with('success', 'Kursus baru berhasil ditambahkan');
             } catch(\Exception $e) {
@@ -171,21 +166,13 @@ class KursusController extends Controller
         $categories = KtgMateriModel::latest('created_at')->get();
         $materiSelectedIds = $course->materi->pluck('id')->toArray();
 
-    // Ambil semua materi yang digunakan oleh kursus lain
-    $usedMateriIds = KursusModel::where('id', '!=', $id)
-                                ->with('materi')
-                                ->get()
-                                ->pluck('materi.*.id')
-                                ->flatten()
-                                ->toArray();
+        // Mendapatkan materi yang belum terhubung dengan kursus lain atau yang sudah terhubung dengan kursus ini
+        $materies = MateriModel::whereNull('kursus_id')
+                                ->orWhereIn('id', $materiSelectedIds)
+                                ->latest('created_at')
+                                ->get();
 
-    // Ambil semua materi, tapi jangan sertakan materi yang digunakan oleh kursus lain, kecuali materi yang sudah digunakan di kursus ini
-    $materies = MateriModel::whereNotIn('id', $usedMateriIds)
-                            ->orWhereIn('id', $materiSelectedIds)
-                            ->latest('created_at')
-                            ->get();
-
-    return view('courses.edit', compact('course', 'categories', 'materies', 'materiSelectedIds'));
+        return view('courses.edit', compact('course', 'categories', 'materies', 'materiSelectedIds'));
     }
 
     /**
@@ -266,7 +253,8 @@ class KursusController extends Controller
             ]);
         
             // Sinkronisasi materi dengan kursus
-            $kursus->materi()->sync($request->id_mtr);
+            MateriModel::whereIn('id', $request->id_mtr)->update(['kursus_id' => $kursus->id]);
+            MateriModel::whereNotIn('id', $request->id_mtr)->where('kursus_id', $kursus->id)->update(['kursus_id' => null]);
 
             return redirect('/courses')->with('success', 'Kursus berhasil diedit');
         } catch (\Exception $e) {
@@ -286,7 +274,8 @@ class KursusController extends Controller
         if ($kursus->gambar && file_exists(public_path('assets/images/' . $kursus->gambar))) {
             unlink(public_path('assets/images/' . $kursus->gambar));
         }
-        $kursus->materi()->detach();
+        // Set kursus_id di tabel materi menjadi null
+        MateriModel::where('kursus_id', $kursus->id)->update(['kursus_id' => null]);
         $kursus->delete();
 
         return redirect()->route('courses.index')->with('success', 'Kursus berhasil dihapus.');

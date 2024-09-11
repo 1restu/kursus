@@ -18,17 +18,17 @@ class MateriModel extends Model
         'deskripsi',
         'file_mtr',
         'original_file_mtr',
-        'id_ktg'
     ];
+
+    // Relasi many-to-one: Satu materi hanya memiliki satu kursus
+    public function kursus()
+    {
+        return $this->belongsTo(KursusModel::class, 'kursus_id');
+    }
 
     public function kategori()
     {
         return $this->belongsTo(KtgMateriModel::class, 'id_ktg');
     }
 
-    public function kursus()
-    {
-        return $this->belongsToMany(KursusModel::class, 'kursus_materi', 'id_mtr', 'id_krs')->withTimestamps();
-
-    }
 }
