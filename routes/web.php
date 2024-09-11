@@ -29,10 +29,4 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::resource('students', MuridController::class);
     Route::resource('regists', PdKursusController::class);
     Route::post('regists/{id}/confirm-payment', [PdKursusController::class, 'confirmPayment'])->name('regist.payment');
-    Route::get('/example', function () {
-        return view('materies.example');
-    });
-    Route::get('/homez', function () {
-        return view('homez');
-    });
 });
