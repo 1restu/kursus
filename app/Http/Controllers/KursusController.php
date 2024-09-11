@@ -295,7 +295,7 @@ class KursusController extends Controller
             return redirect()->route('courses.index')->with('error', 'Kursus tidak dapat dihapus karena masih terkait dengan pendaftaran kursus.');
         }
 
-        return redirect()->route('courses.index')->with("error", "Gagal menghapus kursus." . "$e");
+        return redirect()->route('courses.index')->with("error", "Gagal menghapus kursus.");
     }
 }
 

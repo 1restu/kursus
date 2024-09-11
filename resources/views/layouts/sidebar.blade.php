@@ -35,33 +35,6 @@
                 <i class="fas fa-clock"></i>Riwayat
             </a>
         </li>
-        
-        {{-- <li class="sidebar-item nav-item mb-1">
-            <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#settings" aria-expanded="false" aria-controls="settings">
-                <i class="fas fa-cog pe-2"></i>
-                <span class="topic">Pengaturan </span>
-            </a>
-            <ul id="settings" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
-                        <i class="fas fa-sign-in-alt pe-2"></i>
-                        <span class="topic"> Login</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
-                        <i class="fas fa-user-plus pe-2"></i>
-                        <span class="topic">Registrasi</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
-                        <i class="fas fa-sign-out-alt pe-2"></i>
-                        <span class="topic">Logout</span>
-                    </a>
-                </li>
-            </ul>
-        </li> --}}
     </ul>
     <hr>
     <div class="d-flex">

@@ -74,6 +74,11 @@
     table.table td i {
         font-size: 19px;
     } 
+
+    .material-text {
+    font-weight: normal;
+    margin-left: 8px; /* Adjust this value to control spacing */
+}
 </style>
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -114,13 +119,13 @@
                                     $fileName = pathinfo($matery->file_mtr, PATHINFO_EXTENSION);
                                 @endphp
                                 @if (in_array($fileName, ['pdf']))
-                                    <i class="fa fa-file-pdf-o text-danger">{{ $matery->nama_mtr }}</i><br>
+                                    <i class="fa fa-file-pdf-o text-danger"></i> <span class="material-text">{{ $matery->nama_mtr }}</span><br>
                                 @elseif (in_array($fileName, ['doc', 'docx']))
-                                    <i class="fa fa-file-word-o text-primary">{{ $matery->nama_mtr }}</i><br>
+                                    <i class="fa fa-file-word-o text-primary"></i> <span class="material-text">{{ $matery->nama_mtr }}</span><br>
                                 @elseif (in_array($fileName, ['txt']))
-                                    <i class="fa fa-file-text text-warning">{{ $matery->nama_mtr }}</i><br>
+                                    <i class="fa fa-file-text text-warning"></i> <span class="material-text">{{ $matery->nama_mtr }}</span><br>
                                 @else
-                                    <i class="fa fa-file text-muted">{{ $matery->nama_mtr }}</i><br>
+                                    <i class="fa fa-file text-muted"></i> <span class="material-text">{{ $matery->nama_mtr }}</span><br>
                                 @endif
                             @endforeach
                         </div>

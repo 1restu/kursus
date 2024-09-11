@@ -62,7 +62,7 @@
 <div class="row row-cols-1 row-cols-md-3 g-4 mx-auto position-relative" id="content" style="min-height: 400px;">
     @forelse($courses as $cours)
         <div class="col">
-            <div class="card h-100">
+            <div class="card h-60">
                 <div style="height: 150px; overflow: hidden;">
                     <img src="{{ asset('assets/images/' . $cours->gambar) }}" class="card-img-top" alt="{{ $cours->nama_krs }}" style="height: 100%; object-fit: cover;">
                 </div>
