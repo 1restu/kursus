@@ -21,6 +21,8 @@ class HistoryModel extends Model
         'tanggal_mulai',
         'tanggal_selesai',
         'status',
+        'biaya_krs',
+        'telepon'
     ];
 
     public function kursus()
