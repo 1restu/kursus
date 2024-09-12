@@ -247,7 +247,7 @@ class PdKursusController extends Controller
 
     } catch (\Exception $e) {
         return redirect()->route('courses.show', $id)
-                        ->with('error', 'Terjadi kesalahan saat menghapus data');
+                        ->with('error', 'Terjadi kesalahan saat menghapus data' . $e->getMessage());
     }
 }
 

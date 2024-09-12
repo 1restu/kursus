@@ -18,6 +18,7 @@ class MateriModel extends Model
         'deskripsi',
         'file_mtr',
         'original_file_mtr',
+        'id_ktg'
     ];
 
     // Relasi many-to-one: Satu materi hanya memiliki satu kursus
