@@ -18,6 +18,14 @@
                         <p class="form-control-plaintext">{{ $materies->nama_mtr }}</p>
                     </div>
                     <div class="mb-3">
+                        <h5>Kursus:</h5>
+                            @if($materies->kursus)
+                                <p class="form-control-plaintext">Materi ini digunakan pada kursus: {{ $materies->kursus->nama_krs }}</p>
+                            @else
+                                <p class="form-control-plaintext">Materi ini tidak digunakan pada kursus apapun.</p>
+                            @endif
+                    </div>
+                    <div class="mb-3">
                         <h5>Deskripsi:</h5>
                         <p class="form-control-plaintext">{{ $materies->deskripsi }}</p>
                     </div>

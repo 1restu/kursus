@@ -186,7 +186,7 @@ class MateriController extends Controller
      */
     public function show(string $id)
     {
-        $materies = MateriModel::with('kategori')->findOrFail($id); // Ambil data materi dan relasinya
+        $materies = MateriModel::with('kategori', 'kursus')->findOrFail($id); // Ambil data materi dan relasinya
         return view('materies.show', compact('materies')); 
     }
 
